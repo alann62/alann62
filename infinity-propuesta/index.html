@@ -8,521 +8,619 @@
 <meta name="description" content="Maqueta de propuesta de rediseño del sitio de Infinity Rotomolding. No es el sitio oficial.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --grafito: #1d2226;
-    --grafito-2: #262c31;
-    --grafito-3: #323a40;
-    --verde: #2fb34c;
-    --verde-osc: #1f8a37;
-    --verde-claro: #e6f5e9;
-    --pe: #f2f4f1;          /* polietileno natural */
-    --pe-2: #e4e8e3;
-    --texto: #1a1f22;
-    --gris: #5d6a70;
-    --gris-claro: #9aa6ab;
-    --borde: #d9dfdb;
-    --blanco: #ffffff;
-    --acero: #8e9aa1;
-    --display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
-    --cuerpo: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-    --radio: 6px;
+    --fondo: #ffffff;
+    --gris-fondo: #f5f5f7;
+    --texto: #1d1d1f;
+    --secundario: #6e6e73;
+    --terciario: #86868b;
+    --linea: #d2d2d7;
+    --verde: #0f9d58;
+    --verde-hover: #0b8a4c;
+    --enlace: #0a7f45;
+    --negro: #000000;
+    --gris-osc: #161617;
+    --sf: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --curva: cubic-bezier(.25, .1, .25, 1);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: var(--cuerpo); font-size: 17px; line-height: 1.55; color: var(--texto); background: var(--blanco); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; font-family: var(--sf); font-size: 17px; line-height: 1.47; letter-spacing: -.022em; color: var(--texto); background: var(--fondo); -webkit-font-smoothing: antialiased; }
   img, svg { max-width: 100%; display: block; }
-  a { color: inherit; }
-  h1, h2, h3 { font-family: var(--display); line-height: 1.02; letter-spacing: -.005em; text-wrap: balance; margin: 0; }
-  .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding-inline: 20px; }
-  .eyebrow { font-family: var(--mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--verde-osc); }
-  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-  :focus-visible { outline: 3px solid var(--verde); outline-offset: 2px; }
+  a { color: var(--enlace); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font-family: inherit; letter-spacing: inherit; }
+  h1, h2, h3, h4 { margin: 0; font-weight: 600; text-wrap: balance; }
+  :focus-visible { outline: 3px solid rgba(15,157,88,.5); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: 100%; max-width: 1024px; margin: 0 auto; padding-inline: 22px; }
+  .ancho { max-width: 1260px; }
+  .num { font-variant-numeric: tabular-nums; }
 
-  /* ---------- Franja de propuesta ---------- */
-  .demo { background: #fff4c2; color: #4a3d00; font-size: .85rem; border-bottom: 1px solid #e8d98a; }
-  .demo .wrap { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: space-between; padding-block: 8px; }
-  .demo details { position: relative; }
-  .demo summary { cursor: pointer; font-weight: 700; list-style: none; }
-  .demo summary::-webkit-details-marker { display: none; }
-  .demo summary::after { content: " ▾"; }
-  .demo ul { position: absolute; right: 0; top: 28px; z-index: 90; width: min(420px, calc(100vw - 40px)); background: #fffbe6; border: 1px solid #e8d98a; border-radius: 8px; padding: 14px 16px 14px 32px; margin: 0; box-shadow: 0 12px 30px rgba(0,0,0,.18); }
-  .demo li { margin-bottom: 6px; }
+  /* ---------- Aviso de maqueta ---------- */
+  .aviso-demo { background: var(--gris-fondo); color: var(--secundario); font-size: 12px; letter-spacing: -.01em; text-align: center; padding: 10px 22px; }
+  .aviso-demo b { color: var(--texto); font-weight: 600; }
+  .aviso-demo button { background: none; border: 0; color: var(--enlace); font-size: 12px; cursor: pointer; padding: 0; }
+  .mejoras { max-width: 640px; margin: 10px auto 4px; text-align: left; color: var(--texto); font-size: 13px; }
+  .mejoras li { margin-bottom: 4px; }
 
-  /* ---------- Header ---------- */
-  header.top { position: sticky; top: 0; z-index: 80; background: rgba(29,34,38,.97); backdrop-filter: blur(8px); color: #fff; border-bottom: 1px solid rgba(255,255,255,.06); }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 20px; }
-  .marca { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .marca svg { width: 34px; height: 34px; }
-  .marca b { font-family: var(--display); font-size: 1.45rem; letter-spacing: .06em; font-weight: 700; text-transform: uppercase; line-height: 1; }
-  .marca small { display: block; font-family: var(--mono); font-size: .6rem; letter-spacing: .32em; color: var(--verde); text-transform: uppercase; margin-top: 3px; }
-  .menu { display: none; gap: 26px; font-size: .95rem; font-weight: 500; }
-  .menu a { text-decoration: none; color: #c9d1d4; }
-  .menu a:hover { color: #fff; }
-  @media (min-width: 960px) { .menu { display: flex; } }
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 1rem var(--cuerpo); border: 0; border-radius: var(--radio); padding: 13px 22px; cursor: pointer; text-decoration: none; transition: background .15s, transform .15s, border-color .15s; }
-  .btn svg { width: 19px; height: 19px; flex: none; }
-  .btn:hover { transform: translateY(-1px); }
-  .btn-verde { background: var(--verde); color: #fff; }
-  .btn-verde:hover { background: var(--verde-osc); }
-  .btn-linea { background: transparent; color: inherit; border: 1.5px solid currentColor; }
-  .btn-sm { padding: 9px 15px; font-size: .92rem; }
-  .carrito-btn { position: relative; }
-  .carrito-btn .n { position: absolute; top: -7px; right: -7px; min-width: 21px; height: 21px; padding: 0 5px; border-radius: 999px; background: #fff; color: var(--grafito); font: 700 .75rem var(--cuerpo); display: grid; place-items: center; }
-  .carrito-btn .n[data-cero] { display: none; }
+  /* ---------- Navegación global ---------- */
+  .nav-global { position: sticky; top: 0; z-index: 90; height: 48px; background: rgba(250,250,252,.8); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
+  .nav-global .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; color: var(--texto); font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+  .logo:hover { text-decoration: none; }
+  .logo svg { width: 22px; height: 22px; }
+  .nav-global nav { display: none; gap: 30px; font-size: 12px; }
+  .nav-global nav a { color: rgba(29,29,31,.8); }
+  .nav-global nav a:hover { color: var(--texto); text-decoration: none; }
+  @media (min-width: 834px) { .nav-global nav { display: flex; } }
+  .bolsa { position: relative; background: none; border: 0; cursor: pointer; color: rgba(29,29,31,.8); padding: 6px; }
+  .bolsa svg { width: 17px; height: 17px; }
+  .bolsa .n { position: absolute; right: -2px; bottom: 0; min-width: 15px; height: 15px; padding: 0 4px; border-radius: 99px; background: var(--texto); color: #fff; font-size: 10px; font-weight: 600; display: grid; place-items: center; }
+  .bolsa .n[hidden] { display: none; }
 
-  /* ---------- Hero ---------- */
-  .hero { background: var(--grafito); color: #fff; position: relative; overflow: hidden; }
-  .hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 40px 40px; mask-image: linear-gradient(to left, #000 20%, transparent 75%); }
-  .hero-grid { position: relative; display: grid; gap: 28px; padding-block: 56px 40px; align-items: center; }
-  @media (min-width: 940px) { .hero-grid { grid-template-columns: 1.15fr .85fr; padding-block: 80px 56px; } }
-  .hero .eyebrow { color: var(--verde); }
-  .hero h1 { font-size: clamp(2.9rem, 8vw, 5.6rem); font-weight: 800; text-transform: uppercase; margin: 14px 0 20px; }
-  .hero h1 em { font-style: normal; color: var(--verde); }
-  .hero p.lead { font-size: 1.2rem; color: #c3ccd0; max-width: 33em; margin: 0 0 30px; }
-  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
-  .hero-ctas .btn-linea { color: #fff; border-color: rgba(255,255,255,.4); }
-  .tanque-hero { max-width: 400px; width: 100%; margin: 0 auto; }
-  .tanque-hero text { font-family: var(--mono); font-size: 11px; fill: #c3ccd0; }
-
-  .datos { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid rgba(255,255,255,.1); }
-  @media (min-width: 760px) { .datos { grid-template-columns: repeat(4, 1fr); } }
-  .dato { padding: 22px 20px 26px; border-right: 1px solid rgba(255,255,255,.1); }
-  .dato:nth-child(2n) { border-right: 0; }
-  @media (min-width: 760px) { .dato:nth-child(2n) { border-right: 1px solid rgba(255,255,255,.1); } .dato:last-child { border-right: 0; } }
-  @media (max-width: 759px) { .dato:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.1); } }
-  .dato b { font-family: var(--display); font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700; display: block; line-height: 1; color: #fff; }
-  .dato span { color: #9fabb0; font-size: .92rem; }
+  /* ---------- Navegación local ---------- */
+  .nav-local { position: sticky; top: 48px; z-index: 80; height: 52px; background: rgba(255,255,255,.72); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,.08); }
+  .nav-local .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .nav-local .titulo { font-size: 21px; font-weight: 600; letter-spacing: .011em; }
+  .nav-local .der { display: flex; align-items: center; gap: 24px; font-size: 12px; }
+  .nav-local .der a:not(.pill) { color: var(--texto); display: none; }
+  @media (min-width: 834px) { .nav-local .der a:not(.pill) { display: inline; } }
+  .pill { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--verde); color: #fff; border: 0; border-radius: 980px; font-size: 17px; font-weight: 400; padding: 11px 22px; cursor: pointer; transition: background .2s var(--curva); line-height: 1.18; }
+  .pill:hover { background: var(--verde-hover); text-decoration: none; }
+  .pill:disabled { cursor: default; }
+  .pill.chica { font-size: 12px; padding: 6px 13px; }
+  .pill.borde { background: transparent; color: var(--verde); box-shadow: inset 0 0 0 1px var(--verde); }
+  .pill.borde:hover { background: var(--verde); color: #fff; }
+  .mas::after { content: " ›"; }
 
   /* ---------- Secciones ---------- */
-  section { padding-block: 84px; scroll-margin-top: 66px; }
-  .sec-pe { background: var(--pe); }
-  .sec-oscura { background: var(--grafito); color: #fff; }
-  .cabeza { display: grid; gap: 14px; margin-bottom: 44px; max-width: 720px; }
-  .cabeza h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700; text-transform: uppercase; }
-  .cabeza p { margin: 0; color: var(--gris); font-size: 1.08rem; }
-  .sec-oscura .cabeza p { color: #aeb9bd; }
-  .sec-oscura .eyebrow { color: var(--verde); }
+  section { padding-block: 100px; scroll-margin-top: 100px; }
+  .gris { background: var(--gris-fondo); }
+  .negra { background: var(--negro); color: #f5f5f7; }
+  .centro { text-align: center; }
+  .eyebrow { display: block; font-size: 17px; font-weight: 600; color: var(--verde); margin-bottom: 10px; letter-spacing: -.01em; }
+  .h-sec { font-size: clamp(40px, 6vw, 64px); line-height: 1.06; letter-spacing: -.015em; }
+  .sub { font-size: clamp(19px, 2.2vw, 24px); line-height: 1.33; color: var(--secundario); font-weight: 400; max-width: 700px; margin: 18px auto 0; letter-spacing: .005em; }
+  .negra .sub { color: #a1a1a6; }
+  .cabeza { margin-bottom: 64px; }
 
-  /* Rubros */
-  .rubros { display: grid; gap: 2px; background: var(--borde); border: 1px solid var(--borde); border-radius: 10px; overflow: hidden; }
-  @media (min-width: 820px) { .rubros { grid-template-columns: repeat(3, 1fr); } }
-  .rubro { background: var(--blanco); padding: 30px 28px 32px; display: flex; flex-direction: column; gap: 12px; }
-  .rubro .num { font-family: var(--mono); font-size: .8rem; color: var(--gris-claro); }
-  .rubro h3 { font-size: 1.9rem; text-transform: uppercase; font-weight: 700; }
-  .rubro p { margin: 0; color: var(--gris); }
-  .rubro ul { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
-  .rubro li { font-size: .82rem; font-weight: 600; background: var(--verde-claro); color: var(--verde-osc); padding: 4px 10px; border-radius: 999px; }
+  /* ---------- Hero ---------- */
+  .hero { padding-block: 64px 0; text-align: center; background: var(--gris-fondo); overflow: hidden; }
+  .hero .nuevo { font-size: 17px; color: var(--verde); font-weight: 600; }
+  .hero h1 { font-size: clamp(48px, 9vw, 96px); line-height: 1.02; letter-spacing: -.03em; margin-top: 8px; }
+  .hero .sub { margin-top: 14px; }
+  .hero .ctas { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 28px; font-size: 19px; }
+  .hero-img { width: 100%; max-width: 1100px; margin: 36px auto 0; }
 
-  /* Buscador */
-  .buscador { display: grid; gap: 28px; }
-  @media (min-width: 980px) { .buscador { grid-template-columns: 380px 1fr; align-items: start; } }
-  .panel { background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px; padding: 24px; }
-  .panel h3 { font-size: 1.35rem; text-transform: uppercase; margin-bottom: 18px; }
-  .campo { margin-bottom: 22px; }
-  .campo > label, .campo > .lbl { display: block; font-weight: 600; font-size: .92rem; margin-bottom: 8px; }
-  .segmentado { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .segmentado button { font: 600 .92rem var(--cuerpo); padding: 11px 8px; border-radius: var(--radio); border: 1.5px solid var(--borde); background: var(--blanco); color: var(--texto); cursor: pointer; }
-  .segmentado button[aria-pressed="true"] { border-color: var(--grafito); background: var(--grafito); color: #fff; }
-  .litros-fila { display: flex; gap: 10px; align-items: center; }
-  .litros-fila input[type=number] { width: 130px; font: 500 1.3rem var(--mono); padding: 9px 12px; border: 1.5px solid var(--borde); border-radius: var(--radio); }
-  .litros-fila span { font-family: var(--mono); color: var(--gris); }
-  input[type=range] { width: 100%; accent-color: var(--verde); margin-top: 12px; }
-  .ayuda { font-size: .85rem; color: var(--gris); margin: 6px 0 0; }
-  .resultados { display: grid; gap: 14px; }
-  .res-titulo { font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gris); margin: 4px 0 -4px; }
-  .res { display: grid; grid-template-columns: 76px 1fr; gap: 18px; align-items: center; background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px; padding: 18px 20px; }
-  .res.mejor { border-color: var(--verde); box-shadow: inset 4px 0 0 var(--verde); }
-  .res .diam { font-family: var(--display); font-size: 2rem; font-weight: 700; line-height: 1; text-align: center; }
-  .res .diam small { display: block; font: 500 .7rem var(--mono); color: var(--gris); margin-top: 4px; }
-  .res h4 { margin: 0 0 4px; font-size: 1.05rem; }
-  .res p { margin: 0; color: var(--gris); font-size: .92rem; }
-  .res .acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .chip { display: inline-block; font-size: .75rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--verde-claro); color: var(--verde-osc); margin-left: 6px; vertical-align: 2px; }
-  .chip.gris { background: var(--pe-2); color: var(--gris); }
-  .vacio { background: var(--blanco); border: 1px dashed var(--acero); border-radius: 10px; padding: 22px; color: var(--gris); }
+  .cifras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 44px 20px; }
+  @media (min-width: 834px) { .cifras { grid-template-columns: repeat(4, 1fr); } }
+  .cifra b { display: block; font-size: clamp(44px, 6vw, 64px); font-weight: 600; letter-spacing: -.03em; line-height: 1; background: linear-gradient(135deg, #0f9d58 0%, #1d1d1f 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cifra span { display: block; margin-top: 10px; color: var(--secundario); font-size: 15px; max-width: 200px; }
+  @media (max-width: 833px) { .cifra span { max-width: none; } }
 
-  /* Tabla línea completa */
-  .linea { margin-top: 56px; }
-  .linea h3 { font-size: 1.6rem; text-transform: uppercase; margin-bottom: 16px; }
-  .tabla-scroll { overflow-x: auto; border: 1px solid var(--borde); border-radius: 10px; background: var(--blanco); }
-  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .95rem; }
-  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--borde); vertical-align: top; }
-  th { font: 600 .75rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); background: var(--pe); }
-  td.mono { white-space: nowrap; }
-  tr:last-child td { border-bottom: 0; }
-  tbody th { background: none; font: 700 1.05rem var(--display); letter-spacing: .02em; color: var(--texto); text-transform: uppercase; }
+  /* ---------- Bento de líneas ---------- */
+  .bento { display: grid; gap: 12px; }
+  @media (min-width: 834px) { .bento { grid-template-columns: 1fr 1fr; } .bento .grande { grid-column: 1 / -1; } }
+  .tile { background: var(--fondo); border-radius: 28px; padding: 44px 32px 0; text-align: center; overflow: hidden; display: flex; flex-direction: column; align-items: center; min-height: 520px; }
+  .tile.oscura { background: var(--gris-osc); color: #f5f5f7; }
+  .tile h3 { font-size: clamp(32px, 4vw, 44px); letter-spacing: -.02em; line-height: 1.08; }
+  .tile p { margin: 8px 0 0; font-size: 19px; color: var(--secundario); max-width: 440px; }
+  .tile.oscura p { color: #a1a1a6; }
+  .tile .rango { font-size: 14px; color: var(--terciario); margin-top: 10px; }
+  .tile .acciones { display: flex; gap: 20px; align-items: center; margin-top: 18px; font-size: 17px; }
+  .tile .img { margin-top: auto; padding-top: 28px; width: 100%; display: flex; justify-content: center; }
+  .tile .img svg { height: 300px; width: auto; }
+  .tile.grande .img svg { height: 380px; }
 
-  /* CLAMP */
-  .clamp-grid { display: grid; gap: 40px; align-items: center; }
-  @media (min-width: 940px) { .clamp-grid { grid-template-columns: 1fr 1fr; } }
-  .diagrama text { font-family: var(--mono); font-size: 12px; fill: #c3ccd0; }
-  .beneficios { display: grid; gap: 1px; background: rgba(255,255,255,.1); border-radius: 10px; overflow: hidden; }
-  @media (min-width: 560px) { .beneficios { grid-template-columns: 1fr 1fr; } }
-  .ben { background: var(--grafito-2); padding: 24px; }
-  .ben b { display: block; font-family: var(--display); font-size: 1.5rem; text-transform: uppercase; color: #fff; margin-bottom: 6px; }
-  .ben b span { color: var(--verde); }
-  .ben p { margin: 0; color: #aeb9bd; font-size: .95rem; }
+  /* ---------- CLAMP ---------- */
+  .clamp-img { max-width: 760px; margin: 0 auto 80px; }
+  .clamp-img text { font-family: var(--sf); font-size: 13px; fill: #a1a1a6; letter-spacing: -.01em; }
+  .ventajas { display: grid; gap: 48px 32px; }
+  @media (min-width: 834px) { .ventajas { grid-template-columns: repeat(4, 1fr); } }
+  .ventaja b { display: block; font-size: 40px; font-weight: 600; letter-spacing: -.03em; color: #fff; line-height: 1.05; }
+  .ventaja b.verde { color: #34d27b; }
+  .ventaja span { display: block; margin-top: 10px; color: #a1a1a6; font-size: 17px; }
 
-  /* Material */
-  .material { display: grid; gap: 32px; align-items: center; }
-  @media (min-width: 900px) { .material { grid-template-columns: 1.1fr .9fr; } }
-  .ficha { background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px; overflow: hidden; }
-  .ficha div { display: flex; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--borde); }
-  .ficha div:last-child { border-bottom: 0; }
-  .ficha dt { color: var(--gris); }
-  .ficha dd { margin: 0; font-weight: 600; text-align: right; }
+  /* ---------- Buscador ---------- */
+  .segmento { display: inline-flex; background: #e8e8ed; border-radius: 10px; padding: 3px; gap: 2px; flex-wrap: wrap; justify-content: center; }
+  .segmento button { border: 0; background: transparent; color: var(--texto); font-size: 14px; padding: 8px 18px; border-radius: 8px; cursor: pointer; transition: background .2s var(--curva), box-shadow .2s var(--curva); }
+  .segmento button[aria-pressed="true"] { background: #fff; box-shadow: 0 3px 8px rgba(0,0,0,.12), 0 1px 1px rgba(0,0,0,.04); font-weight: 500; }
+  .control-litros { max-width: 560px; margin: 48px auto 56px; text-align: center; }
+  .litros-grande { display: flex; align-items: baseline; justify-content: center; gap: 10px; }
+  .litros-grande input { width: 5.2ch; font: 600 clamp(64px, 10vw, 96px) var(--sf); letter-spacing: -.04em; text-align: right; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--texto); padding: 0; -moz-appearance: textfield; }
+  .litros-grande input::-webkit-outer-spin-button, .litros-grande input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .litros-grande input:focus { outline: none; border-bottom-color: var(--verde); }
+  .litros-grande span { font-size: 28px; font-weight: 600; color: var(--secundario); }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px; background: var(--linea); margin-top: 26px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25), 0 0 0 .5px rgba(0,0,0,.04); cursor: pointer; }
+  input[type=range]::-moz-range-thumb { width: 28px; height: 28px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); cursor: pointer; }
+  .rango-ayuda { display: flex; justify-content: space-between; font-size: 12px; color: var(--terciario); margin-top: 10px; }
+  .resultados { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+  .res { background: #fff; border-radius: 22px; padding: 30px 28px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 0 0 1px rgba(0,0,0,.04); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
+  .res:hover { transform: scale(1.01); box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+  .res .etq { font-size: 12px; font-weight: 600; color: #b64400; min-height: 16px; }
+  .res .etq.verde { color: var(--verde); }
+  .res h4 { font-size: 28px; letter-spacing: -.02em; line-height: 1.1; }
+  .res .detalle { color: var(--secundario); font-size: 15px; margin: 4px 0 0; }
+  .res .base { margin-top: 14px; padding-top: 14px; border-top: 1px solid #e8e8ed; font-size: 15px; }
+  .res .base b { font-weight: 600; }
+  .res .precio { font-size: 17px; margin-top: 2px; }
+  .res .acciones { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-top: 18px; font-size: 15px; }
+  .vacio { grid-column: 1 / -1; text-align: center; color: var(--secundario); font-size: 19px; padding: 24px; }
 
-  /* Tienda */
-  .tienda-top { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 22px; }
-  .filtros { display: flex; flex-wrap: wrap; gap: 6px; }
-  .filtros button { font: 600 .9rem var(--cuerpo); padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--borde); background: var(--blanco); cursor: pointer; color: var(--texto); }
-  .filtros button[aria-pressed="true"] { background: var(--grafito); border-color: var(--grafito); color: #fff; }
-  .buscar { font: 500 .95rem var(--cuerpo); padding: 9px 14px; border: 1.5px solid var(--borde); border-radius: var(--radio); width: 240px; max-width: 100%; }
-  .aviso { display: flex; gap: 10px; background: var(--verde-claro); color: #174d25; border-radius: 8px; padding: 14px 16px; font-size: .92rem; margin-bottom: 22px; }
-  .productos { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-  .prod { background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; }
-  .prod .fig { background: var(--pe); height: 118px; display: grid; place-items: center; padding: 12px; }
+  /* ---------- Comparar ---------- */
+  .comparar-scroll { overflow-x: auto; }
+  .comparar { display: grid; grid-template-columns: repeat(4, minmax(200px, 1fr)); gap: 24px; min-width: 840px; text-align: center; }
+  .col .fig { height: 200px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 22px; }
+  .col .fig svg { max-height: 100%; width: auto; }
+  .col h4 { font-size: 24px; letter-spacing: -.01em; }
+  .col .dato { border-top: 1px solid var(--linea); margin-top: 22px; padding-top: 22px; }
+  .col .dato b { display: block; font-size: 28px; font-weight: 600; letter-spacing: -.02em; }
+  .col .dato span { display: block; font-size: 14px; color: var(--secundario); margin-top: 4px; }
+  .col ul { list-style: none; padding: 0; margin: 10px 0 0; font-size: 14px; color: var(--texto); line-height: 1.8; }
+
+  /* ---------- Material ---------- */
+  .material { display: grid; gap: 12px; }
+  @media (min-width: 834px) { .material { grid-template-columns: repeat(3, 1fr); } }
+  .mat { background: var(--gris-fondo); border-radius: 28px; padding: 40px 32px; }
+  .mat b { display: block; font-size: 48px; letter-spacing: -.03em; line-height: 1; font-weight: 600; }
+  .mat span { display: block; margin-top: 12px; color: var(--secundario); font-size: 17px; }
+
+  /* ---------- Tienda ---------- */
+  .tienda-barra { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+  .buscar { font: 400 15px var(--sf); letter-spacing: -.01em; background: #fff; border: 1px solid var(--linea); border-radius: 12px; padding: 10px 14px 10px 36px; width: 280px; max-width: 100%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: 16px; background-position: 12px center; }
+  .buscar:focus { outline: none; border-color: var(--verde); box-shadow: 0 0 0 4px rgba(15,157,88,.15); }
+  .nota-tienda { font-size: 14px; color: var(--secundario); margin: -8px 0 28px; }
+  .productos { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+  .prod { background: #fff; border-radius: 22px; padding: 26px 24px 24px; display: flex; flex-direction: column; box-shadow: 0 0 0 1px rgba(0,0,0,.04); transition: box-shadow .3s var(--curva), transform .3s var(--curva); }
+  .prod:hover { box-shadow: 0 12px 34px rgba(0,0,0,.09); transform: translateY(-2px); }
+  .prod .fig { height: 150px; display: grid; place-items: center; margin-bottom: 18px; }
   .prod .fig svg { height: 100%; width: auto; }
-  .prod .cuerpo { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-  .prod .tipo { font: 500 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
-  .prod h4 { margin: 0; font-size: 1.02rem; line-height: 1.3; flex: 1; }
-  .prod .pie { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; }
-  .prod .precio { font: 600 1.15rem var(--mono); font-variant-numeric: tabular-nums; }
-  .prod .precio small { display: block; font: 400 .7rem var(--cuerpo); color: var(--gris); }
-  .agregar { font: 600 .88rem var(--cuerpo); background: var(--grafito); color: #fff; border: 0; border-radius: var(--radio); padding: 9px 14px; cursor: pointer; }
-  .agregar[data-agregado] { background: var(--verde); }
-  .sin-res { color: var(--gris); }
+  .prod .cat { font-size: 12px; color: var(--terciario); }
+  .prod h4 { font-size: 17px; font-weight: 600; line-height: 1.3; margin-top: 4px; flex: 1; letter-spacing: -.015em; }
+  .prod .pie { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
+  .prod .precio { font-size: 17px; }
+  .sin-res { text-align: center; color: var(--secundario); padding: 30px; }
 
-  /* Pedido (drawer) */
-  .pedido { position: fixed; inset: 0 0 0 auto; width: min(420px, 100vw); background: var(--blanco); z-index: 100; box-shadow: -20px 0 50px rgba(0,0,0,.25); display: flex; flex-direction: column; transform: translateX(105%); visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s; }
-  .pedido[data-abierto] { transform: none; visibility: visible; transition: transform .25s ease; }
-  .velo { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 99; }
-  .pedido header { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--borde); }
-  .pedido header h3 { font-size: 1.5rem; text-transform: uppercase; }
-  .cerrar { background: none; border: 0; font-size: 1.8rem; line-height: 1; cursor: pointer; color: var(--gris); }
-  .pedido .items { flex: 1; overflow: auto; padding: 8px 20px; }
-  .item { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 14px 0; border-bottom: 1px solid var(--borde); }
-  .item .nom { font-weight: 600; font-size: .95rem; }
-  .item .sub { font: 500 .95rem var(--mono); text-align: right; }
-  .cant { display: flex; align-items: center; gap: 4px; }
-  .cant button { width: 30px; height: 30px; border: 1px solid var(--borde); background: var(--blanco); border-radius: 6px; cursor: pointer; font-size: 1rem; }
-  .cant span { min-width: 26px; text-align: center; font-family: var(--mono); }
-  .quitar { background: none; border: 0; color: var(--gris); font-size: .82rem; text-decoration: underline; cursor: pointer; justify-self: end; }
-  .pedido footer { padding: 18px 20px 22px; border-top: 1px solid var(--borde); display: grid; gap: 12px; }
-  .total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.1rem; }
-  .total span:last-child { font-family: var(--mono); }
+  /* ---------- Pasos ---------- */
+  .pasos { display: grid; gap: 48px 40px; text-align: center; }
+  @media (min-width: 834px) { .pasos { grid-template-columns: repeat(3, 1fr); } }
+  .paso svg { width: 44px; height: 44px; margin: 0 auto 18px; color: var(--verde); }
+  .paso h3 { font-size: 24px; letter-spacing: -.01em; }
+  .paso p { color: var(--secundario); margin: 8px auto 0; max-width: 280px; }
 
-  /* Cómo comprar */
-  .pasos { display: grid; gap: 16px; }
-  @media (min-width: 820px) { .pasos { grid-template-columns: repeat(3, 1fr); } }
-  .paso { border-top: 3px solid var(--grafito); padding-top: 18px; }
-  .paso .n { font: 500 .8rem var(--mono); color: var(--verde-osc); }
-  .paso h3 { font-size: 1.6rem; text-transform: uppercase; margin: 6px 0 8px; }
-  .paso p { margin: 0; color: var(--gris); }
+  /* ---------- Clientes (cinta) ---------- */
+  .cinta { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .cinta-pista { display: flex; gap: 64px; width: max-content; animation: cinta 40s linear infinite; }
+  .cinta-pista span { font-size: 28px; font-weight: 600; color: #b0b0b5; letter-spacing: -.02em; white-space: nowrap; }
+  @keyframes cinta { to { transform: translateX(-50%); } }
 
-  /* Clientes */
-  .clientes { display: flex; flex-wrap: wrap; gap: 10px 12px; }
-  .clientes span { font-family: var(--display); font-weight: 600; font-size: 1.35rem; letter-spacing: .04em; text-transform: uppercase; color: #cfd6d9; border: 1px solid rgba(255,255,255,.14); padding: 10px 18px; border-radius: 6px; }
+  /* ---------- Distribuidores ---------- */
+  .dist-lista { display: grid; gap: 0 40px; margin-top: 44px; }
+  @media (min-width: 834px) { .dist-lista { grid-template-columns: 1fr 1fr; } }
+  .dist { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--linea); }
+  .dist b { font-size: 19px; font-weight: 600; letter-spacing: -.015em; }
+  .dist span { color: var(--secundario); font-size: 15px; text-align: right; }
 
-  /* Distribuidores */
-  .dist-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
-  .dist { background: var(--blanco); border: 1px solid var(--borde); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; }
-  .dist .pais { font: 500 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--verde-osc); }
-  .dist b { font-size: 1.1rem; }
-  .dist span { color: var(--gris); font-size: .92rem; }
+  /* ---------- FAQ ---------- */
+  .faq { max-width: 820px; margin: 0 auto; }
+  .faq details { border-bottom: 1px solid var(--linea); }
+  .faq summary { list-style: none; cursor: pointer; padding: 26px 0; font-size: 21px; font-weight: 600; letter-spacing: -.015em; display: flex; justify-content: space-between; gap: 24px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: ""; flex: none; width: 10px; height: 10px; margin-top: 8px; border-right: 2px solid var(--secundario); border-bottom: 2px solid var(--secundario); transform: rotate(45deg); transition: transform .3s var(--curva); }
+  .faq details[open] summary::after { transform: rotate(-135deg); margin-top: 14px; }
+  .faq details p { margin: 0 0 26px; color: var(--secundario); font-size: 17px; max-width: 700px; }
 
-  /* FAQ + contacto */
-  .dos-col { display: grid; gap: 40px; }
-  @media (min-width: 940px) { .dos-col { grid-template-columns: 1.2fr .8fr; } }
-  details.faq { border-bottom: 1px solid var(--borde); }
-  details.faq summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
-  details.faq summary::-webkit-details-marker { display: none; }
-  details.faq summary::after { content: "+"; font: 500 1.3rem var(--mono); color: var(--verde-osc); line-height: 1; }
-  details.faq[open] summary::after { content: "−"; }
-  details.faq p { margin: 0 0 18px; color: var(--gris); }
-  .contacto { background: var(--grafito); color: #fff; border-radius: 10px; padding: 28px; display: grid; gap: 16px; align-content: start; }
-  .contacto h3 { font-size: 2rem; text-transform: uppercase; }
-  .contacto p { margin: 0; color: #aeb9bd; }
-  .contacto .linea-c { display: flex; flex-direction: column; gap: 2px; }
-  .contacto .linea-c small { font: 500 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--verde); }
-  .contacto a { text-decoration: none; font-weight: 600; }
+  /* ---------- Contacto ---------- */
+  .contacto { text-align: center; }
+  .contacto .ctas { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 32px; }
+  .contacto .datos { display: flex; flex-wrap: wrap; gap: 10px 40px; justify-content: center; margin-top: 36px; color: var(--secundario); font-size: 15px; }
+  .contacto .datos b { color: var(--texto); font-weight: 500; }
 
-  footer.pie { background: #14181b; color: #8f9ba0; font-size: .9rem; padding-block: 36px; }
-  footer.pie .wrap { display: flex; flex-wrap: wrap; gap: 18px 32px; justify-content: space-between; align-items: center; }
-  footer.pie nav { display: flex; flex-wrap: wrap; gap: 18px; }
-  footer.pie a { text-decoration: none; color: #c9d1d4; }
+  .pie-sitio { background: var(--gris-fondo); color: var(--secundario); font-size: 12px; padding-block: 24px 36px; }
+  .pie-sitio .wrap { display: grid; gap: 16px; }
+  .pie-sitio .fila { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid var(--linea); }
+  .pie-sitio a { color: var(--secundario); }
+  .pie-sitio nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
 
-  .wa { position: fixed; right: 18px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 70; width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #fff; display: grid; place-items: center; box-shadow: 0 8px 22px rgba(0,0,0,.28); }
-  .wa svg { width: 30px; height: 30px; }
+  /* ---------- Panel de pedido ---------- */
+  .velo { position: fixed; inset: 0; background: rgba(0,0,0,.28); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 99; opacity: 0; transition: opacity .3s var(--curva); }
+  .velo.abierto { opacity: 1; }
+  .panel { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: rgba(255,255,255,.96); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); z-index: 100; display: flex; flex-direction: column; transform: translateX(100%); visibility: hidden; transition: transform .4s var(--curva), visibility 0s linear .4s; box-shadow: -10px 0 40px rgba(0,0,0,.12); }
+  .panel.abierto { transform: none; visibility: visible; transition: transform .4s var(--curva); }
+  .panel-cab { padding: 26px 28px 10px; display: flex; justify-content: space-between; align-items: center; }
+  .panel h3 { font-size: 28px; letter-spacing: -.02em; }
+  .cerrar { width: 32px; height: 32px; border-radius: 50%; border: 0; background: #e8e8ed; cursor: pointer; font-size: 15px; color: var(--secundario); display: grid; place-items: center; }
+  .items { flex: 1; overflow: auto; padding: 0 28px; }
+  .item { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; padding: 20px 0; border-bottom: 1px solid #e8e8ed; }
+  .item .nom { font-weight: 600; font-size: 15px; }
+  .item .sub-t { font-size: 15px; text-align: right; }
+  .cant { display: inline-flex; align-items: center; gap: 2px; background: #f5f5f7; border-radius: 99px; padding: 2px; width: fit-content; }
+  .cant button { width: 28px; height: 28px; border: 0; border-radius: 50%; background: transparent; cursor: pointer; font-size: 16px; color: var(--texto); }
+  .cant button:hover { background: #e8e8ed; }
+  .cant span { min-width: 22px; text-align: center; font-size: 14px; }
+  .quitar { background: none; border: 0; color: var(--enlace); font-size: 14px; cursor: pointer; justify-self: end; padding: 0; }
+  .panel-pie { padding: 20px 28px 28px; display: grid; gap: 14px; font-size: 14px; }
+  .total { display: flex; justify-content: space-between; font-size: 19px; font-weight: 600; }
+  .panel .pill { width: 100%; }
+  .vacio-bolsa { text-align: center; color: var(--secundario); padding: 60px 0; }
+
+  .wa { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 70; width: 56px; height: 56px; border-radius: 50%; background: #25d366; color: #fff; display: grid; place-items: center; box-shadow: 0 8px 24px rgba(0,0,0,.18); transition: transform .3s var(--curva); }
+  .wa:hover { transform: scale(1.06); }
+  .wa svg { width: 28px; height: 28px; }
+
+  /* ---------- Aparición al hacer scroll ---------- */
+  .js .revelar { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--curva), transform .9s var(--curva); }
+  .js .revelar.visible { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .btn, .pedido { transition: none; }
+    .js .revelar { opacity: 1; transform: none; transition: none; }
+    .cinta-pista { animation: none; flex-wrap: wrap; width: auto; justify-content: center; gap: 20px 40px; }
+    .panel, .velo, .res, .prod { transition: none; }
   }
 </style>
 </head>
 <body>
 
+<!-- ======== Gráficos: gradientes y productos ======== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <linearGradient id="g-pe" x1="0" x2="1">
+      <stop offset="0" stop-color="#d9ddda"/><stop offset=".18" stop-color="#f4f6f4"/><stop offset=".32" stop-color="#ffffff"/>
+      <stop offset=".7" stop-color="#eceeec"/><stop offset="1" stop-color="#c5cbc7"/>
+    </linearGradient>
+    <linearGradient id="g-pe-v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#eef0ee"/><stop offset="1" stop-color="#cfd4d1"/>
+    </linearGradient>
+    <linearGradient id="g-tapa" x1="0" x2="1">
+      <stop offset="0" stop-color="#128a45"/><stop offset=".35" stop-color="#3fcf78"/><stop offset="1" stop-color="#0d6e37"/>
+    </linearGradient>
+    <linearGradient id="g-acero" x1="0" x2="1">
+      <stop offset="0" stop-color="#8e969b"/><stop offset=".4" stop-color="#e9edef"/><stop offset="1" stop-color="#7c8489"/>
+    </linearGradient>
+    <linearGradient id="g-cerveza" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3b33d" stop-opacity=".16"/><stop offset="1" stop-color="#c77b12" stop-opacity=".34"/>
+    </linearGradient>
+    <linearGradient id="g-agua" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8fd3f4" stop-opacity=".14"/><stop offset="1" stop-color="#3a9fd6" stop-opacity=".26"/>
+    </linearGradient>
+    <radialGradient id="g-sombra"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+
+    <symbol id="i-logo" viewBox="0 0 40 40"><path d="M20 3 35 11.5v17L20 37 5 28.5v-17z" fill="#0f9d58"/><path d="M20 3 35 11.5 20 20 5 11.5z" fill="#3fcf78"/><path d="M5 11.5 20 20v17L5 28.5z" fill="#0b7a44"/></symbol>
+    <symbol id="i-bolsa" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.93.95-3.48-.22-.36a9.43 9.43 0 0 1-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.9.99 6.68 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.21-4.24 9.44-9.46 9.44zm8.04-17.48A11.3 11.3 0 0 0 12.04.7C5.78.7.67 5.8.67 12.07c0 2 .52 3.96 1.52 5.69L.57 23.7l6.08-1.6a11.33 11.33 0 0 0 5.4 1.38h.01c6.27 0 11.37-5.1 11.37-11.37 0-3.04-1.18-5.9-3.34-8.05z"/></symbol>
-    <symbol id="i-carro" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L20 8H6.2M9 20h.01M17 20h.01"/></symbol>
-    <symbol id="i-marca" viewBox="0 0 40 40"><path d="M20 3 35 11.5v17L20 37 5 28.5v-17z" fill="#2fb34c"/><path d="M20 3 35 11.5 20 20 5 11.5z" fill="#5fd07a"/><path d="M5 11.5 20 20v17L5 28.5z" fill="#1f8a37"/><circle cx="12" cy="24" r="1.6" fill="#fff" opacity=".8"/><circle cx="9" cy="20" r="1.3" fill="#fff" opacity=".7"/><circle cx="12" cy="29" r="1.2" fill="#fff" opacity=".6"/></symbol>
-    <!-- Ilustraciones de producto -->
-    <symbol id="p-conico" viewBox="0 0 120 160"><path d="M30 24h60v70L60 132 30 94z" fill="#f7f8f6" stroke="#b9c2bd" stroke-width="2"/><path d="M36 26h12v66l-12-4z" fill="#fff"/><ellipse cx="60" cy="24" rx="30" ry="6" fill="#e9ede9" stroke="#b9c2bd" stroke-width="2"/><rect x="47" y="10" width="26" height="12" rx="3" fill="#2fb34c"/><path d="M24 92 16 156M96 92l8 64M30 94l-8 58M90 94l8 58" stroke="#5d6a70" stroke-width="3"/><path d="M20 120h80" stroke="#5d6a70" stroke-width="3"/><rect x="56" y="130" width="8" height="10" fill="#8e9aa1"/><rect x="88" y="62" width="14" height="7" rx="2" fill="#8e9aa1"/></symbol>
-    <symbol id="p-plano" viewBox="0 0 120 160"><rect x="26" y="26" width="68" height="112" rx="10" fill="#f7f8f6" stroke="#b9c2bd" stroke-width="2"/><rect x="33" y="30" width="12" height="104" rx="4" fill="#fff"/><ellipse cx="60" cy="27" rx="33" ry="7" fill="#e9ede9" stroke="#b9c2bd" stroke-width="2"/><rect x="47" y="12" width="26" height="12" rx="3" fill="#2fb34c"/><rect x="92" y="118" width="14" height="7" rx="2" fill="#8e9aa1"/><path d="M22 140h76" stroke="#5d6a70" stroke-width="4"/></symbol>
-    <symbol id="p-horizontal" viewBox="0 0 170 120"><rect x="14" y="30" width="142" height="70" rx="34" fill="#f7f8f6" stroke="#b9c2bd" stroke-width="2"/><path d="M40 34v62M130 34v62" stroke="#dde3de" stroke-width="3"/><rect x="72" y="16" width="26" height="16" rx="3" fill="#2fb34c"/><path d="M36 100l-6 14M134 100l6 14" stroke="#5d6a70" stroke-width="4"/></symbol>
-    <symbol id="p-bin" viewBox="0 0 150 150"><rect x="22" y="22" width="106" height="100" rx="8" fill="#f7f8f6" stroke="#b9c2bd" stroke-width="2"/><path d="M18 20h114v106H18z" fill="none" stroke="#5d6a70" stroke-width="3"/><path d="M18 55h114M18 90h114M50 20v106M100 20v106" stroke="#5d6a70" stroke-width="2" opacity=".75"/><rect x="62" y="10" width="26" height="12" rx="3" fill="#2fb34c"/><rect x="14" y="126" width="122" height="12" fill="#3a4349"/></symbol>
-    <symbol id="p-base" viewBox="0 0 120 150"><ellipse cx="60" cy="30" rx="40" ry="9" fill="none" stroke="#3b6fb0" stroke-width="5"/><path d="M26 34 36 130M94 34l-10 96M60 39v92" stroke="#3b6fb0" stroke-width="5"/><ellipse cx="60" cy="96" rx="30" ry="6" fill="none" stroke="#3b6fb0" stroke-width="4"/><path d="M28 132h18M76 132h18" stroke="#3b6fb0" stroke-width="6"/></symbol>
-    <symbol id="p-acc" viewBox="0 0 120 120"><circle cx="60" cy="60" r="34" fill="#e8d2c3" stroke="#c9ab98" stroke-width="3"/><circle cx="60" cy="60" r="20" fill="#f0e0d4"/><circle cx="60" cy="60" r="6" fill="#c9ab98"/></symbol>
+    <symbol id="i-carrito" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" d="M10 16h28l-2.5 26h-23zM17 16v-3a7 7 0 0 1 14 0v3"/></symbol>
+    <symbol id="i-escudo" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" d="M24 5 40 11v12c0 10-7 17-16 20-9-3-16-10-16-20V11z"/><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m17 24 5 5 9-10"/></symbol>
+    <symbol id="i-camion" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" d="M4 12h24v20H4zM28 19h9l7 7v6H28z"/><circle cx="12" cy="36" r="4" fill="#fff" stroke="currentColor" stroke-width="2.4"/><circle cx="36" cy="36" r="4" fill="#fff" stroke="currentColor" stroke-width="2.4"/></symbol>
+
+    <!-- Tanque cónico con base; la cerveza se ve a través de la pared -->
+    <symbol id="p-conico" viewBox="0 0 200 300">
+      <ellipse cx="100" cy="290" rx="78" ry="9" fill="url(#g-sombra)"/>
+      <path d="M68 176 64 282M132 176l4 106" stroke="url(#g-acero)" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+      <ellipse cx="100" cy="236" rx="56" ry="9" fill="none" stroke="#9aa3a8" stroke-width="3.5"/>
+      <path d="M48 168 36 284M152 168l12 116" stroke="url(#g-acero)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M46 36h108v134l-42 52H88l-42-52z" fill="url(#g-pe)"/>
+      <path d="M48 104h104v66l-41 50H89l-41-50z" fill="url(#g-cerveza)"/>
+      <rect x="60" y="42" width="11" height="124" rx="5.5" fill="#fff" opacity=".75"/>
+      <ellipse cx="100" cy="170" rx="55" ry="8" fill="none" stroke="url(#g-acero)" stroke-width="5"/>
+      <ellipse cx="100" cy="36" rx="54" ry="10" fill="#f7f8f7"/>
+      <ellipse cx="100" cy="36" rx="54" ry="10" fill="none" stroke="#dfe3e0" stroke-width="1.2"/>
+      <rect x="75" y="18" width="50" height="19" rx="5" fill="url(#g-tapa)"/>
+      <ellipse cx="100" cy="18" rx="25" ry="4.5" fill="#56d98a"/>
+      <rect x="94" y="222" width="12" height="13" fill="url(#g-acero)"/>
+      <rect x="88" y="234" width="24" height="5" rx="2" fill="url(#g-acero)"/>
+      <rect x="154" y="140" width="12" height="10" fill="url(#g-acero)"/>
+      <rect x="165" y="135" width="5" height="20" rx="2" fill="url(#g-acero)"/>
+    </symbol>
+
+    <!-- Tanque fondo plano -->
+    <symbol id="p-plano" viewBox="0 0 200 300">
+      <ellipse cx="100" cy="286" rx="76" ry="9" fill="url(#g-sombra)"/>
+      <rect x="48" y="38" width="104" height="238" rx="18" fill="url(#g-pe)"/>
+      <path d="M50 120h100v138a16 16 0 0 1-16 16H66a16 16 0 0 1-16-16z" fill="url(#g-agua)"/>
+      <rect x="62" y="46" width="11" height="220" rx="5.5" fill="#fff" opacity=".75"/>
+      <path d="M48 110h104M48 190h104" stroke="#dde1de" stroke-width="1.5"/>
+      <ellipse cx="100" cy="40" rx="52" ry="10" fill="#f7f8f7"/>
+      <ellipse cx="100" cy="40" rx="52" ry="10" fill="none" stroke="#dfe3e0" stroke-width="1.2"/>
+      <rect x="76" y="22" width="48" height="19" rx="5" fill="url(#g-tapa)"/>
+      <ellipse cx="100" cy="22" rx="24" ry="4.5" fill="#56d98a"/>
+      <rect x="152" y="246" width="12" height="10" fill="url(#g-acero)"/>
+      <rect x="163" y="241" width="5" height="20" rx="2" fill="url(#g-acero)"/>
+    </symbol>
+
+    <!-- Tanque horizontal -->
+    <symbol id="p-horizontal" viewBox="0 0 320 200">
+      <ellipse cx="160" cy="186" rx="130" ry="9" fill="url(#g-sombra)"/>
+      <rect x="22" y="52" width="276" height="118" rx="59" fill="url(#g-pe-v)"/>
+      <path d="M24 120h272a50 50 0 0 1-50 48H74a50 50 0 0 1-50-48z" fill="url(#g-agua)"/>
+      <rect x="50" y="62" width="220" height="10" rx="5" fill="#fff" opacity=".8"/>
+      <path d="M82 54v114M160 52v118M238 54v114" stroke="#d9dedb" stroke-width="2"/>
+      <rect x="136" y="32" width="48" height="22" rx="5" fill="url(#g-tapa)"/>
+      <ellipse cx="160" cy="32" rx="24" ry="4.5" fill="#56d98a"/>
+      <path d="M60 166l-8 16M260 166l8 16" stroke="#9aa3a8" stroke-width="6" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Contenedor BIN -->
+    <symbol id="p-bin" viewBox="0 0 260 260">
+      <ellipse cx="130" cy="248" rx="112" ry="9" fill="url(#g-sombra)"/>
+      <rect x="34" y="40" width="192" height="176" rx="14" fill="url(#g-pe)"/>
+      <path d="M36 110h188v92a12 12 0 0 1-12 12H48a12 12 0 0 1-12-12z" fill="url(#g-agua)"/>
+      <rect x="28" y="36" width="204" height="184" rx="6" fill="none" stroke="url(#g-acero)" stroke-width="6"/>
+      <path d="M28 97h204M28 158h204M79 36v184M130 36v184M181 36v184" stroke="#a7b0b5" stroke-width="4"/>
+      <rect x="110" y="20" width="40" height="18" rx="4" fill="url(#g-tapa)"/>
+      <rect x="20" y="220" width="220" height="18" rx="3" fill="#2c2c2e"/>
+      <rect x="40" y="226" width="40" height="12" fill="#1d1d1f"/><rect x="180" y="226" width="40" height="12" fill="#1d1d1f"/>
+    </symbol>
+
+    <!-- Base metálica -->
+    <symbol id="p-base" viewBox="0 0 200 220">
+      <ellipse cx="100" cy="210" rx="72" ry="7" fill="url(#g-sombra)"/>
+      <path d="M72 42 66 200M128 42l6 158" stroke="#9aa3a8" stroke-width="5" stroke-linecap="round"/>
+      <ellipse cx="100" cy="140" rx="54" ry="9" fill="none" stroke="#8e969b" stroke-width="4"/>
+      <path d="M44 34 32 204M156 34l12 170" stroke="url(#g-acero)" stroke-width="7" stroke-linecap="round"/>
+      <ellipse cx="100" cy="34" rx="60" ry="12" fill="none" stroke="url(#g-acero)" stroke-width="7"/>
+    </symbol>
+
+    <!-- Base plana estática -->
+    <symbol id="p-plana" viewBox="0 0 200 220">
+      <ellipse cx="100" cy="206" rx="80" ry="7" fill="url(#g-sombra)"/>
+      <path d="M36 120v78M164 120v78M100 128v74" stroke="url(#g-acero)" stroke-width="7" stroke-linecap="round"/>
+      <ellipse cx="100" cy="120" rx="66" ry="14" fill="#e9edef" stroke="url(#g-acero)" stroke-width="6"/>
+      <ellipse cx="100" cy="176" rx="64" ry="10" fill="none" stroke="#9aa3a8" stroke-width="4"/>
+    </symbol>
+
+    <!-- Tapa clamp -->
+    <symbol id="p-tapa" viewBox="0 0 200 200">
+      <ellipse cx="100" cy="176" rx="64" ry="8" fill="url(#g-sombra)"/>
+      <ellipse cx="100" cy="120" rx="66" ry="30" fill="#d9dedb"/>
+      <rect x="34" y="96" width="132" height="24" fill="#d9dedb"/>
+      <ellipse cx="100" cy="96" rx="66" ry="30" fill="url(#g-pe)"/>
+      <ellipse cx="100" cy="96" rx="40" ry="17" fill="none" stroke="#c9cfcb" stroke-width="3"/>
+    </symbol>
   </defs>
 </svg>
 
-<!-- Franja: deja claro que es una maqueta -->
-<div class="demo" role="note">
-  <div class="wrap">
-    <span><b>Propuesta de rediseño</b> · Maqueta no oficial preparada para Infinity Rotomolding. Contenido tomado del sitio actual.</span>
-    <details>
-      <summary>Qué mejora</summary>
-      <ul>
-        <li><b>Buscador de tanque:</b> el cliente carga los litros y ve qué diámetro le sirve y qué base lleva, con precio.</li>
-        <li><b>Tabla técnica completa</b> y legible, en vez de listas sueltas sobre fondo de color.</li>
-        <li><b>Pedido por WhatsApp:</b> el cliente arma la lista y la envía en un toque, sin registrarse.</li>
-        <li><b>Tecnología CLAMP explicada</b> con un diagrama: es el diferencial de la marca y hoy casi no se ve.</li>
-        <li><b>Rubros claros</b> (cervecería, agro, industria) para que cada cliente se reconozca rápido.</li>
-        <li><b>Distribuidores con filtro</b> por país, y clientes y datos de confianza visibles.</li>
-        <li><b>Carga rápida:</b> sin sliders pesados ni videos de fondo, pensada para celular primero.</li>
-      </ul>
-    </details>
-  </div>
+<!-- Aviso: es una maqueta -->
+<div class="aviso-demo" role="note">
+  <b>Propuesta de rediseño.</b> Maqueta no oficial preparada para Infinity Rotomolding con el contenido de su sitio actual.
+  <button type="button" id="ver-mejoras" aria-expanded="false" aria-controls="mejoras">Ver qué mejora ›</button>
+  <ul class="mejoras" id="mejoras" hidden>
+    <li><b>Buscador por litros:</b> el cliente ve qué diámetro le sirve y qué base lleva, con precio.</li>
+    <li><b>Pedido en un toque por WhatsApp</b>, sin registrarse.</li>
+    <li><b>La tecnología CLAMP explicada</b>: es el diferencial de la marca.</li>
+    <li><b>Comparador de líneas</b> y precios claros en la tienda.</li>
+    <li><b>Diseño limpio, rápido y pensado para celular.</b></li>
+  </ul>
 </div>
 
-<header class="top">
-  <div class="wrap nav">
-    <a class="marca" href="#inicio" aria-label="Infinity Rotomolding, inicio">
-      <svg aria-hidden="true"><use href="#i-marca"/></svg>
-      <span><b>Infinity</b><small>Rotomolding</small></span>
-    </a>
-    <nav class="menu" aria-label="Principal">
-      <a href="#rubros">Rubros</a>
-      <a href="#buscador">Productos</a>
-      <a href="#clamp">Tecnología CLAMP</a>
+<header class="nav-global">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="Infinity Rotomolding, inicio"><svg aria-hidden="true"><use href="#i-logo"/></svg>Infinity</a>
+    <nav aria-label="Principal">
+      <a href="#lineas">Tanques</a>
+      <a href="#clamp">CLAMP</a>
+      <a href="#buscador">Buscador</a>
       <a href="#tienda">Tienda</a>
       <a href="#distribuidores">Distribuidores</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#contacto">Soporte</a>
     </nav>
-    <button class="btn btn-verde btn-sm carrito-btn" type="button" id="abrir-pedido" aria-label="Ver pedido">
-      <svg aria-hidden="true"><use href="#i-carro"/></svg> Pedido
-      <span class="n" id="contador" data-cero>0</span>
+    <button class="bolsa" type="button" id="abrir-bolsa" aria-label="Ver pedido">
+      <svg aria-hidden="true"><use href="#i-bolsa"/></svg><span class="n num" id="contador" hidden>0</span>
     </button>
   </div>
 </header>
 
+<div class="nav-local">
+  <div class="wrap">
+    <span class="titulo">Tanques</span>
+    <div class="der">
+      <a href="#lineas">Resumen</a>
+      <a href="#comparar">Comparar</a>
+      <a href="#buscador">¿Cuál es para vos?</a>
+      <a class="pill chica" href="#tienda">Pedir</a>
+    </div>
+  </div>
+</div>
+
 <main id="inicio">
 
 <!-- HERO -->
-<section class="hero" style="padding-block:0">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Fabricantes · Sarandí, Buenos Aires</span>
-      <h1>Tanques con salida <em>CLAMP</em>, hechos para durar</h1>
-      <p class="lead">Fermentadores cónicos, tanques de fondo plano, horizontales y contenedores BIN en polietileno 100% virgen grado alimenticio. Para la cervecería, el agro y la industria.</p>
-      <div class="hero-ctas">
-        <a class="btn btn-verde" href="#buscador">Encontrar mi tanque</a>
-        <a class="btn btn-linea" href="#tienda">Ver precios</a>
-      </div>
-    </div>
-    <svg class="tanque-hero" viewBox="0 0 320 380" role="img" aria-label="Tanque cónico sobre base metálica con salida clamp">
-      <defs>
-        <linearGradient id="cuerpo" x1="0" x2="1">
-          <stop offset="0" stop-color="#dfe4e1"/><stop offset=".25" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef1ee"/><stop offset="1" stop-color="#c9d0cc"/>
-        </linearGradient>
-      </defs>
-      <!-- cotas -->
-      <path d="M70 40v6M250 40v6M70 43h180" stroke="#2fb34c" stroke-width="1.5"/>
-      <text x="160" y="34" text-anchor="middle">Ø 970 mm</text>
-      <!-- tanque -->
-      <path d="M80 70h160v150l-80 70-80-70z" fill="url(#cuerpo)"/>
-      <ellipse cx="160" cy="70" rx="80" ry="16" fill="#f4f6f4"/>
-      <rect x="128" y="46" width="64" height="26" rx="6" fill="#2fb34c"/>
-      <rect x="122" y="42" width="76" height="10" rx="4" fill="#1f8a37"/>
-      <!-- base -->
-      <path d="M72 212 52 360M248 212l20 148M92 226 80 352M228 226l12 126" stroke="#8e9aa1" stroke-width="7" stroke-linecap="round"/>
-      <path d="M64 300h192" stroke="#8e9aa1" stroke-width="6"/>
-      <ellipse cx="160" cy="212" rx="90" ry="12" fill="none" stroke="#8e9aa1" stroke-width="6"/>
-      <!-- salidas clamp -->
-      <rect x="150" y="288" width="20" height="20" fill="#b5bfc4"/>
-      <rect x="144" y="306" width="32" height="8" rx="2" fill="#dfe5e8"/>
-      <rect x="240" y="150" width="26" height="16" fill="#b5bfc4"/>
-      <rect x="264" y="144" width="8" height="28" rx="2" fill="#dfe5e8"/>
-      <path d="M272 158h24" stroke="#2fb34c" stroke-width="1.5"/>
-      <text x="300" y="162">CLAMP</text>
-      <path d="M176 310h40" stroke="#2fb34c" stroke-width="1.5"/>
-      <text x="220" y="314">descarga</text>
-    </svg>
-  </div>
+<section class="hero">
   <div class="wrap">
-    <div class="datos">
-      <div class="dato"><b class="mono">20</b><span>años de experiencia</span></div>
-      <div class="dato"><b>Único</b><span>fabricante con sistema CLAMP en Latinoamérica</span></div>
-      <div class="dato"><b class="mono">+50.000</b><span>tanques vendidos</span></div>
-      <div class="dato"><b class="mono">5</b><span>países donde se usan nuestros productos</span></div>
+    <span class="nuevo">Sistema CLAMP</span>
+    <h1>Hecho para durar.</h1>
+    <p class="sub">Tanques rotomoldeados en polietileno virgen grado alimenticio. Para la cervecería, el agro y la industria.</p>
+    <div class="ctas">
+      <a class="pill" href="#buscador">Encontrá tu tanque</a>
+      <a class="mas" href="#tienda">Ver precios</a>
+    </div>
+  </div>
+  <svg class="hero-img" viewBox="0 0 1100 440" role="img" aria-label="Línea de tanques Infinity: horizontal, cónico, fondo plano y contenedor BIN">
+    <svg x="0" y="190" width="330" height="210" viewBox="0 0 320 200"><use href="#p-horizontal"/></svg>
+    <svg x="760" y="170" width="260" height="260" viewBox="0 0 260 260"><use href="#p-bin"/></svg>
+    <svg x="560" y="50" width="240" height="360" viewBox="0 0 200 300"><use href="#p-plano"/></svg>
+    <svg x="300" y="0" width="290" height="435" viewBox="0 0 200 300"><use href="#p-conico"/></svg>
+  </svg>
+</section>
+
+<!-- CIFRAS -->
+<section style="padding-block:80px">
+  <div class="wrap">
+    <div class="cifras">
+      <div class="cifra revelar"><b class="num">20</b><span>años fabricando tanques y recipientes.</span></div>
+      <div class="cifra revelar"><b class="num">+50.000</b><span>tanques vendidos.</span></div>
+      <div class="cifra revelar"><b>Único</b><span>fabricante con sistema CLAMP en Latinoamérica.</span></div>
+      <div class="cifra revelar"><b class="num">5</b><span>países ya usan nuestros productos.</span></div>
     </div>
   </div>
 </section>
 
-<!-- RUBROS -->
-<section id="rubros">
-  <div class="wrap">
-    <div class="cabeza">
-      <span class="eyebrow">Para cada necesidad</span>
-      <h2>¿En qué los vas a usar?</h2>
-      <p>La misma tecnología, pensada para tres industrias con exigencias distintas.</p>
+<!-- LÍNEAS -->
+<section class="gris" id="lineas">
+  <div class="wrap ancho">
+    <div class="cabeza centro">
+      <h2 class="h-sec">Conocé la línea.</h2>
     </div>
-    <div class="rubros">
-      <article class="rubro">
-        <span class="num">01 · Cervecería y bebidas</span>
-        <h3>Fermentación y maduración</h3>
-        <p>Cónicos con salida clamp para fermentar, madurar y trasvasar. Fáciles de sanitizar y compatibles con accesorios estándar de la industria.</p>
-        <ul><li>Tanques cónicos</li><li>Tapas clamp</li><li>Bases metálicas</li></ul>
+    <div class="bento">
+      <article class="tile oscura grande revelar">
+        <h3>Cónicos</h3>
+        <p>Fermentá, madurá y trasvasá. Con salidas clamp de fábrica.</p>
+        <span class="rango">De 25 a 11.600 litros · Ø 400 a 2.500 mm</span>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="conico">Elegir medida</a><a class="mas" href="#comparar" style="color:#34d27b">Ver medidas</a></div>
+        <div class="img"><svg viewBox="0 0 200 300" aria-hidden="true"><use href="#p-conico"/></svg></div>
       </article>
-      <article class="rubro">
-        <span class="num">02 · Agro</span>
-        <h3>Almacenamiento y traslado</h3>
-        <p>Tanques horizontales y contenedores BIN para agua, fertilizantes líquidos y traslado en campo.</p>
-        <ul><li>Horizontales</li><li>Contenedor BIN</li><li>Fondo plano</li></ul>
+      <article class="tile revelar">
+        <h3>Fondo plano</h3>
+        <p>Almacenamiento y reserva, de 50 a 15.000 litros.</p>
+        <span class="rango">Ø 400 a 2.500 mm</span>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="plano">Elegir medida</a></div>
+        <div class="img"><svg viewBox="0 0 200 300" aria-hidden="true"><use href="#p-plano"/></svg></div>
       </article>
-      <article class="rubro">
-        <span class="num">03 · Industria y petroquímica</span>
-        <h3>Gran volumen</h3>
-        <p>Tanques de fondo plano de hasta 15.000 litros y cónicos de hasta 11.600 litros para procesos y reserva.</p>
-        <ul><li>Fondo plano Ø 2.500</li><li>Cónicos Ø 2.500</li><li>BIN reforzado</li></ul>
+      <article class="tile revelar">
+        <h3>Horizontales</h3>
+        <p>Bajos y estables, ideales para traslado.</p>
+        <span class="rango">250 · 500 · 2.000 · 2.500 litros</span>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="horizontal">Elegir medida</a></div>
+        <div class="img"><svg viewBox="0 0 320 200" aria-hidden="true" style="height:210px;margin-bottom:40px"><use href="#p-horizontal"/></svg></div>
       </article>
-    </div>
-  </div>
-</section>
-
-<!-- BUSCADOR -->
-<section class="sec-pe" id="buscador">
-  <div class="wrap">
-    <div class="cabeza">
-      <span class="eyebrow">Buscador de tanque</span>
-      <h2>Decinos cuántos litros necesitás</h2>
-      <p>Te mostramos qué diámetro te sirve y qué base lleva, con precio de referencia.</p>
-    </div>
-    <div class="buscador">
-      <div class="panel">
-        <h3>Tu tanque</h3>
-        <div class="campo">
-          <span class="lbl" id="lbl-tipo">Tipo de tanque</span>
-          <div class="segmentado" role="group" aria-labelledby="lbl-tipo" id="tipos"></div>
-        </div>
-        <div class="campo" id="campo-litros">
-          <label for="litros">Capacidad</label>
-          <div class="litros-fila">
-            <input type="number" id="litros" min="10" max="15000" step="10" value="1000" inputmode="numeric">
-            <span>litros</span>
-          </div>
-          <input type="range" id="litros-rango" min="0" max="100" value="60" aria-label="Capacidad aproximada">
-          <p class="ayuda" id="ayuda-litros"></p>
-        </div>
-      </div>
-      <div class="resultados" id="resultados" aria-live="polite"></div>
-    </div>
-
-    <div class="linea">
-      <h3>Línea completa</h3>
-      <div class="tabla-scroll">
-        <table>
-          <thead><tr><th scope="col">Línea</th><th scope="col">Diámetro</th><th scope="col">Capacidades</th></tr></thead>
-          <tbody id="tabla-linea"></tbody>
-        </table>
-      </div>
+      <article class="tile grande revelar">
+        <h3>Contenedor BIN</h3>
+        <p>Jaula metálica y pallet. Apilable y listo para autoelevador.</p>
+        <span class="rango">600 y 1.000 litros · liviano o reforzado</span>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="bin">Elegir medida</a></div>
+        <div class="img"><svg viewBox="0 0 260 260" aria-hidden="true" style="height:300px"><use href="#p-bin"/></svg></div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- CLAMP -->
-<section class="sec-oscura" id="clamp">
-  <div class="wrap clamp-grid">
-    <div>
-      <div class="cabeza">
-        <span class="eyebrow">Tecnología CLAMP</span>
-        <h2>La salida que hace la diferencia</h2>
-        <p>Somos los únicos fabricantes de tanques rotomoldeados con salida tipo clamp en Latinoamérica. La conexión se forma con el mismo material del tanque: sin roscas que se aflojen ni juntas donde se acumule suciedad.</p>
-      </div>
-      <div class="beneficios">
-        <div class="ben"><b><span>+50%</span> vida útil</b><p>Incrementa la vida útil de tu tanque en al menos un 50%.</p></div>
-        <div class="ben"><b>Una sola pieza</b><p>Las salidas se conforman del mismo material que el envase.</p></div>
-        <div class="ben"><b>Limpieza rápida</b><p>El sistema agiliza la sanitización y desinfección entre usos.</p></div>
-        <div class="ben"><b>Probado</b><p>Miles de clientes ya comprobaron la superioridad del sistema CLAMP.</p></div>
+<section class="negra" id="clamp">
+  <div class="wrap">
+    <div class="cabeza centro">
+      <span class="eyebrow" style="color:#34d27b">Tecnología CLAMP</span>
+      <h2 class="h-sec">Una sola pieza.<br>Cero roscas.</h2>
+      <p class="sub">La salida se moldea con el mismo material del tanque. Sin roscas que se aflojen ni juntas donde se acumule suciedad. Somos los únicos que la fabrican en Latinoamérica.</p>
+    </div>
+    <svg class="clamp-img revelar" viewBox="0 0 760 300" role="img" aria-label="Corte de la conexión clamp: pared del tanque, férula moldeada, junta sanitaria, abrazadera y válvula">
+      <defs>
+        <linearGradient id="g-pared" x1="0" x2="1"><stop offset="0" stop-color="#3a3a3c"/><stop offset="1" stop-color="#e5e8e6"/></linearGradient>
+      </defs>
+      <rect x="0" y="20" width="200" height="260" fill="url(#g-pared)"/>
+      <path d="M200 110h170v-16h26v112h-26v-16H200z" fill="#e5e8e6"/>
+      <rect x="396" y="100" width="12" height="100" rx="3" fill="#34d27b"/>
+      <path d="M408 94h26v16h150v80H434v16h-26z" fill="url(#g-acero)"/>
+      <rect x="584" y="118" width="110" height="64" rx="10" fill="#8e969b"/>
+      <rect x="628" y="70" width="22" height="50" rx="4" fill="#c5cbcf"/>
+      <rect x="604" y="58" width="70" height="16" rx="8" fill="#e5e8e6"/>
+      <path d="M372 76h60l14 16v116l-14 16h-60l-14-16V92z" fill="none" stroke="#f5f5f7" stroke-width="6" stroke-linejoin="round"/>
+      <circle cx="402" cy="64" r="9" fill="#f5f5f7"/>
+      <text x="100" y="12" text-anchor="middle">Pared del tanque</text>
+      <text x="285" y="236" text-anchor="middle">Férula moldeada</text>
+      <text x="402" y="262" text-anchor="middle" style="fill:#34d27b">Junta sanitaria</text>
+      <text x="402" y="44" text-anchor="middle">Abrazadera</text>
+      <text x="640" y="212" text-anchor="middle">Válvula</text>
+    </svg>
+    <div class="ventajas">
+      <div class="ventaja revelar"><b class="verde">+50%</b><span>de vida útil del tanque, como mínimo.</span></div>
+      <div class="ventaja revelar"><b>1 pieza</b><span>La salida es del mismo material que el envase.</span></div>
+      <div class="ventaja revelar"><b>Rápido</b><span>de sanitizar: el sistema agiliza la limpieza y desinfección.</span></div>
+      <div class="ventaja revelar"><b>Probado</b><span>Miles de clientes ya comprobaron la superioridad del sistema.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSCADOR -->
+<section class="gris" id="buscador">
+  <div class="wrap ancho">
+    <div class="cabeza centro" style="margin-bottom:36px">
+      <h2 class="h-sec">¿Cuál es para vos?</h2>
+      <p class="sub">Decinos cuántos litros necesitás. Te mostramos la medida y la base que lleva.</p>
+    </div>
+    <div class="centro"><div class="segmento" role="group" aria-label="Tipo de tanque" id="tipos"></div></div>
+    <div class="control-litros">
+      <label class="litros-grande" for="litros">
+        <input type="number" id="litros" min="10" max="15000" step="10" value="1000" inputmode="numeric" class="num">
+        <span>litros</span>
+      </label>
+      <input type="range" id="litros-rango" min="0" max="100" value="60" aria-label="Capacidad aproximada">
+      <div class="rango-ayuda num"><span id="r-min"></span><span id="r-max"></span></div>
+    </div>
+    <div class="resultados" id="resultados" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- COMPARAR -->
+<section id="comparar">
+  <div class="wrap ancho">
+    <div class="cabeza centro">
+      <h2 class="h-sec">Compará la línea.</h2>
+    </div>
+    <div class="comparar-scroll">
+      <div class="comparar">
+        <div class="col">
+          <div class="fig"><svg viewBox="0 0 200 300" aria-hidden="true" style="height:200px"><use href="#p-conico"/></svg></div>
+          <h4>Cónico</h4>
+          <div class="dato"><b class="num">25–11.600 L</b><span>Capacidad</span></div>
+          <div class="dato"><b>8 diámetros</b><ul class="num"><li>Ø 400 · 25–132 L</li><li>Ø 500 · 80–200 L</li><li>Ø 600 · 150–365 L</li><li>Ø 690 · 175–650 L</li><li>Ø 970 · 290–1.750 L</li><li>Ø 1.250 · 1.100–3.600 L</li><li>Ø 1.750 · 1.400–6.700 L</li><li>Ø 2.500 · 7.200 y 11.600 L</li></ul></div>
+          <div class="dato"><b>Sí</b><span>Salidas clamp de fábrica</span></div>
+        </div>
+        <div class="col">
+          <div class="fig"><svg viewBox="0 0 200 300" aria-hidden="true" style="height:200px"><use href="#p-plano"/></svg></div>
+          <h4>Fondo plano</h4>
+          <div class="dato"><b class="num">50–15.000 L</b><span>Capacidad</span></div>
+          <div class="dato"><b>7 diámetros</b><ul class="num"><li>Ø 400</li><li>Ø 570</li><li>Ø 690</li><li>Ø 970</li><li>Ø 1.250</li><li>Ø 1.750</li><li>Ø 2.500 · 10.000 y 15.000 L</li></ul></div>
+          <div class="dato"><b>Sí</b><span>Salidas clamp de fábrica</span></div>
+        </div>
+        <div class="col">
+          <div class="fig"><svg viewBox="0 0 320 200" aria-hidden="true" style="height:130px"><use href="#p-horizontal"/></svg></div>
+          <h4>Horizontal</h4>
+          <div class="dato"><b class="num">250–2.500 L</b><span>Capacidad</span></div>
+          <div class="dato"><b>4 medidas</b><ul class="num"><li>250 L</li><li>500 L</li><li>2.000 L</li><li>2.500 L</li><li style="color:var(--terciario)">5.000 L · próximamente</li></ul></div>
+          <div class="dato"><b>Monocapa</b><span>Color natural, sin pigmentos</span></div>
+        </div>
+        <div class="col">
+          <div class="fig"><svg viewBox="0 0 260 260" aria-hidden="true" style="height:170px"><use href="#p-bin"/></svg></div>
+          <h4>Contenedor BIN</h4>
+          <div class="dato"><b class="num">600–1.000 L</b><span>Capacidad</span></div>
+          <div class="dato"><b>2 versiones</b><ul><li>Liviano</li><li>Reforzado</li></ul></div>
+          <div class="dato"><b>Apilable</b><span>Jaula metálica y pallet</span></div>
+        </div>
       </div>
     </div>
-    <svg class="diagrama" viewBox="0 0 460 340" role="img" aria-label="Diagrama de la conexión clamp: pared del tanque, férula integrada, junta y abrazadera">
-      <!-- pared del tanque -->
-      <rect x="20" y="40" width="90" height="260" fill="#eef1ee"/>
-      <text x="65" y="28" text-anchor="middle">pared del tanque</text>
-      <!-- férula integrada -->
-      <path d="M110 140h120v-14h22v88h-22v-14H110z" fill="#eef1ee"/>
-      <path d="M110 150h128M110 190h128" stroke="#c9d0cc" stroke-width="1"/>
-      <!-- junta -->
-      <rect x="252" y="130" width="10" height="80" fill="#2fb34c"/>
-      <!-- férula del accesorio -->
-      <path d="M262 126h22v14h120v60H284v14h-22z" fill="#b5bfc4"/>
-      <!-- abrazadera -->
-      <path d="M236 112h42l10 12v92l-10 12h-42l-10-12v-92z" fill="none" stroke="#dfe5e8" stroke-width="5"/>
-      <circle cx="257" cy="104" r="7" fill="#dfe5e8"/>
-      <path d="M257 97V70" stroke="#dfe5e8" stroke-width="4"/>
-      <!-- flujo -->
-      <path d="M130 170h250" stroke="#2fb34c" stroke-width="2" stroke-dasharray="6 6"/>
-      <path d="M380 162l14 8-14 8z" fill="#2fb34c"/>
-      <!-- referencias -->
-      <path d="M180 214v48" stroke="#8e9aa1"/><text x="180" y="280" text-anchor="middle">férula moldeada</text><text x="180" y="296" text-anchor="middle">con el tanque</text>
-      <path d="M257 216v84" stroke="#8e9aa1"/><text x="257" y="316" text-anchor="middle">junta sanitaria</text>
-      <path d="M257 66v-18" stroke="#8e9aa1"/><text x="257" y="40" text-anchor="middle">abrazadera clamp</text>
-      <path d="M350 200v48" stroke="#8e9aa1"/><text x="350" y="266" text-anchor="middle">válvula o</text><text x="350" y="282" text-anchor="middle">accesorio</text>
-    </svg>
   </div>
 </section>
 
 <!-- MATERIAL -->
-<section>
-  <div class="wrap material">
-    <div class="cabeza" style="margin:0">
-      <span class="eyebrow">Material</span>
-      <h2>Polietileno virgen, grado alimenticio</h2>
-      <p>Fabricamos por rotomoldeo: una sola pieza, sin soldaduras. Monocapa, color natural, en polietileno lineal de media densidad, sin aditivos ni pigmentos. Podés ver el nivel del líquido a través de la pared.</p>
+<section style="padding-top:0">
+  <div class="wrap ancho">
+    <div class="cabeza centro">
+      <h2 class="h-sec">Lo que va adentro importa.</h2>
+      <p class="sub">Rotomoldeo en una sola pieza, en polietileno lineal de media densidad. Monocapa y color natural: ves el nivel del líquido a través de la pared.</p>
     </div>
-    <dl class="ficha">
-      <div><dt>Proceso</dt><dd>Rotomoldeo, pieza única</dd></div>
-      <div><dt>Material</dt><dd>PE lineal de media densidad</dd></div>
-      <div><dt>Pureza</dt><dd>100% virgen</dd></div>
-      <div><dt>Aptitud</dt><dd>Grado alimenticio</dd></div>
-      <div><dt>Aditivos y pigmentos</dt><dd>Sin agregados</dd></div>
-      <div><dt>Salidas</dt><dd>Clamp, incluido el kit</dd></div>
-    </dl>
+    <div class="material">
+      <div class="mat revelar"><b>100%</b><span>Polietileno virgen.</span></div>
+      <div class="mat revelar"><b>0</b><span>Aditivos, pigmentos o soldaduras.</span></div>
+      <div class="mat revelar"><b>Apto</b><span>Grado alimenticio, para agua, mosto y cerveza.</span></div>
+    </div>
   </div>
 </section>
 
 <!-- TIENDA -->
-<section class="sec-pe" id="tienda">
-  <div class="wrap">
-    <div class="cabeza">
-      <span class="eyebrow">Tienda</span>
-      <h2>Precios y pedido online</h2>
-      <p>Armá tu pedido y envialo por WhatsApp. Te confirmamos stock, envío y forma de pago.</p>
+<section class="gris" id="tienda">
+  <div class="wrap ancho">
+    <div class="cabeza centro" style="margin-bottom:48px">
+      <h2 class="h-sec">Tienda.</h2>
+      <p class="sub">La forma más simple de comprar tanques, bases y accesorios.</p>
     </div>
-    <div class="aviso" role="note">
-      <span aria-hidden="true">✓</span>
-      <span>Todos los tanques vienen con su kit clamp. Bases, llaves y accesorios se venden por separado. Las tapas a rosca D25 y D50 vienen incluidas; la tapa con insertos D47, no.</span>
+    <div class="tienda-barra">
+      <div class="segmento" role="group" aria-label="Filtrar por categoría" id="filtros"></div>
+      <input class="buscar" type="search" id="buscar" placeholder="Buscar D69, 380 L…" aria-label="Buscar en la tienda">
     </div>
-    <div class="tienda-top">
-      <div class="filtros" role="group" aria-label="Filtrar por categoría" id="filtros"></div>
-      <input class="buscar" type="search" id="buscar" placeholder="Buscar: D69, 380 L, clamp…" aria-label="Buscar en la tienda">
-    </div>
+    <p class="nota-tienda">Todos los tanques incluyen su kit clamp. Bases, llaves y accesorios se venden por separado. Las tapas a rosca D25 y D50 vienen incluidas; la tapa con insertos D47, no.</p>
     <div class="productos" id="productos"></div>
     <p class="sin-res" id="sin-res" hidden>No encontramos productos con esa búsqueda.</p>
   </div>
@@ -531,167 +629,138 @@
 <!-- CÓMO COMPRAR -->
 <section>
   <div class="wrap">
-    <div class="cabeza">
-      <span class="eyebrow">Cómo comprar</span>
-      <h2>Tres pasos, sin vueltas</h2>
+    <div class="cabeza centro">
+      <h2 class="h-sec">Comprar es fácil.</h2>
     </div>
     <div class="pasos">
-      <div class="paso"><span class="n">Paso 1</span><h3>Armá tu pedido</h3><p>Elegí tanques, bases y accesorios en la tienda, o pedinos asesoramiento.</p></div>
-      <div class="paso"><span class="n">Paso 2</span><h3>Pagá seguro</h3><p>Con Mercado Pago, débito, crédito o efectivo. Tu compra queda protegida.</p></div>
-      <div class="paso"><span class="n">Paso 3</span><h3>Recibilo o retiralo</h3><p>Acordamos el lugar de entrega, o lo retirás por nuestra planta en Sarandí, Avellaneda.</p></div>
+      <div class="paso revelar"><svg aria-hidden="true"><use href="#i-carrito"/></svg><h3>Armá tu pedido</h3><p>Elegí en la tienda o pedinos asesoramiento por WhatsApp.</p></div>
+      <div class="paso revelar"><svg aria-hidden="true"><use href="#i-escudo"/></svg><h3>Pagá seguro</h3><p>Mercado Pago, débito, crédito o efectivo. Tu compra está protegida.</p></div>
+      <div class="paso revelar"><svg aria-hidden="true"><use href="#i-camion"/></svg><h3>Recibilo o retiralo</h3><p>Acordamos la entrega, o lo retirás por Sarandí, Avellaneda.</p></div>
     </div>
   </div>
 </section>
 
 <!-- CLIENTES -->
-<section class="sec-oscura">
+<section class="gris" style="padding-block:80px">
   <div class="wrap">
-    <div class="cabeza">
-      <span class="eyebrow">Confían en nosotros</span>
-      <h2>Cervecerías que ya trabajan con Infinity</h2>
-    </div>
-    <div class="clientes" id="clientes"></div>
+    <p class="centro" style="color:var(--secundario);margin:0 0 36px;font-size:17px">Cervecerías de todo el país ya trabajan con Infinity.</p>
   </div>
+  <div class="cinta"><div class="cinta-pista" id="clientes"></div></div>
 </section>
 
 <!-- DISTRIBUIDORES -->
-<section class="sec-pe" id="distribuidores">
+<section id="distribuidores">
   <div class="wrap">
-    <div class="cabeza">
-      <span class="eyebrow">Distribuidores</span>
-      <h2>Encontrá tu distribuidor</h2>
-      <p>Red oficial de distribuidores en Argentina, Chile y Perú.</p>
+    <div class="cabeza centro" style="margin-bottom:36px">
+      <h2 class="h-sec">Cerca tuyo.</h2>
+      <p class="sub">Distribuidores oficiales en Argentina, Chile y Perú.</p>
     </div>
-    <div class="tienda-top">
-      <div class="filtros" role="group" aria-label="Filtrar por país" id="filtros-pais"></div>
-    </div>
-    <div class="dist-grid" id="distribuidores-lista"></div>
+    <div class="centro"><div class="segmento" role="group" aria-label="Filtrar por país" id="filtros-pais"></div></div>
+    <div class="dist-lista" id="distribuidores-lista"></div>
   </div>
 </section>
 
-<!-- FAQ + CONTACTO -->
-<section id="contacto">
-  <div class="wrap dos-col">
-    <div>
-      <div class="cabeza">
-        <span class="eyebrow">Preguntas frecuentes</span>
-        <h2>Antes de comprar</h2>
-      </div>
-      <details class="faq"><summary>¿Los tanques incluyen las conexiones clamp?</summary><p>Sí. Todos los tanques vienen con su kit clamp correspondiente. Las bases, llaves y demás accesorios se venden por separado.</p></details>
-      <details class="faq"><summary>¿Qué base necesito para mi tanque cónico?</summary><p>Depende del diámetro y la capacidad. Usá el buscador de tanque: te indica la base compatible con cada medida.</p></details>
-      <details class="faq"><summary>¿Son aptos para alimentos y bebidas?</summary><p>Sí. Se fabrican en polietileno 100% virgen grado alimenticio, sin aditivos ni pigmentos.</p></details>
-      <details class="faq"><summary>¿Hacen envíos?</summary><p>Sí. Al terminar tu compra acordamos el lugar de entrega. También podés retirar por Sarandí, Avellaneda.</p></details>
-      <details class="faq"><summary>¿Qué medios de pago aceptan?</summary><p>Débito, crédito y efectivo. Los pagos online se procesan con Mercado Pago.</p></details>
-      <details class="faq"><summary>¿Venden fuera de Argentina?</summary><p>Sí. Tenemos distribuidores en Chile y Perú, y nuestros productos ya se usan en 5 países.</p></details>
+<!-- FAQ -->
+<section class="gris">
+  <div class="wrap">
+    <div class="cabeza centro"><h2 class="h-sec">Preguntas frecuentes.</h2></div>
+    <div class="faq">
+      <details><summary>¿Los tanques incluyen las conexiones clamp?</summary><p>Sí. Todos vienen con su kit clamp. Las bases, llaves y demás accesorios se venden por separado.</p></details>
+      <details><summary>¿Qué base necesito para mi cónico?</summary><p>Depende del diámetro y la capacidad. El buscador te muestra la base compatible con cada medida.</p></details>
+      <details><summary>¿Son aptos para alimentos y bebidas?</summary><p>Sí. Se fabrican en polietileno 100% virgen grado alimenticio, sin aditivos ni pigmentos.</p></details>
+      <details><summary>¿Hacen envíos?</summary><p>Sí. Al terminar tu compra acordamos el lugar de entrega. También podés retirar por Sarandí, Avellaneda.</p></details>
+      <details><summary>¿Qué medios de pago aceptan?</summary><p>Débito, crédito y efectivo. Los pagos online se procesan con Mercado Pago.</p></details>
+      <details><summary>¿Venden fuera de Argentina?</summary><p>Sí. Tenemos distribuidores en Chile y Perú, y nuestros productos se usan en 5 países.</p></details>
     </div>
-    <aside class="contacto">
-      <h3>Hablemos</h3>
-      <p>Asesoramiento técnico para elegir tanque, base y accesorios.</p>
-      <div class="linea-c"><small>WhatsApp</small><a id="wa-contacto" href="#">+54 9 11 5463-9406</a></div>
-      <div class="linea-c"><small>Email</small><a href="mailto:info@infinityrotomolding.com">info@infinityrotomolding.com</a></div>
-      <div class="linea-c"><small>Retiro</small><span>Sarandí, Avellaneda, Buenos Aires</span></div>
-      <a class="btn btn-verde" id="wa-contacto-btn" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg> Escribinos por WhatsApp</a>
-    </aside>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="wrap contacto">
+    <h2 class="h-sec">¿Dudas? Hablemos.</h2>
+    <p class="sub">Te asesoramos para elegir tanque, base y accesorios.</p>
+    <div class="ctas">
+      <a class="pill" id="wa-contacto" href="#">Escribinos por WhatsApp</a>
+      <a class="pill borde" href="mailto:info@infinityrotomolding.com">Enviar un email</a>
+    </div>
+    <div class="datos">
+      <span>WhatsApp <b class="num">+54 9 11 5463-9406</b></span>
+      <span>Email <b>info@infinityrotomolding.com</b></span>
+      <span>Retiro <b>Sarandí, Avellaneda</b></span>
+    </div>
   </div>
 </section>
 </main>
 
-<footer class="pie">
+<footer class="pie-sitio">
   <div class="wrap">
-    <a class="marca" href="#inicio" aria-label="Infinity Rotomolding, inicio">
-      <svg aria-hidden="true"><use href="#i-marca"/></svg>
-      <span><b style="color:#fff">Infinity</b><small>Rotomolding</small></span>
-    </a>
-    <nav aria-label="Pie">
-      <a href="#buscador">Productos</a><a href="#tienda">Tienda</a><a href="#distribuidores">Distribuidores</a><a href="#contacto">Preguntas frecuentes</a>
-    </nav>
-    <span>Siempre hay un Infinity para cada necesidad.</span>
+    <span>Los precios son de referencia y pueden cambiar sin aviso. Las imágenes son ilustrativas.</span>
+    <div class="fila">
+      <span>Siempre hay un Infinity para cada necesidad.</span>
+      <nav aria-label="Pie"><a href="#lineas">Tanques</a><a href="#tienda">Tienda</a><a href="#distribuidores">Distribuidores</a><a href="#contacto">Soporte</a></nav>
+    </div>
   </div>
 </footer>
 
 <a class="wa" id="wa-flotante" href="#" aria-label="Escribinos por WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
 
-<!-- Pedido -->
 <div class="velo" id="velo" hidden></div>
-<aside class="pedido" id="pedido" aria-label="Tu pedido" aria-hidden="true">
-  <header>
+<aside class="panel" id="panel" aria-label="Tu pedido" aria-hidden="true">
+  <div class="panel-cab">
     <h3>Tu pedido</h3>
-    <button class="cerrar" type="button" id="cerrar-pedido" aria-label="Cerrar pedido">×</button>
-  </header>
+    <button class="cerrar" type="button" id="cerrar-bolsa" aria-label="Cerrar">✕</button>
+  </div>
   <div class="items" id="items"></div>
-  <footer>
-    <div class="total"><span>Total de referencia</span><span id="total">$ 0</span></div>
-    <a class="btn btn-verde" id="enviar-pedido" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg> Enviar pedido por WhatsApp</a>
-    <p class="ayuda" style="text-align:center">Te confirmamos stock, envío y forma de pago.</p>
-  </footer>
+  <div class="panel-pie">
+    <div class="total"><span>Total</span><span class="num" id="total">$ 0</span></div>
+    <a class="pill" id="enviar-pedido" href="#">Enviar pedido por WhatsApp</a>
+    <span class="centro" style="color:var(--secundario)">Te confirmamos stock, envío y forma de pago.</span>
+  </div>
 </aside>
 
 <script>
 "use strict";
+document.documentElement.classList.add("js");
 
 const WHATSAPP = "5491154639406";
 
-// ---- Línea de productos (datos del sitio actual) ----
+// ---- Datos del sitio actual ----
 const LINEAS = {
-  conico: {
-    nombre: "Cónicos", img: "p-conico",
-    medidas: [
-      { d: 400,  min: 25,   max: 132 },
-      { d: 500,  min: 80,   max: 200 },
-      { d: 600,  min: 150,  max: 365 },
-      { d: 690,  min: 175,  max: 650 },
-      { d: 970,  min: 290,  max: 1750 },
-      { d: 1250, min: 1100, max: 3600 },
-      { d: 1750, min: 1400, max: 6700 },
-      { d: 2500, min: 7200, max: 11600, texto: "7.200 y 11.600 L" }
-    ]
-  },
-  plano: {
-    nombre: "Fondo plano", img: "p-plano",
-    medidas: [
-      { d: 400 }, { d: 570 }, { d: 690 }, { d: 970 }, { d: 1250 }, { d: 1750 },
-      { d: 2500, min: 10000, max: 15000, texto: "10.000 y 15.000 L" }
-    ]
-  },
-  horizontal: {
-    nombre: "Horizontales", img: "p-horizontal",
-    medidas: [{ l: 250 }, { l: 500 }, { l: 2000 }, { l: 2500 }, { l: 5000, prox: true }]
-  },
-  bin: {
-    nombre: "Contenedor BIN", img: "p-bin",
-    medidas: [
-      { l: 600, v: "liviano" }, { l: 600, v: "reforzado" },
-      { l: 1000, v: "liviano" }, { l: 1000, v: "reforzado" }
-    ]
-  }
+  conico: { nombre: "Cónico", medidas: [
+    { d: 400, min: 25, max: 132 }, { d: 500, min: 80, max: 200 }, { d: 600, min: 150, max: 365 },
+    { d: 690, min: 175, max: 650 }, { d: 970, min: 290, max: 1750 }, { d: 1250, min: 1100, max: 3600 },
+    { d: 1750, min: 1400, max: 6700 }, { d: 2500, min: 7200, max: 11600, texto: "7.200 y 11.600 L" } ] },
+  plano: { nombre: "Fondo plano" },
+  horizontal: { nombre: "Horizontal", medidas: [{ l: 250 }, { l: 500 }, { l: 2000 }, { l: 2500 }, { l: 5000, prox: true }] },
+  bin: { nombre: "BIN", medidas: [{ l: 600, v: "liviano" }, { l: 600, v: "reforzado" }, { l: 1000, v: "liviano" }, { l: 1000, v: "reforzado" }] }
 };
 
-// ---- Tienda (precios de referencia tomados del sitio actual) ----
 const PRODUCTOS = [
-  { id: "c50",   cat: "Tanques",     img: "p-conico", nombre: "Cónico 50 L D40 con tapa a rosca", precio: 145469 },
-  { id: "fp50",  cat: "Tanques",     img: "p-plano",  nombre: "Tanque fondo plano 50 L D40, salida lateral", precio: 111358 },
-  { id: "b40a",  cat: "Bases",       img: "p-base", nombre: "Base metálica D40 de 18 a 50 L",   precio: 105725, dmin: 18,   dmax: 50,   diam: 400 },
-  { id: "b40b",  cat: "Bases",       img: "p-base", nombre: "Base metálica D40 de 60 a 70 L",   precio: 108835, dmin: 60,   dmax: 70,   diam: 400 },
-  { id: "b40c",  cat: "Bases",       img: "p-base", nombre: "Base metálica D40 de 82 a 132 L",  precio: 161699, dmin: 82,   dmax: 132,  diam: 400 },
-  { id: "b50",   cat: "Bases",       img: "p-base", nombre: "Base metálica D50 de 80 a 200 L",  precio: 217315, dmin: 80,   dmax: 200,  diam: 500 },
-  { id: "b60",   cat: "Bases",       img: "p-base", nombre: "Base metálica D60 de 150 a 365 L", precio: 248331, dmin: 150,  dmax: 365,  diam: 600 },
-  { id: "b69l",  cat: "Bases",       img: "p-base", nombre: "Base metálica D69 liviana de 175 a 380 L",   precio: 271347, dmin: 175, dmax: 380, diam: 690 },
-  { id: "b69r",  cat: "Bases",       img: "p-base", nombre: "Base metálica D69 reforzada de 380 a 650 L", precio: 306690, dmin: 380, dmax: 650, diam: 690 },
-  { id: "b97",   cat: "Bases",       img: "p-base", nombre: "Base metálica D97 de 570 a 1.750 L",   precio: 427717, dmin: 570,  dmax: 1750, diam: 970 },
-  { id: "b125a", cat: "Bases",       img: "p-base", nombre: "Base metálica D125 de 1.100 a 1.650 L", precio: 550000, dmin: 1100, dmax: 1650, diam: 1250 },
-  { id: "b125b", cat: "Bases",       img: "p-base", nombre: "Base metálica D125 de 2.000 a 2.150 L", precio: 660000, dmin: 2000, dmax: 2150, diam: 1250 },
-  { id: "b125c", cat: "Bases",       img: "p-base", nombre: "Base metálica D125 de 2.150 a 3.600 L", precio: 823900, dmin: 2150, dmax: 3600, diam: 1250 },
-  { id: "bp40",  cat: "Bases planas", img: "p-base", nombre: "Base metálica D40 plana estática sin disco de apoyo", precio: 139118 },
-  { id: "bp58",  cat: "Bases planas", img: "p-base", nombre: "Base metálica D58 plana estática sin disco de apoyo", precio: 176000 },
-  { id: "bp69",  cat: "Bases planas", img: "p-base", nombre: "Base metálica D69 plana estática sin disco de apoyo", precio: 201679 },
-  { id: "bp97",  cat: "Bases planas", img: "p-base", nombre: "Base metálica D97 plana estática con disco de 3 mm (hasta 3.500 L)", precio: 499580 },
-  { id: "bp125", cat: "Bases planas", img: "p-base", nombre: "Base metálica D125 plana estática con piso en tubo 30×30", precio: 634717 },
-  { id: "bpl40", cat: "Accesorios",  img: "p-base", nombre: "Base plástica D40", precio: 46355 },
-  { id: "tclamp",cat: "Accesorios",  img: "p-acc",  nombre: "Tapa ciega clamp 1 1/2\"", precio: 3377 }
+  { id: "c50",   cat: "Tanques", img: "p-conico", nombre: "Cónico 50 L D40 con tapa a rosca", precio: 145469 },
+  { id: "fp50",  cat: "Tanques", img: "p-plano",  nombre: "Fondo plano 50 L D40, salida lateral", precio: 111358 },
+  { id: "b40a",  cat: "Bases", img: "p-base", nombre: "Base metálica D40 · 18 a 50 L",    precio: 105725, dmin: 18,   dmax: 50,   diam: 400 },
+  { id: "b40b",  cat: "Bases", img: "p-base", nombre: "Base metálica D40 · 60 a 70 L",    precio: 108835, dmin: 60,   dmax: 70,   diam: 400 },
+  { id: "b40c",  cat: "Bases", img: "p-base", nombre: "Base metálica D40 · 82 a 132 L",   precio: 161699, dmin: 82,   dmax: 132,  diam: 400 },
+  { id: "b50",   cat: "Bases", img: "p-base", nombre: "Base metálica D50 · 80 a 200 L",   precio: 217315, dmin: 80,   dmax: 200,  diam: 500 },
+  { id: "b60",   cat: "Bases", img: "p-base", nombre: "Base metálica D60 · 150 a 365 L",  precio: 248331, dmin: 150,  dmax: 365,  diam: 600 },
+  { id: "b69l",  cat: "Bases", img: "p-base", nombre: "Base metálica D69 liviana · 175 a 380 L",   precio: 271347, dmin: 175, dmax: 380, diam: 690 },
+  { id: "b69r",  cat: "Bases", img: "p-base", nombre: "Base metálica D69 reforzada · 380 a 650 L", precio: 306690, dmin: 380, dmax: 650, diam: 690 },
+  { id: "b97",   cat: "Bases", img: "p-base", nombre: "Base metálica D97 · 570 a 1.750 L",     precio: 427717, dmin: 570,  dmax: 1750, diam: 970 },
+  { id: "b125a", cat: "Bases", img: "p-base", nombre: "Base metálica D125 · 1.100 a 1.650 L",  precio: 550000, dmin: 1100, dmax: 1650, diam: 1250 },
+  { id: "b125b", cat: "Bases", img: "p-base", nombre: "Base metálica D125 · 2.000 a 2.150 L",  precio: 660000, dmin: 2000, dmax: 2150, diam: 1250 },
+  { id: "b125c", cat: "Bases", img: "p-base", nombre: "Base metálica D125 · 2.150 a 3.600 L",  precio: 823900, dmin: 2150, dmax: 3600, diam: 1250 },
+  { id: "bp40",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D40 sin disco de apoyo", precio: 139118 },
+  { id: "bp58",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D58 sin disco de apoyo", precio: 176000 },
+  { id: "bp69",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D69 sin disco de apoyo", precio: 201679 },
+  { id: "bp97",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D97 con disco de 3 mm (hasta 3.500 L)", precio: 499580 },
+  { id: "bp125", cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D125 con piso en tubo 30×30", precio: 634717 },
+  { id: "bpl40", cat: "Accesorios", img: "p-plana", nombre: "Base plástica D40", precio: 46355 },
+  { id: "tclamp",cat: "Accesorios", img: "p-tapa",  nombre: "Tapa ciega clamp 1 1/2\"", precio: 3377 }
 ];
+const VB = { "p-conico": "0 0 200 300", "p-plano": "0 0 200 300", "p-base": "0 0 200 220", "p-plana": "0 0 200 220", "p-tapa": "0 0 200 200" };
 
 const CLIENTES = ["Varit", "Cratón", "Ribera", "Vamp", "Hashtag", "Kalewala", "Viejo Cabezón", "Elemut", "Beyla", "San Pedro"];
-
 const DISTRIBUIDORES = [
   { n: "Cumbre", lugar: "San Juan", pais: "Argentina" },
   { n: "Malba Insumos Cerveceros", lugar: "Godoy Cruz, Mendoza", pais: "Argentina" },
@@ -706,83 +775,45 @@ const DISTRIBUIDORES = [
 
 // ---- Utilidades ----
 const $ = s => document.querySelector(s);
-const fmtL = n => n.toLocaleString("es-AR") + " L";
-const fmt$ = n => "$ " + n.toLocaleString("es-AR");
+const miles = n => n.toLocaleString("es-AR");
+const fmtL = n => miles(n) + " L";
+const fmt$ = n => "$ " + miles(n);
 const wa = msg => "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
 const SVGNS = "http://www.w3.org/2000/svg";
 
-// Crea elementos sin innerHTML: h("div", {class:"x"}, "texto", otroNodo)
+// Crea nodos sin innerHTML
 function h(tag, props, ...hijos) {
   const el = document.createElement(tag);
   for (const [k, v] of Object.entries(props || {})) {
     if (v == null || v === false) continue;
     if (k === "class") el.className = v;
     else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
-    else el.setAttribute(k, v === true ? "" : v);
+    else el.setAttribute(k, v);
   }
   for (const c of hijos.flat()) if (c != null && c !== false) el.append(c.nodeType ? c : String(c));
   return el;
 }
-function icono(id, viewBox) {
+function figura(id) {
   const s = document.createElementNS(SVGNS, "svg");
-  s.setAttribute("aria-hidden", "true");
-  if (viewBox) s.setAttribute("viewBox", viewBox);
-  const u = document.createElementNS(SVGNS, "use");
-  u.setAttribute("href", "#" + id);
-  s.append(u);
-  return s;
+  s.setAttribute("viewBox", VB[id]); s.setAttribute("aria-hidden", "true");
+  const u = document.createElementNS(SVGNS, "use"); u.setAttribute("href", "#" + id);
+  s.append(u); return s;
 }
-const VB = { "p-conico": "0 0 120 160", "p-plano": "0 0 120 160", "p-horizontal": "0 0 170 120", "p-bin": "0 0 150 150", "p-base": "0 0 120 150", "p-acc": "0 0 120 120" };
+const enlaceWa = (texto, msg, clase) => h("a", { class: clase || "mas", href: wa(msg), target: "_blank", rel: "noopener" }, texto);
 
-function filtrosBotones(cont, opciones, alElegir) {
-  opciones.forEach((op, i) => {
-    cont.append(h("button", { type: "button", "aria-pressed": String(i === 0), onclick: e => {
-      cont.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === e.currentTarget)));
-      alElegir(op);
-    } }, op));
-  });
+function segmento(cont, opciones, inicial, alElegir) {
+  cont.replaceChildren(...opciones.map(([valor, etiqueta]) => h("button", {
+    type: "button", "aria-pressed": String(valor === inicial), "data-valor": valor,
+    onclick: () => { marcar(cont, valor); alElegir(valor); }
+  }, etiqueta)));
 }
-
-// ---- Tabla de la línea completa ----
-(function tabla() {
-  const tb = $("#tabla-linea");
-  for (const [clave, linea] of Object.entries(LINEAS)) {
-    // Líneas por capacidad (sin diámetro): una sola fila con todas las opciones
-    if (linea.medidas[0].l) {
-      const txt = linea.medidas.map(m => fmtL(m.l) + (m.v ? " " + m.v : "") + (m.prox ? " (próximamente)" : "")).join(" · ");
-      tb.append(h("tr", {}, h("th", { scope: "row" }, linea.nombre), h("td", { class: "mono" }, "—"), h("td", {}, txt)));
-      continue;
-    }
-    // Fondo plano: los diámetros chicos comparten una fila
-    const chicos = linea.medidas.filter(m => !m.min && !m.texto);
-    if (chicos.length > 1) {
-      tb.append(h("tr", {}, h("th", { scope: "row", rowspan: 2 }, linea.nombre),
-        h("td", { class: "mono", style: "white-space:normal" }, "Ø " + chicos.map(m => m.d.toLocaleString("es-AR")).join(" · ") + " mm"),
-        h("td", {}, "Capacidad según altura: consultar")));
-      const g = linea.medidas.find(m => m.texto);
-      tb.append(h("tr", {}, h("td", { class: "mono" }, "Ø " + g.d.toLocaleString("es-AR") + " mm"), h("td", {}, g.texto)));
-      continue;
-    }
-    linea.medidas.forEach((m, i) => {
-      const tr = h("tr", {});
-      if (i === 0) tr.append(h("th", { scope: "row", rowspan: linea.medidas.length }, linea.nombre));
-      let diam = m.d ? "Ø " + m.d.toLocaleString("es-AR") + " mm" : "—";
-      let cap;
-      if (m.texto) cap = m.texto;
-      else if (m.min) cap = "de " + m.min.toLocaleString("es-AR") + " a " + fmtL(m.max);
-      else if (m.l) cap = fmtL(m.l) + (m.v ? " (" + m.v + ")" : "") + (m.prox ? " · próximamente" : "");
-      else cap = "Consultar capacidades";
-      tr.append(h("td", { class: "mono" }, diam), h("td", {}, cap));
-      tb.append(tr);
-    });
-  }
-})();
+const marcar = (cont, valor) => cont.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.valor === valor)));
 
 // ---- Buscador ----
 const estado = { tipo: "conico", litros: 1000 };
 const RANGOS = { conico: [25, 11600], plano: [50, 15000], horizontal: [250, 5000], bin: [600, 1000] };
 
-// El control deslizante usa escala logarítmica: los tanques chicos también quedan accesibles
+// Escala logarítmica: los tanques chicos también son fáciles de elegir
 function litrosDesdeRango(v) {
   const [a, b] = RANGOS[estado.tipo];
   const l = Math.exp(Math.log(a) + (Math.log(b) - Math.log(a)) * v / 100);
@@ -794,194 +825,194 @@ function rangoDesdeLitros(l) {
   return Math.round((Math.log(x) - Math.log(a)) / (Math.log(b) - Math.log(a)) * 100);
 }
 
-function botonAgregar(p) {
-  return h("button", { class: "agregar", type: "button", onclick: e => agregar(p.id, e.currentTarget) }, "Agregar " + fmt$(p.precio));
+function tarjetaRes({ etq, etqVerde, titulo, detalle, base, acciones }) {
+  return h("article", { class: "res" },
+    h("span", { class: "etq" + (etqVerde ? " verde" : "") }, etq || ""),
+    h("h4", {}, titulo),
+    h("p", { class: "detalle" }, detalle),
+    base || null,
+    h("div", { class: "acciones" }, acciones));
 }
 
 function buscar() {
   const cont = $("#resultados");
-  cont.replaceChildren();
   const L = estado.litros;
-  const linea = LINEAS[estado.tipo];
   const [a, b] = RANGOS[estado.tipo];
-  $("#ayuda-litros").textContent = "Esta línea va de " + fmtL(a) + " a " + fmtL(b) + ".";
+  $("#r-min").textContent = fmtL(a);
+  $("#r-max").textContent = fmtL(b);
+  const tarjetas = [];
 
   if (estado.tipo === "conico") {
-    const aptos = linea.medidas.filter(m => L >= m.min && L <= m.max);
-    if (!aptos.length) {
-      cont.append(h("div", { class: "vacio" }, "No hay un cónico estándar de " + fmtL(L) + ". ", h("a", { href: wa("Hola! Necesito un tanque cónico de " + L + " litros. ¿Qué me recomiendan?"), target: "_blank", rel: "noopener" }, "Consultanos por una medida especial.")));
-      return;
-    }
-    // el más compacto primero: menor diámetro que cumple
-    cont.append(h("p", { class: "res-titulo" }, aptos.length + (aptos.length === 1 ? " diámetro disponible" : " diámetros disponibles") + " para " + fmtL(L)));
+    const aptos = LINEAS.conico.medidas.filter(m => L >= m.min && L <= m.max);
     aptos.forEach((m, i) => {
       const bases = PRODUCTOS.filter(p => p.diam === m.d && L >= p.dmin && L <= p.dmax);
-      const acciones = h("div", { class: "acciones" });
-      bases.forEach(p => acciones.append(botonAgregar(p)));
-      acciones.append(h("a", { class: "btn btn-linea btn-sm", href: wa("Hola! Quiero cotizar un tanque cónico Ø " + m.d + " mm de " + L + " litros."), target: "_blank", rel: "noopener" }, "Cotizar tanque"));
-      cont.append(h("article", { class: "res" + (i === 0 ? " mejor" : "") },
-        h("div", { class: "diam" }, m.d.toLocaleString("es-AR"), h("small", {}, "mm Ø")),
-        h("div", {},
-          h("h4", {}, "Cónico Ø " + m.d.toLocaleString("es-AR") + " mm", i === 0 ? h("span", { class: "chip" }, "Más compacto") : null),
-          h("p", {}, "Rango de la línea: " + (m.texto || fmtL(m.min) + " a " + fmtL(m.max)) + ". " +
-            (bases.length ? "Base compatible: " + bases.map(p => p.nombre.replace("Base metálica ", "")).join(" o ") + "." : "Base: consultar.")),
-          acciones)
-      ));
+      const acciones = [];
+      bases.forEach(p => acciones.push(h("button", { class: "pill chica", type: "button", onclick: e => agregar(p.id, e.currentTarget) }, "Agregar base")));
+      acciones.push(enlaceWa("Cotizar tanque", "Hola! Quiero cotizar un tanque cónico Ø " + m.d + " mm de " + L + " litros."));
+      tarjetas.push(tarjetaRes({
+        etq: i === 0 ? "Más compacto" : (i === aptos.length - 1 && aptos.length > 1 ? "Más bajo" : ""),
+        etqVerde: i === 0,
+        titulo: "Cónico Ø " + miles(m.d),
+        detalle: "Esta medida va " + (m.texto ? "en " + m.texto : "de " + miles(m.min) + " a " + fmtL(m.max)) + ".",
+        base: bases.length
+          ? h("div", { class: "base" }, h("b", {}, "Base: "), bases.map(p => p.nombre.replace("Base metálica ", "")).join(" o "), h("div", { class: "precio num" }, fmt$(bases[0].precio)))
+          : h("div", { class: "base" }, h("b", {}, "Base: "), "consultar"),
+        acciones
+      }));
     });
   } else if (estado.tipo === "plano") {
     const grande = L > 3500;
-    const m = grande ? linea.medidas[linea.medidas.length - 1] : null;
-    cont.append(h("p", { class: "res-titulo" }, "Fondo plano para " + fmtL(L)));
-    cont.append(h("article", { class: "res mejor" },
-      h("div", { class: "diam" }, grande ? "2.500" : "400–1.750", h("small", {}, "mm Ø")),
-      h("div", {},
-        h("h4", {}, grande ? "Fondo plano Ø 2.500 mm" : "Fondo plano, Ø 400 a 1.750 mm"),
-        h("p", {}, grande ? "Disponible en " + m.texto + ". Ideal para reserva y procesos de gran volumen." : "Elegimos el diámetro según el espacio disponible y la altura. Base plana estática D40 a D125 por separado."),
-        h("div", { class: "acciones" }, h("a", { class: "btn btn-linea btn-sm", href: wa("Hola! Quiero cotizar un tanque de fondo plano de " + L + " litros."), target: "_blank", rel: "noopener" }, "Cotizar tanque")))
-    ));
+    tarjetas.push(tarjetaRes({
+      etq: "Recomendado", etqVerde: true,
+      titulo: grande ? "Fondo plano Ø 2.500" : "Fondo plano Ø 400 a 1.750",
+      detalle: grande ? "Disponible en 10.000 y 15.000 litros." : "Elegimos el diámetro según el espacio y la altura que tengas.",
+      base: h("div", { class: "base" }, h("b", {}, "Base: "), "plana estática D40 a D125, se vende por separado."),
+      acciones: [enlaceWa("Cotizar tanque", "Hola! Quiero cotizar un tanque de fondo plano de " + L + " litros.", "pill chica")]
+    }));
   } else {
-    // horizontales y BIN: capacidades fijas → la más cercana por encima
-    const ops = linea.medidas;
-    const cap = m => m.l;
-    const arriba = ops.filter(m => cap(m) >= L);
-    const elegidas = (arriba.length ? ops.filter(m => cap(m) === cap(arriba[0])) : [ops[ops.length - 1]]);
-    cont.append(h("p", { class: "res-titulo" }, linea.nombre + " recomendado para " + fmtL(L)));
-    elegidas.forEach((m, i) => {
-      const nom = linea.nombre.replace(/es$/, "") + " " + fmtL(m.l) + (m.v ? " " + m.v : "");
-      cont.append(h("article", { class: "res" + (i === 0 ? " mejor" : "") },
-        h("div", { class: "diam" }, m.l.toLocaleString("es-AR"), h("small", {}, "litros")),
-        h("div", {},
-          h("h4", {}, nom, m.prox ? h("span", { class: "chip gris" }, "Próximamente") : null),
-          h("p", {}, estado.tipo === "bin" ? (m.v === "reforzado" ? "Jaula reforzada para uso intensivo y apilado." : "Versión liviana para uso general y traslado.") : "Monocapa, polietileno virgen grado alimenticio."),
-          h("div", { class: "acciones" }, h("a", { class: "btn btn-linea btn-sm", href: wa("Hola! Quiero cotizar: " + nom + "."), target: "_blank", rel: "noopener" }, "Cotizar")))
-      ));
+    const ops = LINEAS[estado.tipo].medidas;
+    const arriba = ops.filter(m => m.l >= L);
+    const cap = arriba.length ? arriba[0].l : ops[ops.length - 1].l;
+    ops.filter(m => m.l === cap).forEach((m, i) => {
+      const nombre = LINEAS[estado.tipo].nombre + " " + fmtL(m.l) + (m.v ? " " + m.v : "");
+      tarjetas.push(tarjetaRes({
+        etq: m.prox ? "Próximamente" : (i === 0 ? "Recomendado" : ""), etqVerde: !m.prox && i === 0,
+        titulo: nombre,
+        detalle: estado.tipo === "bin"
+          ? (m.v === "reforzado" ? "Jaula reforzada para uso intensivo y apilado." : "Versión liviana para uso general y traslado.")
+          : "Monocapa, polietileno virgen grado alimenticio.",
+        acciones: [enlaceWa("Cotizar", "Hola! Quiero cotizar: " + nombre + ".", "pill chica")]
+      }));
     });
   }
+
+  if (!tarjetas.length) {
+    cont.replaceChildren(h("p", { class: "vacio" }, "No hay una medida estándar de " + fmtL(L) + ". ",
+      enlaceWa("Consultanos por una a medida", "Hola! Necesito un tanque de " + L + " litros. ¿Qué me recomiendan?")));
+  } else cont.replaceChildren(...tarjetas);
 }
 
-(function buscador() {
-  const tipos = $("#tipos");
-  Object.entries(LINEAS).forEach(([k, l], i) => tipos.append(h("button", { type: "button", "aria-pressed": String(i === 0), onclick: e => {
-    tipos.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === e.currentTarget)));
-    estado.tipo = k;
-    const [a, b] = RANGOS[k];
-    estado.litros = Math.min(Math.max(estado.litros, a), b);
-    $("#litros").value = estado.litros;
-    $("#litros-rango").value = rangoDesdeLitros(estado.litros);
-    buscar();
-  } }, l.nombre)));
-  $("#litros").addEventListener("input", e => {
-    const v = parseInt(e.target.value, 10);
-    if (!Number.isFinite(v) || v <= 0) return;
-    estado.litros = v;
-    $("#litros-rango").value = rangoDesdeLitros(v);
-    buscar();
-  });
-  $("#litros-rango").addEventListener("input", e => {
-    estado.litros = litrosDesdeRango(+e.target.value);
-    $("#litros").value = estado.litros;
-    buscar();
-  });
+function elegirTipo(t) {
+  estado.tipo = t;
+  const [a, b] = RANGOS[t];
+  estado.litros = Math.min(Math.max(estado.litros, a), b);
+  $("#litros").value = estado.litros;
   $("#litros-rango").value = rangoDesdeLitros(estado.litros);
+  marcar($("#tipos"), t);
   buscar();
-})();
+}
+segmento($("#tipos"), Object.entries(LINEAS).map(([k, l]) => [k, l.nombre === "BIN" ? "Contenedor BIN" : l.nombre]), "conico", elegirTipo);
+$("#litros").addEventListener("input", e => {
+  const v = parseInt(e.target.value, 10);
+  if (!Number.isFinite(v) || v <= 0) return;
+  estado.litros = v;
+  $("#litros-rango").value = rangoDesdeLitros(v);
+  buscar();
+});
+$("#litros-rango").addEventListener("input", e => {
+  estado.litros = litrosDesdeRango(+e.target.value);
+  $("#litros").value = estado.litros;
+  buscar();
+});
+document.querySelectorAll("[data-tipo]").forEach(a => a.addEventListener("click", () => elegirTipo(a.dataset.tipo)));
+$("#litros-rango").value = rangoDesdeLitros(estado.litros);
+buscar();
 
 // ---- Tienda ----
-const pedido = new Map(); // id → cantidad
 let filtroCat = "Todo";
-
-function tarjeta(p) {
-  return h("article", { class: "prod", "data-cat": p.cat, "data-texto": (p.nombre + " " + p.cat).toLowerCase() },
-    h("div", { class: "fig" }, icono(p.img, VB[p.img])),
-    h("div", { class: "cuerpo" },
-      h("span", { class: "tipo" }, p.cat),
-      h("h4", {}, p.nombre),
-      h("div", { class: "pie" },
-        h("span", { class: "precio" }, fmt$(p.precio), h("small", {}, "precio de referencia")),
-        h("button", { class: "agregar", type: "button", "data-id": p.id, onclick: e => agregar(p.id, e.currentTarget) }, "Agregar"))));
-}
-(function tienda() {
-  const cont = $("#productos");
-  PRODUCTOS.forEach(p => cont.append(tarjeta(p)));
-  const cats = ["Todo", ...new Set(PRODUCTOS.map(p => p.cat))];
-  filtrosBotones($("#filtros"), cats, c => { filtroCat = c; filtrarTienda(); });
-  $("#buscar").addEventListener("input", filtrarTienda);
-})();
+PRODUCTOS.forEach(p => $("#productos").append(h("article", { class: "prod", "data-cat": p.cat, "data-texto": (p.nombre + " " + p.cat).toLowerCase().replace(/\./g, "") },
+  h("div", { class: "fig" }, figura(p.img)),
+  h("span", { class: "cat" }, p.cat),
+  h("h4", {}, p.nombre),
+  h("div", { class: "pie" },
+    h("span", { class: "precio num" }, fmt$(p.precio)),
+    h("button", { class: "pill chica", type: "button", onclick: e => agregar(p.id, e.currentTarget) }, "Agregar")))));
+segmento($("#filtros"), ["Todo", ...new Set(PRODUCTOS.map(p => p.cat))].map(c => [c, c]), "Todo", c => { filtroCat = c; filtrarTienda(); });
+$("#buscar").addEventListener("input", filtrarTienda);
 function filtrarTienda() {
-  const q = $("#buscar").value.trim().toLowerCase().replace(/\s*l$/, "");
+  const q = $("#buscar").value.trim().toLowerCase().replace(/\./g, "").replace(/\s*l$/, "");
   let n = 0;
   document.querySelectorAll("#productos .prod").forEach(el => {
-    const ok = (filtroCat === "Todo" || el.dataset.cat === filtroCat) && (!q || el.dataset.texto.replace(/\./g, "").includes(q.replace(/\./g, "")));
+    const ok = (filtroCat === "Todo" || el.dataset.cat === filtroCat) && (!q || el.dataset.texto.includes(q));
     el.hidden = !ok; if (ok) n++;
   });
   $("#sin-res").hidden = n > 0;
 }
 
 // ---- Pedido ----
+const pedido = new Map();
 function agregar(id, boton) {
   pedido.set(id, (pedido.get(id) || 0) + 1);
   if (boton) {
     const txt = boton.textContent;
-    boton.setAttribute("data-agregado", "");
     boton.textContent = "Agregado ✓";
-    setTimeout(() => { boton.removeAttribute("data-agregado"); boton.textContent = txt; }, 1200);
+    boton.disabled = true;
+    setTimeout(() => { boton.textContent = txt; boton.disabled = false; }, 1100);
   }
   pintarPedido();
 }
 function pintarPedido() {
-  const items = $("#items");
-  items.replaceChildren();
   let total = 0, cant = 0;
+  const filas = [];
   for (const [id, c] of pedido) {
     const p = PRODUCTOS.find(x => x.id === id);
     total += p.precio * c; cant += c;
-    items.append(h("div", { class: "item" },
+    filas.push(h("div", { class: "item" },
       h("span", { class: "nom" }, p.nombre),
-      h("span", { class: "sub" }, fmt$(p.precio * c)),
+      h("span", { class: "sub-t num" }, fmt$(p.precio * c)),
       h("div", { class: "cant" },
         h("button", { type: "button", "aria-label": "Quitar uno", onclick: () => { c > 1 ? pedido.set(id, c - 1) : pedido.delete(id); pintarPedido(); } }, "−"),
-        h("span", {}, c),
+        h("span", { class: "num" }, c),
         h("button", { type: "button", "aria-label": "Agregar uno", onclick: () => { pedido.set(id, c + 1); pintarPedido(); } }, "+")),
-      h("button", { class: "quitar", type: "button", onclick: () => { pedido.delete(id); pintarPedido(); } }, "Quitar")));
+      h("button", { class: "quitar", type: "button", onclick: () => { pedido.delete(id); pintarPedido(); } }, "Eliminar")));
   }
-  if (!cant) items.append(h("p", { class: "ayuda", style: "padding:18px 0" }, "Todavía no agregaste productos. Usá la tienda o el buscador de tanque."));
+  $("#items").replaceChildren(...(filas.length ? filas : [h("p", { class: "vacio-bolsa" }, "Tu pedido está vacío.")]));
   $("#total").textContent = fmt$(total);
-  const cont = $("#contador");
-  cont.textContent = cant;
-  cant ? cont.removeAttribute("data-cero") : cont.setAttribute("data-cero", "");
+  $("#contador").textContent = cant;
+  $("#contador").hidden = cant === 0;
   const lineas = ["Hola Infinity! Quiero hacer este pedido:"];
   for (const [id, c] of pedido) { const p = PRODUCTOS.find(x => x.id === id); lineas.push("• " + c + " × " + p.nombre + " (" + fmt$(p.precio * c) + ")"); }
-  lineas.push("Total de referencia: " + fmt$(total), "¿Me confirman stock y envío?");
-  $("#enviar-pedido").href = wa(lineas.join("\n"));
-  $("#enviar-pedido").target = "_blank";
-  $("#enviar-pedido").rel = "noopener";
+  lineas.push("Total: " + fmt$(total), "¿Me confirman stock y envío?");
+  const env = $("#enviar-pedido");
+  env.href = wa(lineas.join("\n")); env.target = "_blank"; env.rel = "noopener";
 }
-function abrirPedido(abrir) {
-  const p = $("#pedido");
-  abrir ? p.setAttribute("data-abierto", "") : p.removeAttribute("data-abierto");
-  p.setAttribute("aria-hidden", String(!abrir));
-  $("#velo").hidden = !abrir;
-  if (abrir) $("#cerrar-pedido").focus();
+function bolsa(abrir) {
+  const panel = $("#panel"), velo = $("#velo");
+  panel.classList.toggle("abierto", abrir);
+  panel.setAttribute("aria-hidden", String(!abrir));
+  if (abrir) { velo.hidden = false; requestAnimationFrame(() => velo.classList.add("abierto")); $("#cerrar-bolsa").focus(); }
+  else { velo.classList.remove("abierto"); setTimeout(() => { velo.hidden = true; }, 300); }
 }
-$("#abrir-pedido").addEventListener("click", () => abrirPedido(true));
-$("#cerrar-pedido").addEventListener("click", () => abrirPedido(false));
-$("#velo").addEventListener("click", () => abrirPedido(false));
-document.addEventListener("keydown", e => { if (e.key === "Escape") abrirPedido(false); });
+$("#abrir-bolsa").addEventListener("click", () => bolsa(true));
+$("#cerrar-bolsa").addEventListener("click", () => bolsa(false));
+$("#velo").addEventListener("click", () => bolsa(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#panel").classList.contains("abierto")) bolsa(false); });
 pintarPedido();
 
 // ---- Clientes y distribuidores ----
-CLIENTES.forEach(c => $("#clientes").append(h("span", {}, c)));
+[...CLIENTES, ...CLIENTES].forEach((c, i) => $("#clientes").append(h("span", i >= CLIENTES.length ? { "aria-hidden": "true" } : {}, c)));
 function pintarDist(pais) {
-  const cont = $("#distribuidores-lista");
-  cont.replaceChildren(...DISTRIBUIDORES.filter(d => pais === "Todos" || d.pais === pais).map(d =>
-    h("article", { class: "dist" }, h("span", { class: "pais" }, d.pais), h("b", {}, d.n), h("span", {}, d.lugar))));
+  $("#distribuidores-lista").replaceChildren(...DISTRIBUIDORES.filter(d => pais === "Todos" || d.pais === pais).map(d =>
+    h("div", { class: "dist" }, h("b", {}, d.n), h("span", {}, d.lugar + (pais === "Todos" && d.pais !== "Argentina" ? ", " + d.pais : "")))));
 }
-filtrosBotones($("#filtros-pais"), ["Todos", "Argentina", "Chile", "Perú"], pintarDist);
+segmento($("#filtros-pais"), ["Todos", "Argentina", "Chile", "Perú"].map(p => [p, p]), "Todos", pintarDist);
 pintarDist("Todos");
 
-// ---- Enlaces de WhatsApp ----
-const general = wa("Hola Infinity! Quiero hacer una consulta.");
-["#wa-contacto", "#wa-contacto-btn", "#wa-flotante"].forEach(s => { const a = $(s); a.href = general; a.target = "_blank"; a.rel = "noopener"; });
+// ---- WhatsApp y aviso ----
+["#wa-contacto", "#wa-flotante"].forEach(s => { const a = $(s); a.href = wa("Hola Infinity! Quiero hacer una consulta."); a.target = "_blank"; a.rel = "noopener"; });
+$("#ver-mejoras").addEventListener("click", e => {
+  const lista = $("#mejoras"); lista.hidden = !lista.hidden;
+  e.currentTarget.setAttribute("aria-expanded", String(!lista.hidden));
+});
+
+// ---- Aparición al hacer scroll ----
+const revelables = document.querySelectorAll(".revelar");
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver(ents => ents.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
+  }), { rootMargin: "0px 0px -8% 0px" });
+  revelables.forEach(el => io.observe(el));
+} else revelables.forEach(el => el.classList.add("visible"));
 </script>
 </body>
 </html>
