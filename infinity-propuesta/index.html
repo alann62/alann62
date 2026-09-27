@@ -137,7 +137,7 @@
   input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25), 0 0 0 .5px rgba(0,0,0,.04); cursor: pointer; }
   input[type=range]::-moz-range-thumb { width: 28px; height: 28px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); cursor: pointer; }
   .rango-ayuda { display: flex; justify-content: space-between; font-size: 12px; color: var(--terciario); margin-top: 10px; }
-  .resultados { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+  .resultados { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 360px)); justify-content: center; }
   .res { background: #fff; border-radius: 22px; padding: 30px 28px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 0 0 1px rgba(0,0,0,.04); transition: transform .3s var(--curva), box-shadow .3s var(--curva); }
   .res:hover { transform: scale(1.01); box-shadow: 0 10px 30px rgba(0,0,0,.08); }
   .res .etq { font-size: 12px; font-weight: 600; color: #b64400; min-height: 16px; }
@@ -252,12 +252,55 @@
   .wa svg { width: 28px; height: 28px; }
 
   /* ---------- Aparición al hacer scroll ---------- */
-  .js .revelar { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--curva), transform .9s var(--curva); }
-  .js .revelar.visible { opacity: 1; transform: none; }
+  .io .revelar { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--curva), transform .9s var(--curva); }
+  .io .revelar.visible { opacity: 1; transform: none; }
+
+  /* ---------- Escena 3D ---------- */
+  .escena { position: relative; width: 100%; max-width: 1100px; height: clamp(420px, 62vw, 640px); margin: 12px auto 0; touch-action: pan-y; }
+  .escena .lienzo { position: absolute; inset: 0; cursor: grab; }
+  .escena .lienzo:active { cursor: grabbing; }
+  .escena canvas { display: block; width: 100% !important; height: 100% !important; }
+  .escena .respaldo { position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; transition: opacity .6s var(--curva); }
+  .escena.listo .respaldo { opacity: 0; pointer-events: none; }
+  .punto { position: absolute; left: 0; top: 0; z-index: 2; display: flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; cursor: default; opacity: 0; transition: opacity .4s var(--curva); pointer-events: none; }
+  .escena.listo .punto { opacity: 1; }
+  .punto i { width: 14px; height: 14px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 4px rgba(15,157,88,.22); animation: latido 2.4s infinite; flex: none; }
+  .punto span { font: 500 12px var(--sf); color: var(--texto); background: rgba(255,255,255,.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 5px 10px; border-radius: 99px; white-space: nowrap; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+  @keyframes latido { 50% { box-shadow: 0 0 0 9px rgba(15,157,88,0); } }
+  .pista { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); font-size: 12px; color: var(--terciario); display: flex; gap: 6px; align-items: center; opacity: 0; transition: opacity .6s; }
+  .escena.listo .pista { opacity: 1; }
+  .chip-litros { position: absolute; right: 4%; top: 12%; background: rgba(255,255,255,.8); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 18px; padding: 14px 18px; text-align: left; box-shadow: 0 8px 30px rgba(0,0,0,.08); opacity: 0; transition: opacity .6s .4s; }
+  .escena.listo .chip-litros { opacity: 1; }
+  .chip-litros small { display: block; font-size: 12px; color: var(--secundario); }
+  .chip-litros b { font-size: 28px; font-weight: 600; letter-spacing: -.03em; }
+  @media (max-width: 640px) { .chip-litros { right: 0; top: 2%; padding: 10px 14px; } .chip-litros b { font-size: 22px; } }
+
+  /* ---------- Texto palabra por palabra ---------- */
+  .palabra { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }
+  .palabra > span { display: inline-block; will-change: transform; }
+
+  /* ---------- Tarjetas con luz que sigue al mouse ---------- */
+  .tile, .res, .prod { position: relative; isolation: isolate; }
+  .tile::before, .res::before, .prod::before { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .35s var(--curva); background: radial-gradient(480px circle at var(--mx, 50%) var(--my, 50%), rgba(15,157,88,.10), transparent 60%); }
+  .tile.oscura::before { background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(52,210,123,.20), transparent 60%); }
+  .tile:hover::before, .res:hover::before, .prod:hover::before { opacity: 1; }
+
+  /* ---------- Botón con destello ---------- */
+  .brillo { position: relative; overflow: hidden; isolation: isolate; }
+  .brillo::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.5) 50%, transparent 70%); transform: translateX(-120%); animation: barrido 3.4s var(--curva) 1.2s infinite; }
+  @keyframes barrido { 55%, 100% { transform: translateX(120%); } }
+
+  /* ---------- Borde animado ---------- */
+  @property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+  .haz { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, conic-gradient(from var(--ang), transparent 0 65%, #34d27b 82%, #0f9d58 90%, transparent 97%) border-box; animation: giro 4s linear infinite; }
+  @keyframes giro { to { --ang: 360deg; } }
+
+  .clamp-escena { will-change: transform; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .js .revelar { opacity: 1; transform: none; transition: none; }
+    .io .revelar { opacity: 1; transform: none; transition: none; }
+    .punto i, .brillo::after, .haz { animation: none; }
     .cinta-pista { animation: none; flex-wrap: wrap; width: auto; justify-content: center; gap: 20px 40px; }
     .panel, .velo, .res, .prod { transition: none; }
   }
@@ -434,26 +477,34 @@
     <h1>Hecho para durar.</h1>
     <p class="sub">Tanques rotomoldeados en polietileno virgen grado alimenticio. Para la cervecería, el agro y la industria.</p>
     <div class="ctas">
-      <a class="pill" href="#buscador">Encontrá tu tanque</a>
+      <a class="pill brillo iman" href="#buscador">Encontrá tu tanque</a>
       <a class="mas" href="#tienda">Ver precios</a>
     </div>
   </div>
-  <svg class="hero-img" viewBox="0 0 1100 440" role="img" aria-label="Línea de tanques Infinity: horizontal, cónico, fondo plano y contenedor BIN">
+  <div class="escena" id="escena">
+  <svg class="respaldo" viewBox="0 0 1100 440" role="img" aria-label="Línea de tanques Infinity: horizontal, cónico, fondo plano y contenedor BIN">
     <svg x="0" y="190" width="330" height="210" viewBox="0 0 320 200"><use href="#p-horizontal"/></svg>
     <svg x="760" y="170" width="260" height="260" viewBox="0 0 260 260"><use href="#p-bin"/></svg>
     <svg x="560" y="50" width="240" height="360" viewBox="0 0 200 300"><use href="#p-plano"/></svg>
     <svg x="300" y="0" width="290" height="435" viewBox="0 0 200 300"><use href="#p-conico"/></svg>
   </svg>
+    <div class="lienzo" id="lienzo" aria-label="Tanque cónico en 3D. Arrastrá para girarlo." role="img"></div>
+    <div class="punto" data-p="tapa"><i></i><span>Tapa hermética</span></div>
+    <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
+    <div class="punto" data-p="valvula"><i></i><span>Descarga de fondo</span></div>
+    <div class="chip-litros"><small>Cónico Ø 970</small><b class="num" id="nivel-3d">0 L</b></div>
+    <div class="pista">↔ Arrastrá para girarlo</div>
+  </div>
 </section>
 
 <!-- CIFRAS -->
 <section style="padding-block:80px">
   <div class="wrap">
     <div class="cifras">
-      <div class="cifra revelar"><b class="num">20</b><span>años fabricando tanques y recipientes.</span></div>
-      <div class="cifra revelar"><b class="num">+50.000</b><span>tanques vendidos.</span></div>
+      <div class="cifra revelar"><b class="num" data-contar="20">20</b><span>años fabricando tanques y recipientes.</span></div>
+      <div class="cifra revelar"><b class="num" data-contar="50000" data-prefijo="+">+50.000</b><span>tanques vendidos.</span></div>
       <div class="cifra revelar"><b>Único</b><span>fabricante con sistema CLAMP en Latinoamérica.</span></div>
-      <div class="cifra revelar"><b class="num">5</b><span>países ya usan nuestros productos.</span></div>
+      <div class="cifra revelar"><b class="num" data-contar="5">5</b><span>países ya usan nuestros productos.</span></div>
     </div>
   </div>
 </section>
@@ -505,25 +556,25 @@
       <h2 class="h-sec">Una sola pieza.<br>Cero roscas.</h2>
       <p class="sub">La salida se moldea con el mismo material del tanque. Sin roscas que se aflojen ni juntas donde se acumule suciedad. Somos los únicos que la fabrican en Latinoamérica.</p>
     </div>
-    <svg class="clamp-img revelar" viewBox="0 0 760 300" role="img" aria-label="Corte de la conexión clamp: pared del tanque, férula moldeada, junta sanitaria, abrazadera y válvula">
+    <div class="clamp-escena" id="clamp-escena"><svg class="clamp-img" viewBox="0 0 760 300" role="img" aria-label="Corte de la conexión clamp: pared del tanque, férula moldeada, junta sanitaria, abrazadera y válvula">
       <defs>
         <linearGradient id="g-pared" x1="0" x2="1"><stop offset="0" stop-color="#3a3a3c"/><stop offset="1" stop-color="#e5e8e6"/></linearGradient>
       </defs>
-      <rect x="0" y="20" width="200" height="260" fill="url(#g-pared)"/>
-      <path d="M200 110h170v-16h26v112h-26v-16H200z" fill="#e5e8e6"/>
-      <rect x="396" y="100" width="12" height="100" rx="3" fill="#34d27b"/>
-      <path d="M408 94h26v16h150v80H434v16h-26z" fill="url(#g-acero)"/>
+      <g id="c-pared"><rect x="0" y="20" width="200" height="260" fill="url(#g-pared)"/>
+      <path d="M200 110h170v-16h26v112h-26v-16H200z" fill="#e5e8e6"/></g>
+      <g id="c-junta"><rect x="396" y="100" width="12" height="100" rx="3" fill="#34d27b"/></g>
+      <g id="c-accesorio"><path d="M408 94h26v16h150v80H434v16h-26z" fill="url(#g-acero)"/>
       <rect x="584" y="118" width="110" height="64" rx="10" fill="#8e969b"/>
       <rect x="628" y="70" width="22" height="50" rx="4" fill="#c5cbcf"/>
-      <rect x="604" y="58" width="70" height="16" rx="8" fill="#e5e8e6"/>
-      <path d="M372 76h60l14 16v116l-14 16h-60l-14-16V92z" fill="none" stroke="#f5f5f7" stroke-width="6" stroke-linejoin="round"/>
-      <circle cx="402" cy="64" r="9" fill="#f5f5f7"/>
-      <text x="100" y="12" text-anchor="middle">Pared del tanque</text>
+      <rect x="604" y="58" width="70" height="16" rx="8" fill="#e5e8e6"/></g>
+      <g id="c-abrazadera"><path d="M372 76h60l14 16v116l-14 16h-60l-14-16V92z" fill="none" stroke="#f5f5f7" stroke-width="6" stroke-linejoin="round"/>
+      <circle cx="402" cy="64" r="9" fill="#f5f5f7"/></g>
+      <g id="c-textos"><text x="100" y="12" text-anchor="middle">Pared del tanque</text>
       <text x="285" y="236" text-anchor="middle">Férula moldeada</text>
       <text x="402" y="262" text-anchor="middle" style="fill:#34d27b">Junta sanitaria</text>
       <text x="402" y="44" text-anchor="middle">Abrazadera</text>
-      <text x="640" y="212" text-anchor="middle">Válvula</text>
-    </svg>
+      <text x="640" y="212" text-anchor="middle">Válvula</text></g>
+    </svg></div>
     <div class="ventajas">
       <div class="ventaja revelar"><b class="verde">+50%</b><span>de vida útil del tanque, como mínimo.</span></div>
       <div class="ventaja revelar"><b>1 pieza</b><span>La salida es del mismo material que el envase.</span></div>
@@ -719,6 +770,8 @@
   </div>
 </aside>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 "use strict";
 document.documentElement.classList.add("js");
@@ -825,8 +878,8 @@ function rangoDesdeLitros(l) {
   return Math.round((Math.log(x) - Math.log(a)) / (Math.log(b) - Math.log(a)) * 100);
 }
 
-function tarjetaRes({ etq, etqVerde, titulo, detalle, base, acciones }) {
-  return h("article", { class: "res" },
+function tarjetaRes({ etq, etqVerde, titulo, detalle, base, acciones, destacado }) {
+  return h("article", { class: "res" + (destacado ? " haz" : "") },
     h("span", { class: "etq" + (etqVerde ? " verde" : "") }, etq || ""),
     h("h4", {}, titulo),
     h("p", { class: "detalle" }, detalle),
@@ -851,7 +904,7 @@ function buscar() {
       acciones.push(enlaceWa("Cotizar tanque", "Hola! Quiero cotizar un tanque cónico Ø " + m.d + " mm de " + L + " litros."));
       tarjetas.push(tarjetaRes({
         etq: i === 0 ? "Más compacto" : (i === aptos.length - 1 && aptos.length > 1 ? "Más bajo" : ""),
-        etqVerde: i === 0,
+ etqVerde: i === 0, destacado: i === 0,
         titulo: "Cónico Ø " + miles(m.d),
         detalle: "Esta medida va " + (m.texto ? "en " + m.texto : "de " + miles(m.min) + " a " + fmtL(m.max)) + ".",
         base: bases.length
@@ -1005,14 +1058,256 @@ $("#ver-mejoras").addEventListener("click", e => {
   e.currentTarget.setAttribute("aria-expanded", String(!lista.hidden));
 });
 
-// ---- Aparición al hacer scroll ----
-const revelables = document.querySelectorAll(".revelar");
-if ("IntersectionObserver" in window) {
-  const io = new IntersectionObserver(ents => ents.forEach(en => {
-    if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
-  }), { rootMargin: "0px 0px -8% 0px" });
-  revelables.forEach(el => io.observe(el));
-} else revelables.forEach(el => el.classList.add("visible"));
+// ---- Animaciones (GSAP + ScrollTrigger; si no cargan, IntersectionObserver) ----
+const REDUCIR = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const GSAP = !REDUCIR && window.gsap && window.ScrollTrigger;
+
+// Divide un título en palabras sin tocar los <br>
+function dividirPalabras(el) {
+  [...el.childNodes].forEach(n => {
+    if (n.nodeType !== 3) return;
+    const frag = document.createDocumentFragment();
+    n.textContent.split(/(\s+)/).forEach(t => {
+      if (!t) return;
+      if (/^\s+$/.test(t)) { frag.append(t); return; }
+      const w = document.createElement("span"); w.className = "palabra";
+      const i = document.createElement("span"); i.textContent = t;
+      w.append(i); frag.append(w);
+    });
+    n.replaceWith(frag);
+  });
+}
+
+if (GSAP) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Títulos: palabras que suben con desenfoque
+  document.querySelectorAll(".hero h1, .h-sec").forEach(t => {
+    dividirPalabras(t);
+    const enHero = t.closest(".hero");
+    gsap.from(t.querySelectorAll(".palabra > span"), {
+      yPercent: 110, opacity: 0, filter: "blur(10px)", duration: 1, ease: "power4.out", stagger: .07,
+      delay: enHero ? .15 : 0,
+      scrollTrigger: enHero ? null : { trigger: t, start: "top 88%" }
+    });
+  });
+  gsap.from(".hero .nuevo, .hero .sub, .hero .ctas", { y: 24, opacity: 0, duration: 1, ease: "power3.out", stagger: .1, delay: .45 });
+
+  // Bloques
+  document.querySelectorAll(".revelar").forEach(el => gsap.from(el, {
+    y: 48, opacity: 0, duration: 1.1, ease: "power3.out",
+    scrollTrigger: { trigger: el, start: "top 90%" }
+  }));
+
+  // Contadores
+  document.querySelectorAll("[data-contar]").forEach(el => {
+    const fin = +el.dataset.contar, pre = el.dataset.prefijo || "", o = { v: 0 };
+    gsap.to(o, { v: fin, duration: 2, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%" },
+      onStart: () => { el.textContent = pre + "0"; },
+      onUpdate: () => { el.textContent = pre + Math.round(o.v).toLocaleString("es-AR"); } });
+  });
+
+  // Hero: la escena se aleja suavemente al bajar
+  gsap.to("#escena", { yPercent: 10, scale: .94, opacity: .6, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+  // CLAMP: despiece que se arma con el scroll
+  const tl = gsap.timeline({ scrollTrigger: { trigger: "#clamp-escena", start: "center center", end: "+=700", scrub: .6, pin: true } });
+  tl.from("#c-accesorio", { x: 180, duration: 1 }, 0)
+    .from("#c-abrazadera", { y: -140, opacity: 0, duration: 1 }, .15)
+    .from("#c-junta", { y: 120, opacity: 0, duration: 1 }, .05)
+    .from("#c-textos", { opacity: 0, duration: .6 }, .7);
+
+  // Botones magnéticos
+  document.querySelectorAll(".iman").forEach(b => {
+    const x = gsap.quickTo(b, "x", { duration: .5, ease: "power3" }), y = gsap.quickTo(b, "y", { duration: .5, ease: "power3" });
+    b.addEventListener("pointermove", e => { const r = b.getBoundingClientRect(); x((e.clientX - r.left - r.width / 2) * .3); y((e.clientY - r.top - r.height / 2) * .4); });
+    b.addEventListener("pointerleave", () => { x(0); y(0); });
+  });
+} else {
+  document.documentElement.classList.add("io");
+  const revelables = document.querySelectorAll(".revelar");
+  if (!REDUCIR && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(ents => ents.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
+    }), { rootMargin: "0px 0px -8% 0px" });
+    revelables.forEach(el => io.observe(el));
+  } else revelables.forEach(el => el.classList.add("visible"));
+}
+
+// Luz que sigue al mouse en tarjetas
+document.addEventListener("pointermove", e => {
+  const t = e.target.closest && e.target.closest(".tile, .res, .prod");
+  if (!t) return;
+  const r = t.getBoundingClientRect();
+  t.style.setProperty("--mx", (e.clientX - r.left) + "px");
+  t.style.setProperty("--my", (e.clientY - r.top) + "px");
+}, { passive: true });
+</script>
+
+<!-- Escena 3D del tanque (Three.js). Si no carga, queda la ilustración. -->
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const escena = document.getElementById("escena");
+const lienzo = document.getElementById("lienzo");
+const reducir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+try {
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 700 ? 1.5 : 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  lienzo.append(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+
+  const camera = new THREE.PerspectiveCamera(28, 1, .1, 50);
+  camera.position.set(3.2, 1.9, 5.4);
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, .62, 0);
+  controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true;
+  controls.autoRotate = !reducir; controls.autoRotateSpeed = 1.2;
+  controls.minPolarAngle = Math.PI * .3; controls.maxPolarAngle = Math.PI * .5;
+
+  // ---- Materiales ----
+  const pe = new THREE.MeshPhysicalMaterial({ color: 0xf2f4f1, roughness: .38, transmission: .78, thickness: .25, ior: 1.46, clearcoat: .5, clearcoatRoughness: .25, side: THREE.DoubleSide });
+  const acero = new THREE.MeshStandardMaterial({ color: 0xd3d8dc, metalness: 1, roughness: .26 });
+  const verde = new THREE.MeshPhysicalMaterial({ color: 0x12a150, roughness: .32, clearcoat: .6 });
+  const cerveza = new THREE.MeshStandardMaterial({ color: 0xc46a05, roughness: .12, metalness: 0, emissive: 0x7a3a00, emissiveIntensity: .35 });
+
+  const tanque = new THREE.Group(); scene.add(tanque);
+
+  // ---- Cuerpo: perfil de revolución (cono + cilindro + techo) ----
+  const radio = y => y < .56 ? .07 + .43 * Math.max(0, y - .02) / .54 : .5;
+  const perfil = [[.055, 0], [.07, .02], [.5, .56], [.5, 1.62], [.492, 1.66], [.44, 1.7], [.26, 1.725], [0, 1.73]].map(([x, y]) => new THREE.Vector2(x, y));
+  const cuerpo = new THREE.Mesh(new THREE.LatheGeometry(perfil, 128), pe);
+  cuerpo.castShadow = true; tanque.add(cuerpo);
+
+  // ---- Líquido: se regenera según el nivel ----
+  const liquido = new THREE.Mesh(new THREE.BufferGeometry(), cerveza); tanque.add(liquido);
+  function nivel(hh) {
+    const pts = [new THREE.Vector2(0, .03)];
+    for (let i = 0; i <= 28; i++) { const y = .03 + (hh - .03) * i / 28; pts.push(new THREE.Vector2(radio(y) * .955, y)); }
+    pts.push(new THREE.Vector2(0, hh));
+    liquido.geometry.dispose();
+    liquido.geometry = new THREE.LatheGeometry(pts, 96);
+  }
+  // Volumen aproximado del cónico Ø 970 lleno hasta la altura y (escala: 1.730 L con el tanque lleno)
+  const litrosA = y => Math.round(1750 * Math.min(1, Math.max(0, (y - .03) / (1.6 - .03)) ** 1.08));
+
+  // ---- Tapa ----
+  const tapa = new THREE.Mesh(new THREE.CylinderGeometry(.21, .21, .11, 64), verde);
+  tapa.position.y = 1.78; tapa.castShadow = true; tanque.add(tapa);
+  const aro = new THREE.Mesh(new THREE.TorusGeometry(.215, .018, 16, 64), verde);
+  aro.rotation.x = Math.PI / 2; aro.position.y = 1.735; tanque.add(aro);
+
+  // ---- Base metálica ----
+  function tubo(a, b, r, mat = acero) {
+    const va = new THREE.Vector3(...a), vb = new THREE.Vector3(...b);
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, va.distanceTo(vb), 20), mat);
+    m.position.copy(va).add(vb).multiplyScalar(.5);
+    m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), vb.clone().sub(va).normalize());
+    m.castShadow = true; tanque.add(m); return m;
+  }
+  const anillo = (r, y, g) => { const t = new THREE.Mesh(new THREE.TorusGeometry(r, g, 16, 128), acero); t.rotation.x = Math.PI / 2; t.position.y = y; t.castShadow = true; tanque.add(t); };
+  anillo(.515, .56, .024);
+  anillo(.6, -.12, .016);
+  for (let k = 0; k < 4; k++) {
+    const a = Math.PI / 4 + k * Math.PI / 2, c = Math.cos(a), s = Math.sin(a);
+    tubo([.515 * c, .56, .515 * s], [.66 * c, -.5, .66 * s], .022);
+    const pie = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .012, 24), acero);
+    pie.position.set(.66 * c, -.494, .66 * s); tanque.add(pie);
+  }
+
+  // ---- Salidas CLAMP ----
+  const ferula = (pos, rotZ) => {
+    const f = new THREE.Mesh(new THREE.CylinderGeometry(.065, .065, .025, 40), acero);
+    f.position.set(...pos); f.rotation.z = rotZ; tanque.add(f);
+    const ab = new THREE.Mesh(new THREE.TorusGeometry(.07, .012, 12, 40), acero);
+    ab.position.set(...pos); ab.rotation.set(rotZ ? 0 : Math.PI / 2, rotZ ? Math.PI / 2 : 0, 0); tanque.add(ab);
+  };
+  tubo([0, .02, 0], [0, -.2, 0], .035); ferula([0, -.2, 0], 0);
+  const valvula = new THREE.Mesh(new THREE.BoxGeometry(.12, .1, .1), acero); valvula.position.set(0, -.28, 0); tanque.add(valvula);
+  tubo([.12, -.28, 0], [-.12, -.28, 0], .015);
+  tubo([.49, .9, 0], [.68, .9, 0], .032); ferula([.68, .9, 0], Math.PI / 2);
+
+  // ---- Luces y piso ----
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xe8e8ed, .6));
+  const sol = new THREE.DirectionalLight(0xffffff, 1.6);
+  sol.position.set(3, 6, 4); sol.castShadow = true; sol.shadow.mapSize.set(1024, 1024);
+  Object.assign(sol.shadow.camera, { left: -2, right: 2, top: 2, bottom: -2 }); sol.shadow.radius = 6;
+  scene.add(sol);
+  const piso = new THREE.Mesh(new THREE.PlaneGeometry(12, 12), new THREE.ShadowMaterial({ opacity: .14 }));
+  piso.rotation.x = -Math.PI / 2; piso.position.y = -.5; piso.receiveShadow = true; scene.add(piso);
+
+  // ---- Puntos de interés (etiquetas HTML sobre el 3D) ----
+  const puntos = {
+    tapa: new THREE.Vector3(0, 1.84, 0),
+    clamp: new THREE.Vector3(.72, .9, 0),
+    valvula: new THREE.Vector3(0, -.3, 0)
+  };
+  const etiquetas = [...escena.querySelectorAll(".punto")];
+  const v = new THREE.Vector3(), dirCam = new THREE.Vector3();
+
+  function ajustar() {
+    const w = lienzo.clientWidth, h = lienzo.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    // En pantallas angostas se aleja la cámara para que entre el tanque completo
+    camera.fov = w < 600 ? 34 : 28;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(ajustar).observe(lienzo); ajustar();
+
+  // ---- Animación de llenado ----
+  const nivelTxt = document.getElementById("nivel-3d");
+  let h = .05; const hFin = 1.32, t0 = performance.now();
+  nivel(h);
+
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(escena);
+
+  function cuadro(t) {
+    requestAnimationFrame(cuadro);
+    if (!visible) return;
+    if (h < hFin) {
+      const p = reducir ? 1 : Math.min(1, (t - t0 - 400) / 2600);
+      if (p > 0) { h = .05 + (hFin - .05) * (1 - Math.pow(1 - p, 3)); nivel(h); nivelTxt.textContent = litrosA(h).toLocaleString("es-AR") + " L"; }
+    }
+    controls.update();
+    renderer.render(scene, camera);
+    camera.getWorldDirection(dirCam);
+    const w = lienzo.clientWidth, hh = lienzo.clientHeight;
+    etiquetas.forEach(el => {
+      const p = puntos[el.dataset.p];
+      v.copy(p).applyMatrix4(tanque.matrixWorld);
+      const detras = v.clone().sub(camera.position).normalize().dot(dirCam) < 0;
+      // La salida lateral se oculta cuando queda del lado de atrás del tanque
+      const oculta = el.dataset.p === "clamp" && v.clone().setY(0).normalize().dot(camera.position.clone().setY(0).normalize()) < -.15;
+      v.project(camera);
+      el.style.transform = `translate(${(v.x * .5 + .5) * w - 7}px, ${(-v.y * .5 + .5) * hh - 7}px)`;
+      el.style.visibility = detras || oculta ? "hidden" : "visible";
+    });
+  }
+  requestAnimationFrame(cuadro);
+  escena.classList.add("listo");
+} catch (err) {
+  console.warn("Escena 3D no disponible, se muestra la ilustración.", err);
+}
 </script>
 </body>
 </html>
