@@ -11,6 +11,11 @@ def incrustar(m):
     datos = base64.b64encode(ruta.read_bytes()).decode()
     return f"data:{TIPOS[ruta.suffix]};base64,{datos}"
 
+# Scripts locales: se copian adentro del HTML
+def script(m):
+    codigo = (base / m.group(1)).read_text(encoding="utf-8").replace("</script", "<\\/script")
+    return "<script>" + codigo + "</script>"
+html = re.sub(r'<script src="(js/[\w.-]+)"></script>', script, html)
 html = re.sub(r"img/[\w-]+\.(?:webp|png|jpg)", incrustar, html)
 # Rutas que el script arma en tiempo de ejecución ("img/p" + id + ".webp")
 usadas = sorted(p.name for p in (base / "img").iterdir())
