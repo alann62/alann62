@@ -297,6 +297,34 @@
 
   .clamp-escena { will-change: transform; }
 
+  /* ---------- Fotos reales ---------- */
+  .hero-foto { width: min(1000px, 100%); height: auto; margin: 44px auto 0; display: block; will-change: transform; }
+  .logo img { width: 26px; height: auto; }
+  #tres-d { padding-bottom: 20px; }
+  .escena img.respaldo { object-fit: contain; }
+  .tile { background: #fff; }
+  .tile .fotos { margin-top: auto; padding-top: 32px; width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 3%; }
+  .tile .fotos img { width: auto; max-width: 48%; object-fit: contain; }
+  .tile.foto-abajo { padding-bottom: 0; }
+  .tile.foto-abajo .fotos img { max-width: 100%; }
+  .col .fig img { max-height: 100%; max-width: 100%; width: auto; object-fit: contain; }
+  .prod .fig { display: flex; align-items: center; justify-content: center; height: 180px; overflow: hidden; }
+  .prod .fig img { max-height: 180px; max-width: 100%; width: auto; height: auto; object-fit: contain; }
+  .res-foto { height: 170px; display: flex; align-items: center; justify-content: center; margin: 6px 0 10px; }
+  .res-foto img { max-height: 170px; max-width: 100%; object-fit: contain; }
+  .res .producto { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-top: 6px; font-size: 15px; }
+  .res .producto b { font-weight: 600; }
+  .res .producto span { white-space: nowrap; }
+  .banda { position: relative; color: #fff; background: #1d1d1f center / cover no-repeat; min-height: 620px; display: flex; align-items: flex-end; padding-block: 120px 90px; }
+  .banda::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.65) 100%); }
+  .banda .wrap { position: relative; }
+  .banda .sub { color: rgba(255,255,255,.85); margin-left: 0; }
+  .banda .ctas { display: flex; gap: 18px; align-items: center; margin-top: 28px; flex-wrap: wrap; }
+  .banda .mas { color: #fff; }
+  .cinta-pista { align-items: center; gap: 72px; }
+  .cinta-pista img { height: 84px; width: auto; opacity: .8; }
+  .ver-todos { display: flex; justify-content: center; margin-top: 36px; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .io .revelar { opacity: 1; transform: none; transition: none; }
@@ -441,7 +469,7 @@
 
 <header class="nav-global">
   <div class="wrap">
-    <a class="logo" href="#inicio" aria-label="Infinity Rotomolding, inicio"><svg aria-hidden="true"><use href="#i-logo"/></svg>Infinity</a>
+    <a class="logo" href="#inicio" aria-label="Infinity Rotomolding, inicio"><img src="img/logo.png" alt="" width="26" height="20">Infinity</a>
     <nav aria-label="Principal">
       <a href="#lineas">Tanques</a>
       <a href="#clamp">CLAMP</a>
@@ -481,20 +509,7 @@
       <a class="mas" href="#tienda">Ver precios</a>
     </div>
   </div>
-  <div class="escena" id="escena">
-  <svg class="respaldo" viewBox="0 0 1100 440" role="img" aria-label="Línea de tanques Infinity: horizontal, cónico, fondo plano y contenedor BIN">
-    <svg x="0" y="190" width="330" height="210" viewBox="0 0 320 200"><use href="#p-horizontal"/></svg>
-    <svg x="760" y="170" width="260" height="260" viewBox="0 0 260 260"><use href="#p-bin"/></svg>
-    <svg x="560" y="50" width="240" height="360" viewBox="0 0 200 300"><use href="#p-plano"/></svg>
-    <svg x="300" y="0" width="290" height="435" viewBox="0 0 200 300"><use href="#p-conico"/></svg>
-  </svg>
-    <div class="lienzo" id="lienzo" aria-label="Tanque cónico en 3D. Arrastrá para girarlo." role="img"></div>
-    <div class="punto" data-p="tapa"><i></i><span>Tapa hermética</span></div>
-    <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
-    <div class="punto" data-p="valvula"><i></i><span>Descarga de fondo</span></div>
-    <div class="chip-litros"><small>Cónico Ø 970</small><b class="num" id="nivel-3d">0 L</b></div>
-    <div class="pista">↔ Arrastrá para girarlo</div>
-  </div>
+  <img class="hero-foto" id="hero-foto" src="img/familia.webp" alt="Línea Infinity: tanques cónicos y de fondo plano, horizontales, contenedor BIN y batea" width="1000" height="626">
 </section>
 
 <!-- CIFRAS -->
@@ -509,6 +524,26 @@
   </div>
 </section>
 
+<!-- 3D -->
+<section id="tres-d">
+  <div class="wrap">
+    <div class="cabeza centro" style="margin-bottom:0">
+      <span class="eyebrow">En 3D</span>
+      <h2 class="h-sec">Girá el fermentador.</h2>
+      <p class="sub">Arrastralo para ver la salida CLAMP, la tapa hermética y cómo se ve el nivel a través de la pared.</p>
+    </div>
+  </div>
+  <div class="escena" id="escena">
+  <img class="respaldo" src="img/p532.webp" alt="" width="243" height="500">
+    <div class="lienzo" id="lienzo" aria-label="Tanque cónico en 3D. Arrastrá para girarlo." role="img"></div>
+    <div class="punto" data-p="tapa"><i></i><span>Tapa hermética</span></div>
+    <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
+    <div class="punto" data-p="valvula"><i></i><span>Descarga de fondo</span></div>
+    <div class="chip-litros"><small>Cónico Ø 970</small><b class="num" id="nivel-3d">0 L</b></div>
+    <div class="pista">↔ Arrastrá para girarlo</div>
+  </div>
+</section>
+
 <!-- LÍNEAS -->
 <section class="gris" id="lineas">
   <div class="wrap ancho">
@@ -516,33 +551,47 @@
       <h2 class="h-sec">Conocé la línea.</h2>
     </div>
     <div class="bento">
-      <article class="tile oscura grande revelar">
+      <article class="tile grande revelar">
         <h3>Cónicos</h3>
-        <p>Fermentá, madurá y trasvasá. Con salidas clamp de fábrica.</p>
-        <span class="rango">De 25 a 11.600 litros · Ø 400 a 2.500 mm</span>
-        <div class="acciones"><a class="pill" href="#buscador" data-tipo="conico">Elegir medida</a><a class="mas" href="#comparar" style="color:#34d27b">Ver medidas</a></div>
-        <div class="img"><svg viewBox="0 0 200 300" aria-hidden="true"><use href="#p-conico"/></svg></div>
+        <p>De 25 a 11.600 litros. Con tapa a rosca y salidas clamp de fábrica.</p>
+        <span class="rango">Ø 380 a 2.500 mm · desde $ 91.283</span>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="conico">Elegir medida</a><a class="mas" href="#tienda" data-cat="Fermentadores">Comprar</a></div>
+        <div class="fotos"><img src="img/p3828.webp" alt="Cónico 25 L" style="height:190px" loading="lazy"><img src="img/p3913.webp" alt="Cónico 160 L" style="height:260px" loading="lazy"><img src="img/p3926.webp" alt="Cónico 250 L sobre base" style="height:340px" loading="lazy"></div>
       </article>
       <article class="tile revelar">
-        <h3>Fondo plano</h3>
-        <p>Almacenamiento y reserva, de 50 a 15.000 litros.</p>
-        <span class="rango">Ø 400 a 2.500 mm</span>
-        <div class="acciones"><a class="pill" href="#buscador" data-tipo="plano">Elegir medida</a></div>
-        <div class="img"><svg viewBox="0 0 200 300" aria-hidden="true"><use href="#p-plano"/></svg></div>
+        <h3>Para la cervecería</h3>
+        <p>Fermentadores y maduradores con salida CLAMP.</p>
+        <span class="rango">25 · 69 · 270 · 300 litros</span>
+        <div class="acciones"><a class="pill" href="#tienda" data-cat="Fermentadores">Ver fermentadores</a></div>
+        <div class="fotos"><img src="img/p532.webp" alt="Fermentador cervecero 300 L" style="height:320px" loading="lazy"><img src="img/p562.webp" alt="Madurador cervecero 270 L" style="height:250px" loading="lazy"></div>
       </article>
       <article class="tile revelar">
         <h3>Horizontales</h3>
-        <p>Bajos y estables, ideales para traslado.</p>
+        <p>Bajos y estables, ideales para traslado y químicos.</p>
         <span class="rango">250 · 500 · 2.000 · 2.500 litros</span>
         <div class="acciones"><a class="pill" href="#buscador" data-tipo="horizontal">Elegir medida</a></div>
-        <div class="img"><svg viewBox="0 0 320 200" aria-hidden="true" style="height:210px;margin-bottom:40px"><use href="#p-horizontal"/></svg></div>
+        <div class="fotos"><img src="img/horizontales.webp" alt="Tanques horizontales Infinity" style="height:260px;max-width:100%" loading="lazy"></div>
       </article>
       <article class="tile grande revelar">
-        <h3>Contenedor BIN</h3>
-        <p>Jaula metálica y pallet. Apilable y listo para autoelevador.</p>
-        <span class="rango">600 y 1.000 litros · liviano o reforzado</span>
-        <div class="acciones"><a class="pill" href="#buscador" data-tipo="bin">Elegir medida</a></div>
-        <div class="img"><svg viewBox="0 0 260 260" aria-hidden="true" style="height:300px"><use href="#p-bin"/></svg></div>
+        <h3>Hasta 15.000 litros.</h3>
+        <p>Tanques de fondo plano para reserva, agro e industria.</p>
+        <span class="rango">Ø 400 a 2.500 mm · 59 L a 15.000 L</span>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="plano">Elegir medida</a></div>
+        <div class="fotos"><img src="img/p240.webp" alt="Tanque fondo plano 59 L" style="height:200px" loading="lazy"><img src="img/grande.webp" alt="Tanque de 10.000 litros junto a una persona, para ver la escala" style="height:330px;border-radius:18px" loading="lazy"></div>
+      </article>
+      <article class="tile revelar">
+        <h3>Contenedores y bateas</h3>
+        <p>Contenedor BIN, cajas con ruedas y bateas antiderrame.</p>
+        <span class="rango">190 a 1.200 litros</span>
+        <div class="acciones"><a class="pill" href="#tienda" data-cat="Bateas y cajones">Ver productos</a></div>
+        <div class="fotos"><img src="img/contenedores.webp" alt="Caja cajón, tanque plano, contenedor BIN y bases" style="height:280px;max-width:100%" loading="lazy"></div>
+      </article>
+      <article class="tile revelar">
+        <h3>Accesorios CLAMP</h3>
+        <p>Llaves, abrazaderas, juntas y airlocks. Todo compatible.</p>
+        <span class="rango">desde $ 3.377</span>
+        <div class="acciones"><a class="pill" href="#tienda" data-cat="Accesorios CLAMP">Ver accesorios</a></div>
+        <div class="fotos"><img src="img/p3280.webp" alt="Llave de paso CLAMP" style="height:230px" loading="lazy"><img src="img/p3272.webp" alt="Kit CLAMP" style="height:230px" loading="lazy"></div>
       </article>
     </div>
   </div>
@@ -613,28 +662,28 @@
     <div class="comparar-scroll">
       <div class="comparar">
         <div class="col">
-          <div class="fig"><svg viewBox="0 0 200 300" aria-hidden="true" style="height:200px"><use href="#p-conico"/></svg></div>
+          <div class="fig"><img src="img/p3913.webp" alt="Tanque cónico" loading="lazy"></div>
           <h4>Cónico</h4>
           <div class="dato"><b class="num">25–11.600 L</b><span>Capacidad</span></div>
           <div class="dato"><b>8 diámetros</b><ul class="num"><li>Ø 400 · 25–132 L</li><li>Ø 500 · 80–200 L</li><li>Ø 600 · 150–365 L</li><li>Ø 690 · 175–650 L</li><li>Ø 970 · 290–1.750 L</li><li>Ø 1.250 · 1.100–3.600 L</li><li>Ø 1.750 · 1.400–6.700 L</li><li>Ø 2.500 · 7.200 y 11.600 L</li></ul></div>
           <div class="dato"><b>Sí</b><span>Salidas clamp de fábrica</span></div>
         </div>
         <div class="col">
-          <div class="fig"><svg viewBox="0 0 200 300" aria-hidden="true" style="height:200px"><use href="#p-plano"/></svg></div>
+          <div class="fig"><img src="img/p240.webp" alt="Tanque fondo plano" loading="lazy"></div>
           <h4>Fondo plano</h4>
           <div class="dato"><b class="num">50–15.000 L</b><span>Capacidad</span></div>
           <div class="dato"><b>7 diámetros</b><ul class="num"><li>Ø 400</li><li>Ø 570</li><li>Ø 690</li><li>Ø 970</li><li>Ø 1.250</li><li>Ø 1.750</li><li>Ø 2.500 · 10.000 y 15.000 L</li></ul></div>
           <div class="dato"><b>Sí</b><span>Salidas clamp de fábrica</span></div>
         </div>
         <div class="col">
-          <div class="fig"><svg viewBox="0 0 320 200" aria-hidden="true" style="height:130px"><use href="#p-horizontal"/></svg></div>
+          <div class="fig"><img src="img/p414.webp" alt="Tanque horizontal" loading="lazy"></div>
           <h4>Horizontal</h4>
           <div class="dato"><b class="num">250–2.500 L</b><span>Capacidad</span></div>
           <div class="dato"><b>4 medidas</b><ul class="num"><li>250 L</li><li>500 L</li><li>2.000 L</li><li>2.500 L</li><li style="color:var(--terciario)">5.000 L · próximamente</li></ul></div>
           <div class="dato"><b>Monocapa</b><span>Color natural, sin pigmentos</span></div>
         </div>
         <div class="col">
-          <div class="fig"><svg viewBox="0 0 260 260" aria-hidden="true" style="height:170px"><use href="#p-bin"/></svg></div>
+          <div class="fig"><img src="img/contenedores.webp" alt="Contenedor BIN" loading="lazy"></div>
           <h4>Contenedor BIN</h4>
           <div class="dato"><b class="num">600–1.000 L</b><span>Capacidad</span></div>
           <div class="dato"><b>2 versiones</b><ul><li>Liviano</li><li>Reforzado</li></ul></div>
@@ -660,6 +709,16 @@
   </div>
 </section>
 
+<!-- CERVECERÍA -->
+<section class="banda" style="background-image:url(img/planta.webp)">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#34d27b">Cervecería artesanal</span>
+    <h2 class="h-sec">Del mosto a la canilla.</h2>
+    <p class="sub">Fermentadores y maduradores con salida CLAMP, fáciles de sanitizar y compatibles con los accesorios de la industria.</p>
+    <div class="ctas"><a class="pill" href="#tienda" data-cat="Fermentadores">Ver fermentadores</a><a class="mas" href="#clamp">Conocé el sistema CLAMP</a></div>
+  </div>
+</section>
+
 <!-- TIENDA -->
 <section class="gris" id="tienda">
   <div class="wrap ancho">
@@ -674,6 +733,7 @@
     <p class="nota-tienda">Todos los tanques incluyen su kit clamp. Bases, llaves y accesorios se venden por separado. Las tapas a rosca D25 y D50 vienen incluidas; la tapa con insertos D47, no.</p>
     <div class="productos" id="productos"></div>
     <p class="sin-res" id="sin-res" hidden>No encontramos productos con esa búsqueda.</p>
+    <div class="ver-todos"><button class="pill borde" type="button" id="ver-todos">Ver todos los productos</button></div>
   </div>
 </section>
 
@@ -694,7 +754,7 @@
 <!-- CLIENTES -->
 <section class="gris" style="padding-block:80px">
   <div class="wrap">
-    <p class="centro" style="color:var(--secundario);margin:0 0 36px;font-size:17px">Cervecerías de todo el país ya trabajan con Infinity.</p>
+    <p class="centro" style="color:var(--secundario);margin:0 0 44px;font-size:17px">Cervecerías de todo el país ya trabajan con Infinity.</p>
   </div>
   <div class="cinta"><div class="cinta-pista" id="clientes"></div></div>
 </section>
@@ -789,31 +849,71 @@ const LINEAS = {
   bin: { nombre: "BIN", medidas: [{ l: 600, v: "liviano" }, { l: 600, v: "reforzado" }, { l: 1000, v: "liviano" }, { l: 1000, v: "reforzado" }] }
 };
 
+// Catálogo y precios de la tienda actual de Infinity
+const P = (id, cat, nombre, precio, extra) => ({ id: String(id), cat, nombre, precio, img: "img/p" + id + ".webp", ...extra });
 const PRODUCTOS = [
-  { id: "c50",   cat: "Tanques", img: "p-conico", nombre: "Cónico 50 L D40 con tapa a rosca", precio: 145469 },
-  { id: "fp50",  cat: "Tanques", img: "p-plano",  nombre: "Fondo plano 50 L D40, salida lateral", precio: 111358 },
-  { id: "b40a",  cat: "Bases", img: "p-base", nombre: "Base metálica D40 · 18 a 50 L",    precio: 105725, dmin: 18,   dmax: 50,   diam: 400 },
-  { id: "b40b",  cat: "Bases", img: "p-base", nombre: "Base metálica D40 · 60 a 70 L",    precio: 108835, dmin: 60,   dmax: 70,   diam: 400 },
-  { id: "b40c",  cat: "Bases", img: "p-base", nombre: "Base metálica D40 · 82 a 132 L",   precio: 161699, dmin: 82,   dmax: 132,  diam: 400 },
-  { id: "b50",   cat: "Bases", img: "p-base", nombre: "Base metálica D50 · 80 a 200 L",   precio: 217315, dmin: 80,   dmax: 200,  diam: 500 },
-  { id: "b60",   cat: "Bases", img: "p-base", nombre: "Base metálica D60 · 150 a 365 L",  precio: 248331, dmin: 150,  dmax: 365,  diam: 600 },
-  { id: "b69l",  cat: "Bases", img: "p-base", nombre: "Base metálica D69 liviana · 175 a 380 L",   precio: 271347, dmin: 175, dmax: 380, diam: 690 },
-  { id: "b69r",  cat: "Bases", img: "p-base", nombre: "Base metálica D69 reforzada · 380 a 650 L", precio: 306690, dmin: 380, dmax: 650, diam: 690 },
-  { id: "b97",   cat: "Bases", img: "p-base", nombre: "Base metálica D97 · 570 a 1.750 L",     precio: 427717, dmin: 570,  dmax: 1750, diam: 970 },
-  { id: "b125a", cat: "Bases", img: "p-base", nombre: "Base metálica D125 · 1.100 a 1.650 L",  precio: 550000, dmin: 1100, dmax: 1650, diam: 1250 },
-  { id: "b125b", cat: "Bases", img: "p-base", nombre: "Base metálica D125 · 2.000 a 2.150 L",  precio: 660000, dmin: 2000, dmax: 2150, diam: 1250 },
-  { id: "b125c", cat: "Bases", img: "p-base", nombre: "Base metálica D125 · 2.150 a 3.600 L",  precio: 823900, dmin: 2150, dmax: 3600, diam: 1250 },
-  { id: "bp40",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D40 sin disco de apoyo", precio: 139118 },
-  { id: "bp58",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D58 sin disco de apoyo", precio: 176000 },
-  { id: "bp69",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D69 sin disco de apoyo", precio: 201679 },
-  { id: "bp97",  cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D97 con disco de 3 mm (hasta 3.500 L)", precio: 499580 },
-  { id: "bp125", cat: "Bases planas", img: "p-plana", nombre: "Base plana estática D125 con piso en tubo 30×30", precio: 634717 },
-  { id: "bpl40", cat: "Accesorios", img: "p-plana", nombre: "Base plástica D40", precio: 46355 },
-  { id: "tclamp",cat: "Accesorios", img: "p-tapa",  nombre: "Tapa ciega clamp 1 1/2\"", precio: 3377 }
+  P(532, "Fermentadores", "Fermentador cervecero CLAMP 300 L", 310657),
+  P(562, "Fermentadores", "Madurador cervecero CLAMP 270 L", 300000),
+  P(613, "Fermentadores", "Madurador 69 L con salida CLAMP", 119179),
+  P(584, "Fermentadores", "Fermentador cervecero 25 L", 91283),
+  P(3828, "Fermentadores", "Cónico 25 L D38 con tapa a rosca", 91283, { l: 25, diam: 400 }),
+  P(3831, "Fermentadores", "Cónico 30 L D40 con tapa a rosca", 109541, { l: 30, diam: 400 }),
+  P(3834, "Fermentadores", "Cónico 40 L D40 con tapa a rosca", 131287, { l: 40, diam: 400 }),
+  P(29,   "Fermentadores", "Cónico 50 L D40 con tapa a rosca", 145469, { l: 50, diam: 400 }),
+  P(3838, "Fermentadores", "Cónico 60 L D40 con tapa a rosca", 151879, { l: 60, diam: 400 }),
+  P(3861, "Fermentadores", "Cónico 70 L D40 con tapa a rosca", 164786, { l: 70, diam: 400 }),
+  P(3867, "Fermentadores", "Cónico 82 L D40 con tapa a rosca", 171158, { l: 82, diam: 400 }),
+  P(3893, "Fermentadores", "Cónico 90 L D40 con tapa a rosca", 177644, { l: 90, diam: 400 }),
+  P(3897, "Fermentadores", "Cónico 110 L D40 con tapa a rosca", 182643, { l: 110, diam: 400 }),
+  P(3900, "Fermentadores", "Cónico 132 L D40 con tapa a rosca", 187715, { l: 132, diam: 400 }),
+  P(3909, "Fermentadores", "Cónico 125 L D50 con tapa a rosca", 185238, { l: 125, diam: 500 }),
+  P(3913, "Fermentadores", "Cónico 160 L D50 con tapa a rosca", 212336, { l: 160, diam: 500 }),
+  P(3917, "Fermentadores", "Cónico 200 L D50 con tapa a rosca", 253416, { l: 200, diam: 500 }),
+  P(3926, "Fermentadores", "Cónico 250 L D60 con tapa a rosca", 311944, { l: 250, diam: 600 }),
+  P(240,  "Tanques", "Fondo plano 59 L D40, salida lateral", 111358, { plano: 59 }),
+  P(3977, "Tanques", "Fondo plano 110 L D40, salida lateral", 147844, { plano: 110 }),
+  P(607,  "Tanques", "Tanque vertical 10.000 L Ø 2.500", 3347190, { plano: 10000 }),
+  P(443,  "Tanques", "Tanque fondo plano 15.000 L", 4656960, { plano: 15000 }),
+  P(414,  "Tanques", "Tanque horizontal 250 L", 345278, { horiz: 250 }),
+  P(946,  "Tanques", "Tanque horizontal 500 L para químicos", 532800, { horiz: 500 }),
+  P(181, "Bases", "Base metálica D40 · 18 a 50 L", 105725, { dmin: 18, dmax: 50, diam: 400 }),
+  P(180, "Bases", "Base metálica D40 · 60 a 70 L", 108835, { dmin: 60, dmax: 70, diam: 400 }),
+  P(179, "Bases", "Base metálica D40 · 82 a 132 L", 161699, { dmin: 82, dmax: 132, diam: 400 }),
+  P(178, "Bases", "Base metálica D50 · 80 a 200 L", 217315, { dmin: 80, dmax: 200, diam: 500 }),
+  P(177, "Bases", "Base metálica D60 · 150 a 365 L", 248331, { dmin: 150, dmax: 365, diam: 600 }),
+  P(175, "Bases", "Base metálica D69 liviana · 175 a 380 L", 271347, { dmin: 175, dmax: 380, diam: 690 }),
+  P(174, "Bases", "Base metálica D69 reforzada · 380 a 650 L", 306690, { dmin: 380, dmax: 650, diam: 690 }),
+  P(130, "Bases", "Base metálica D97 · 570 a 1.750 L", 427717, { dmin: 570, dmax: 1750, diam: 970 }),
+  P(123, "Bases", "Base metálica D125 · 1.100 a 1.650 L", 550000, { dmin: 1100, dmax: 1650, diam: 1250 }),
+  P(183, "Bases", "Base metálica D125 · 2.000 a 2.150 L", 660000, { dmin: 2000, dmax: 2150, diam: 1250 }),
+  P(182, "Bases", "Base metálica D125 · 2.150 a 3.600 L", 823900, { dmin: 2150, dmax: 3600, diam: 1250 }),
+  P(577, "Bases", "Base plástica para fermentadores D40 · 30 a 90 L", 46355),
+  P(19,  "Bases", "Base plástica D40", 46355),
+  P(407, "Bases", "Base plana estática D40", 139118),
+  P(406, "Bases", "Base plana estática D58", 176000),
+  P(405, "Bases", "Base plana estática D69", 201679),
+  P(409, "Bases", "Base plana estática D97 con disco de 3 mm", 499580),
+  P(410, "Bases", "Base plana estática D125 con piso en tubo 30×30", 634717),
+  P(3272, "Accesorios CLAMP", "Kit CLAMP: abrazadera, manguito y junta", 23708),
+  P(3280, "Accesorios CLAMP", "Llave de paso CLAMP", 48899),
+  P(3840, "Accesorios CLAMP", "Llave de paso CLAMP con abrazadera y junta", 59000),
+  P(3804, "Accesorios CLAMP", "Abrazadera plástica 1 1/2\"", 13223),
+  P(559,  "Accesorios CLAMP", "Junta CLAMP 1 1/2\" estándar", 3714),
+  P(159,  "Accesorios CLAMP", "Tapa ciega CLAMP 1 1/2\"", 3377),
+  P(534,  "Accesorios CLAMP", "Manguito CLAMP roscado 3/4\"", 7400),
+  P(955,  "Accesorios CLAMP", "Airlock con conector a rosca", 21893),
+  P(574,  "Accesorios CLAMP", "Tapa plástica a rosca D25", 54055),
+  P(603, "Bateas y cajones", "Batea antiderrame 1.200 L", 1073126),
+  P(425, "Bateas y cajones", "Batea 750 L", 804756),
+  P(609, "Bateas y cajones", "Batea antiderrame 300 L", 331904),
+  P(482, "Bateas y cajones", "Caja cajón 190 L con ruedas", 191029),
+  P(3875, "Recipientes", "Recipiente cilíndrico 30 L con tapa y manija", 64033),
+  P(3878, "Recipientes", "Recipiente cilíndrico 75 L con tapa y manija", 96850),
+  P(3881, "Recipientes", "Recipiente cilíndrico 100 L con tapa y manija", 101653)
 ];
-const VB = { "p-conico": "0 0 200 300", "p-plano": "0 0 200 300", "p-base": "0 0 200 220", "p-plana": "0 0 200 220", "p-tapa": "0 0 200 200" };
+const ETIQUETA_CAT = { "Fermentadores": "Fermentadores y cónicos" };
 
-const CLIENTES = ["Varit", "Cratón", "Ribera", "Vamp", "Hashtag", "Kalewala", "Viejo Cabezón", "Elemut", "Beyla", "San Pedro"];
+const CLIENTES = [["19668","Varit"],["19732","Cratón"],["19733","Ribera"],["19734","Vamp"],["19735","Nave"],["19737","600 Chapitas"],["19738","Hashtag"],["19739","Kalewala"],["19740","Viejo Cabezón"],["19741","Elemut"],["19742","Beyla"],["19743","Misha Beer"],["19744","Stielar"],["19745","San Pedro"],["19746","Olvidate"]];
 const DISTRIBUIDORES = [
   { n: "Cumbre", lugar: "San Juan", pais: "Argentina" },
   { n: "Malba Insumos Cerveceros", lugar: "Godoy Cruz, Mendoza", pais: "Argentina" },
@@ -887,6 +987,14 @@ function tarjetaRes({ etq, etqVerde, titulo, detalle, base, acciones, destacado 
     h("div", { class: "acciones" }, acciones));
 }
 
+const fotoRes = (src, alt) => h("div", { class: "res-foto" }, h("img", { src, alt, loading: "lazy" }));
+function lineaProducto(p) {
+  return [
+    h("div", { class: "producto" }, h("b", {}, p.nombre), h("span", { class: "num" }, fmt$(p.precio))),
+  ];
+}
+const btnAgregar = (p, texto) => h("button", { class: "pill chica", type: "button", onclick: e => agregar(p.id, e.currentTarget) }, texto || "Agregar");
+
 function buscar() {
   const cont = $("#resultados");
   const L = estado.litros;
@@ -898,44 +1006,51 @@ function buscar() {
   if (estado.tipo === "conico") {
     const aptos = LINEAS.conico.medidas.filter(m => L >= m.min && L <= m.max);
     aptos.forEach((m, i) => {
-      const bases = PRODUCTOS.filter(p => p.diam === m.d && L >= p.dmin && L <= p.dmax);
+      // Tanque de catálogo: el más chico de ese diámetro que alcanza los litros pedidos
+      const tanque = PRODUCTOS.filter(p => p.diam === m.d && p.l && p.l >= L).sort((x, y) => x.l - y.l)[0];
+      const bases = PRODUCTOS.filter(p => p.diam === m.d && p.dmin && L >= p.dmin && L <= p.dmax);
       const acciones = [];
-      bases.forEach(p => acciones.push(h("button", { class: "pill chica", type: "button", onclick: e => agregar(p.id, e.currentTarget) }, "Agregar base")));
-      acciones.push(enlaceWa("Cotizar tanque", "Hola! Quiero cotizar un tanque cónico Ø " + m.d + " mm de " + L + " litros."));
-      tarjetas.push(tarjetaRes({
-        etq: i === 0 ? "Más compacto" : (i === aptos.length - 1 && aptos.length > 1 ? "Más bajo" : ""),
- etqVerde: i === 0, destacado: i === 0,
-        titulo: "Cónico Ø " + miles(m.d),
-        detalle: "Esta medida va " + (m.texto ? "en " + m.texto : "de " + miles(m.min) + " a " + fmtL(m.max)) + ".",
-        base: bases.length
-          ? h("div", { class: "base" }, h("b", {}, "Base: "), bases.map(p => p.nombre.replace("Base metálica ", "")).join(" o "), h("div", { class: "precio num" }, fmt$(bases[0].precio)))
-          : h("div", { class: "base" }, h("b", {}, "Base: "), "consultar"),
-        acciones
-      }));
+      if (tanque) acciones.push(btnAgregar(tanque, "Agregar tanque"));
+      bases.forEach(p => acciones.push(btnAgregar(p, "Agregar base")));
+      if (!tanque) acciones.push(enlaceWa("Cotizar tanque", "Hola! Quiero cotizar un tanque cónico Ø " + m.d + " mm de " + L + " litros."));
+      tarjetas.push(h("article", { class: "res" + (i === 0 ? " haz" : "") },
+        h("span", { class: "etq" + (i === 0 ? " verde" : "") }, i === 0 ? "Más compacto" : (i === aptos.length - 1 && aptos.length > 1 ? "Más bajo" : "")),
+        h("h4", {}, "Cónico Ø " + miles(m.d)),
+        h("p", { class: "detalle" }, "Esta medida va " + (m.texto ? "en " + m.texto : "de " + miles(m.min) + " a " + fmtL(m.max)) + "."),
+        tanque ? fotoRes(tanque.img, tanque.nombre) : null,
+        tanque ? lineaProducto(tanque) : h("div", { class: "producto" }, h("b", {}, "Tanque de " + fmtL(L)), h("span", {}, "a cotizar")),
+        bases.length ? h("div", { class: "base" }, h("b", {}, "Base: "), bases.map(p => p.nombre.replace("Base metálica ", "")).join(" o "), h("div", { class: "precio num" }, fmt$(bases[0].precio)))
+                     : h("div", { class: "base" }, h("b", {}, "Base: "), "consultar"),
+        h("div", { class: "acciones" }, acciones)));
     });
   } else if (estado.tipo === "plano") {
-    const grande = L > 3500;
-    tarjetas.push(tarjetaRes({
-      etq: "Recomendado", etqVerde: true,
-      titulo: grande ? "Fondo plano Ø 2.500" : "Fondo plano Ø 400 a 1.750",
-      detalle: grande ? "Disponible en 10.000 y 15.000 litros." : "Elegimos el diámetro según el espacio y la altura que tengas.",
-      base: h("div", { class: "base" }, h("b", {}, "Base: "), "plana estática D40 a D125, se vende por separado."),
-      acciones: [enlaceWa("Cotizar tanque", "Hola! Quiero cotizar un tanque de fondo plano de " + L + " litros.", "pill chica")]
-    }));
+    const opciones = PRODUCTOS.filter(p => p.plano && p.plano >= L).sort((x, y) => x.plano - y.plano);
+    const t = opciones[0];
+    const enCatalogo = t && (t.plano <= 110 ? L <= 110 : L > 3500);
+    tarjetas.push(h("article", { class: "res haz" },
+      h("span", { class: "etq verde" }, "Recomendado"),
+      h("h4", {}, enCatalogo ? t.nombre : "Fondo plano Ø 400 a 1.750"),
+      h("p", { class: "detalle" }, enCatalogo ? "Disponible en la tienda." : "Elegimos el diámetro según el espacio y la altura que tengas."),
+      fotoRes(enCatalogo ? t.img : "img/p240.webp", "Tanque de fondo plano"),
+      enCatalogo ? lineaProducto(t) : null,
+      h("div", { class: "base" }, h("b", {}, "Base: "), "plana estática D40 a D125, se vende por separado."),
+      h("div", { class: "acciones" }, enCatalogo ? btnAgregar(t, "Agregar tanque") : enlaceWa("Cotizar tanque", "Hola! Quiero cotizar un tanque de fondo plano de " + L + " litros.", "pill chica"))));
   } else {
     const ops = LINEAS[estado.tipo].medidas;
     const arriba = ops.filter(m => m.l >= L);
     const cap = arriba.length ? arriba[0].l : ops[ops.length - 1].l;
     ops.filter(m => m.l === cap).forEach((m, i) => {
       const nombre = LINEAS[estado.tipo].nombre + " " + fmtL(m.l) + (m.v ? " " + m.v : "");
-      tarjetas.push(tarjetaRes({
-        etq: m.prox ? "Próximamente" : (i === 0 ? "Recomendado" : ""), etqVerde: !m.prox && i === 0,
-        titulo: nombre,
-        detalle: estado.tipo === "bin"
+      const prod = estado.tipo === "horizontal" ? PRODUCTOS.find(p => p.horiz === m.l) : null;
+      tarjetas.push(h("article", { class: "res" + (i === 0 ? " haz" : "") },
+        h("span", { class: "etq" + (!m.prox && i === 0 ? " verde" : "") }, m.prox ? "Próximamente" : (i === 0 ? "Recomendado" : "")),
+        h("h4", {}, prod ? prod.nombre : nombre),
+        h("p", { class: "detalle" }, estado.tipo === "bin"
           ? (m.v === "reforzado" ? "Jaula reforzada para uso intensivo y apilado." : "Versión liviana para uso general y traslado.")
-          : "Monocapa, polietileno virgen grado alimenticio.",
-        acciones: [enlaceWa("Cotizar", "Hola! Quiero cotizar: " + nombre + ".", "pill chica")]
-      }));
+          : "Monocapa, polietileno virgen grado alimenticio."),
+        fotoRes(prod ? prod.img : (estado.tipo === "bin" ? "img/contenedores.webp" : "img/horizontales.webp"), nombre),
+        prod ? lineaProducto(prod) : null,
+        h("div", { class: "acciones" }, prod ? btnAgregar(prod) : enlaceWa("Cotizar", "Hola! Quiero cotizar: " + nombre + ".", "pill chica"))));
     });
   }
 
@@ -972,25 +1087,37 @@ $("#litros-rango").value = rangoDesdeLitros(estado.litros);
 buscar();
 
 // ---- Tienda ----
-let filtroCat = "Todo";
+let filtroCat = "Todo", verTodos = false;
+const INICIALES = 12;
 PRODUCTOS.forEach(p => $("#productos").append(h("article", { class: "prod", "data-cat": p.cat, "data-texto": (p.nombre + " " + p.cat).toLowerCase().replace(/\./g, "") },
-  h("div", { class: "fig" }, figura(p.img)),
-  h("span", { class: "cat" }, p.cat),
+  h("div", { class: "fig" }, h("img", { src: p.img, alt: p.nombre, loading: "lazy" })),
+  h("span", { class: "cat" }, ETIQUETA_CAT[p.cat] || p.cat),
   h("h4", {}, p.nombre),
   h("div", { class: "pie" },
     h("span", { class: "precio num" }, fmt$(p.precio)),
     h("button", { class: "pill chica", type: "button", onclick: e => agregar(p.id, e.currentTarget) }, "Agregar")))));
-segmento($("#filtros"), ["Todo", ...new Set(PRODUCTOS.map(p => p.cat))].map(c => [c, c]), "Todo", c => { filtroCat = c; filtrarTienda(); });
+segmento($("#filtros"), ["Todo", ...new Set(PRODUCTOS.map(p => p.cat))].map(c => [c, ETIQUETA_CAT[c] || c]), "Todo", c => { filtroCat = c; filtrarTienda(); });
 $("#buscar").addEventListener("input", filtrarTienda);
+$("#ver-todos").addEventListener("click", () => { verTodos = true; filtrarTienda(); });
 function filtrarTienda() {
   const q = $("#buscar").value.trim().toLowerCase().replace(/\./g, "").replace(/\s*l$/, "");
-  let n = 0;
+  const limitar = !verTodos && filtroCat === "Todo" && !q;
+  let n = 0, total = 0;
   document.querySelectorAll("#productos .prod").forEach(el => {
     const ok = (filtroCat === "Todo" || el.dataset.cat === filtroCat) && (!q || el.dataset.texto.includes(q));
-    el.hidden = !ok; if (ok) n++;
+    if (ok) total++;
+    const ver = ok && (!limitar || total <= INICIALES);
+    el.hidden = !ver; if (ver) n++;
   });
-  $("#sin-res").hidden = n > 0;
+  $("#sin-res").hidden = total > 0;
+  $("#ver-todos").hidden = !(limitar && total > INICIALES);
+  $("#ver-todos").textContent = "Ver los " + PRODUCTOS.length + " productos";
 }
+filtrarTienda();
+// Enlaces que abren la tienda en una categoría
+document.querySelectorAll("a[data-cat]").forEach(a => a.addEventListener("click", () => {
+  filtroCat = a.dataset.cat; marcar($("#filtros"), filtroCat); filtrarTienda();
+}));
 
 // ---- Pedido ----
 const pedido = new Map();
@@ -1043,7 +1170,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#panel"
 pintarPedido();
 
 // ---- Clientes y distribuidores ----
-[...CLIENTES, ...CLIENTES].forEach((c, i) => $("#clientes").append(h("span", i >= CLIENTES.length ? { "aria-hidden": "true" } : {}, c)));
+[...CLIENTES, ...CLIENTES].forEach(([id, n], i) => $("#clientes").append(h("img", { src: "img/c" + id + ".webp", alt: i >= CLIENTES.length ? "" : n, loading: "lazy" })));
 function pintarDist(pais) {
   $("#distribuidores-lista").replaceChildren(...DISTRIBUIDORES.filter(d => pais === "Todos" || d.pais === pais).map(d =>
     h("div", { class: "dist" }, h("b", {}, d.n), h("span", {}, d.lugar + (pais === "Todos" && d.pais !== "Argentina" ? ", " + d.pais : "")))));
@@ -1108,8 +1235,11 @@ if (GSAP) {
   });
 
   // Hero: la escena se aleja suavemente al bajar
-  gsap.to("#escena", { yPercent: 10, scale: .94, opacity: .6, ease: "none",
+  gsap.fromTo("#hero-foto", { scale: 1 }, { scale: 1.1, yPercent: 4, ease: "none",
     scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+  document.querySelectorAll(".tile .fotos").forEach(f => gsap.from(f, { yPercent: 14, ease: "none",
+    scrollTrigger: { trigger: f, start: "top bottom", end: "bottom 70%", scrub: true } }));
 
   // CLAMP: despiece que se arma con el scroll
   const tl = gsap.timeline({ scrollTrigger: { trigger: "#clamp-escena", start: "center center", end: "+=700", scrub: .6, pin: true } });

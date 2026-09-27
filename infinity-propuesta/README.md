@@ -2,11 +2,14 @@
 
 Maqueta para presentarle a Infinity Rotomolding cómo podría quedar su sitio. **No es el sitio oficial** y no debe publicarse como tal: lleva una franja arriba que lo aclara, y un `noindex` para que no la indexen los buscadores.
 
-Abrí `index.html` en el navegador (compu o celular). No necesita servidor.
+- `index.html` + `img/`: versión de trabajo.
+- `propuesta-infinity.html`: la misma página en **un solo archivo**, con las fotos incrustadas, para compartir por WhatsApp o mail. Se regenera con `python3 empaquetar.py` después de editar `index.html`.
+
+Se abre en cualquier navegador y no necesita servidor. El 3D (Three.js) y las animaciones (GSAP) se descargan de CDN, así que conviene abrirla con internet. Sin conexión se ve igual, pero sin 3D ni animaciones.
 
 ## Contenido
 
-Todo el contenido sale del sitio actual: catálogo y medidas, precios de la tienda, tecnología CLAMP, material, medios de pago, envíos, clientes y distribuidores.
+Todo el contenido y las imágenes salen del sitio actual de Infinity (infinityrotomolding.com): fotos de producto, logo, foto de familia de productos, logos de cervecerías clientes, catálogo de la tienda con precios, medidas, tecnología CLAMP, medios de pago, envíos y distribuidores.
 
 ## Mejoras que muestra
 
@@ -19,6 +22,5 @@ Todo el contenido sale del sitio actual: catálogo y medidas, precios de la tien
 
 ## Para la versión final
 
-- Reemplazar las ilustraciones por fotos reales de producto.
-- Usar el logo oficial de Infinity.
+- Fotos de producto en alta resolución y con fondo uniforme (las de la tienda son de 500 px).
 - Conectar la tienda a Mercado Pago o a su sistema actual.
