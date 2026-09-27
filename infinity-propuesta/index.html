@@ -325,6 +325,50 @@
   .cinta-pista img { height: 84px; width: auto; opacity: .8; }
   .ver-todos { display: flex; justify-content: center; margin-top: 36px; }
 
+  /* ---------- Anatomía (scroll de cine) ---------- */
+  .anatomia { padding: 0; background: var(--fondo); }
+  .anat-pin { position: relative; height: 100vh; min-height: 580px; overflow: hidden; }
+  .anat-lienzo { position: absolute; inset: 0; }
+  .anat-lienzo canvas, .config-lienzo canvas { display: block; width: 100% !important; height: 100% !important; }
+  .anatomia .respaldo { position: absolute; right: 12%; top: 50%; transform: translateY(-50%); height: 68%; width: auto; transition: opacity .6s var(--curva); }
+  .anatomia.listo .respaldo { opacity: 0; }
+  .anat-textos { position: absolute; left: max(22px, calc((100vw - 1024px) / 2)); top: 50%; width: min(430px, 42vw); pointer-events: none; }
+  .paso-a { position: absolute; left: 0; right: 0; top: 0; transform: translateY(-40%); opacity: 0; transition: opacity .6s var(--curva), transform .6s var(--curva); }
+  .paso-a.activo { opacity: 1; transform: translateY(-50%); }
+  .paso-a h3 { font-size: clamp(32px, 4.4vw, 52px); letter-spacing: -.025em; line-height: 1.05; }
+  .paso-a p { font-size: 19px; color: var(--secundario); margin: 14px 0 0; }
+  .anatomia.listo .punto, .config-3d.listo .punto { opacity: 1; }
+  .anatomia .punto { transition: opacity .4s, visibility 0s; }
+  @media (max-width: 760px) {
+    .anat-textos { left: 16px; right: 16px; width: auto; top: auto; bottom: 5%; }
+    .paso-a { top: auto; bottom: 0; transform: translateY(10px); background: rgba(255,255,255,.86); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 16px 18px; border-radius: 20px; }
+    .paso-a.activo { transform: none; }
+    .paso-a h3 { font-size: 26px; } .paso-a .h-sec { font-size: 32px; } .paso-a p { font-size: 15px; margin-top: 6px; }
+  }
+  .anatomia.estatico .anat-pin { height: auto; min-height: 0; display: grid; }
+  .anatomia.estatico .anat-lienzo { position: relative; height: 520px; }
+  .anatomia.estatico .anat-textos { position: relative; left: auto; top: auto; bottom: auto; width: auto; max-width: 1024px; margin: 0 auto; padding: 60px 22px; display: grid; gap: 28px; }
+  .anatomia.estatico .paso-a { position: relative; opacity: 1; transform: none; background: none; backdrop-filter: none; padding: 0; }
+
+  /* ---------- Configurador 3D ---------- */
+  .config-3d { position: relative; height: clamp(360px, 46vw, 520px); background: #fff; border-radius: 28px; overflow: hidden; margin: -16px 0 24px; }
+  .config-3d:not(.listo) { display: none; }
+  .config-lienzo { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+  .config-3d .chip-litros { opacity: 1; }
+  .escala { position: absolute; left: 20px; bottom: 16px; font-size: 12px; color: var(--terciario); }
+
+  /* ---------- Gran volumen ---------- */
+  .gigante-foto { display: flex; justify-content: center; margin: 56px 0 64px; padding-inline: 22px; }
+  #gigante-img { width: min(640px, 100%); height: auto; border-radius: 28px; will-change: transform; }
+  .cifras-g { display: grid; gap: 32px; text-align: center; }
+  @media (min-width: 760px) { .cifras-g { grid-template-columns: repeat(3, 1fr); } }
+  .cifras-g b { display: block; font-size: clamp(40px, 5vw, 56px); font-weight: 600; letter-spacing: -.03em; color: #fff; }
+  .cifras-g span { display: block; color: #a1a1a6; margin-top: 6px; }
+
+  /* ---------- Micro-interacciones ---------- */
+  .prod { transform-style: preserve-3d; }
+  .volando { position: fixed; z-index: 200; pointer-events: none; object-fit: contain; margin: 0; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .io .revelar { opacity: 1; transform: none; transition: none; }
@@ -524,23 +568,21 @@
   </div>
 </section>
 
-<!-- 3D -->
-<section id="tres-d">
-  <div class="wrap">
-    <div class="cabeza centro" style="margin-bottom:0">
-      <span class="eyebrow">En 3D</span>
-      <h2 class="h-sec">Girá el fermentador.</h2>
-      <p class="sub">Arrastralo para ver la salida CLAMP, la tapa hermética y cómo se ve el nivel a través de la pared.</p>
+<!-- ANATOMÍA -->
+<section id="anatomia" class="anatomia">
+  <div class="anat-pin">
+    <div class="anat-lienzo" id="anat-lienzo" role="img" aria-label="Fermentador cónico en 3D que se arma a medida que bajás"></div>
+    <img class="respaldo" src="img/p532.webp" alt="" width="243" height="500">
+    <div class="punto" data-p="tapa"><i></i><span>Tapa a rosca</span></div>
+    <div class="punto" data-p="clamp"><i></i><span>Férula · junta · abrazadera</span></div>
+    <div class="punto" data-p="base"><i></i><span>Base metálica D97</span></div>
+    <div class="anat-textos">
+      <div class="paso-a activo"><span class="eyebrow">Anatomía</span><h2 class="h-sec">Un fermentador,<br>pieza por pieza.</h2><p>Seguí bajando.</p></div>
+      <div class="paso-a"><span class="eyebrow">01 · Tapa</span><h3>Cierre hermético.</h3><p>Tapa a rosca de boca ancha: cargás, limpiás y cerrás sin herramientas.</p></div>
+      <div class="paso-a"><span class="eyebrow">02 · Salida CLAMP</span><h3>Se desarma en segundos.</h3><p>Férula moldeada con el tanque, junta sanitaria y abrazadera. Sin roscas donde se acumule suciedad.</p></div>
+      <div class="paso-a"><span class="eyebrow">03 · Pared translúcida</span><h3>Ves el nivel.</h3><p>Polietileno virgen color natural: controlás el llenado sin abrir el tanque.</p></div>
+      <div class="paso-a"><span class="eyebrow">04 · Base</span><h3>Una base para cada medida.</h3><p>Bases metálicas de D40 a D125, calculadas para cada diámetro y capacidad.</p></div>
     </div>
-  </div>
-  <div class="escena" id="escena">
-  <img class="respaldo" src="img/p532.webp" alt="" width="243" height="500">
-    <div class="lienzo" id="lienzo" aria-label="Tanque cónico en 3D. Arrastrá para girarlo." role="img"></div>
-    <div class="punto" data-p="tapa"><i></i><span>Tapa hermética</span></div>
-    <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
-    <div class="punto" data-p="valvula"><i></i><span>Descarga de fondo</span></div>
-    <div class="chip-litros"><small>Cónico Ø 970</small><b class="num" id="nivel-3d">0 L</b></div>
-    <div class="pista">↔ Arrastrá para girarlo</div>
   </div>
 </section>
 
@@ -649,6 +691,13 @@
       <input type="range" id="litros-rango" min="0" max="100" value="60" aria-label="Capacidad aproximada">
       <div class="rango-ayuda num"><span id="r-min"></span><span id="r-max"></span></div>
     </div>
+    <div class="config-3d" id="config-3d">
+      <div class="config-lienzo" id="config-lienzo" role="img" aria-label="Vista 3D a escala del tanque elegido junto a una persona de 1,75 m"></div>
+      <div class="chip-litros" id="config-chip"><small>Cónico Ø 970</small><b class="num">1.000 L</b></div>
+      <div class="punto" data-p="tapa"><i></i><span>Tapa</span></div>
+      <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
+      <span class="escala">A escala real · persona de referencia de 1,75 m · arrastrá para girar</span>
+    </div>
     <div class="resultados" id="resultados" aria-live="polite"></div>
   </div>
 </section>
@@ -705,6 +754,23 @@
       <div class="mat revelar"><b>100%</b><span>Polietileno virgen.</span></div>
       <div class="mat revelar"><b>0</b><span>Aditivos, pigmentos o soldaduras.</span></div>
       <div class="mat revelar"><b>Apto</b><span>Grado alimenticio, para agua, mosto y cerveza.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAN VOLUMEN -->
+<section class="negra" id="gigante">
+  <div class="wrap centro">
+    <span class="eyebrow" style="color:#34d27b">Gran volumen</span>
+    <h2 class="h-sec">2,5 metros de diámetro.<br>Hasta 15.000 litros.</h2>
+    <p class="sub">Tanques de fondo plano para reserva de agua, agro e industria. Una sola pieza, sin soldaduras.</p>
+  </div>
+  <div class="gigante-foto"><img id="gigante-img" src="img/grande.webp" alt="Tanque Infinity de 10.000 litros junto a una persona" width="500" height="449" loading="lazy"></div>
+  <div class="wrap">
+    <div class="cifras-g">
+      <div><b class="num">Ø 2.500</b><span>milímetros de diámetro</span></div>
+      <div><b class="num">10.000 L</b><span>$ 3.347.190</span></div>
+      <div><b class="num">15.000 L</b><span>$ 4.656.960</span></div>
     </div>
   </div>
 </section>
@@ -1054,6 +1120,21 @@ function buscar() {
     });
   }
 
+  // Avisar al configurador 3D qué tanque mostrar
+  let diam = 0, litros3d = L, tipo3d = estado.tipo;
+  if (estado.tipo === "conico") {
+    const med = LINEAS.conico.medidas;
+    const m = med.find(x => L >= x.min && L <= x.max) || med.reduce((x, y) => Math.abs(y.max - L) < Math.abs(x.max - L) ? y : x);
+    diam = m.d; litros3d = Math.min(Math.max(L, m.min), m.max);
+  } else if (estado.tipo === "plano") {
+    diam = L <= 110 ? 400 : L <= 650 ? 690 : L <= 1750 ? 970 : L <= 3600 ? 1250 : L <= 6700 ? 1750 : 2500;
+  } else {
+    const ops = LINEAS[estado.tipo].medidas, arr = ops.filter(x => x.l >= L);
+    litros3d = arr.length ? arr[0].l : ops[ops.length - 1].l;
+  }
+  window.ultimoTanque = { tipo: tipo3d, litros: litros3d, diam };
+  window.dispatchEvent(new CustomEvent("tanque", { detail: window.ultimoTanque }));
+
   if (!tarjetas.length) {
     cont.replaceChildren(h("p", { class: "vacio" }, "No hay una medida estándar de " + fmtL(L) + ". ",
       enlaceWa("Consultanos por una a medida", "Hola! Necesito un tanque de " + L + " litros. ¿Qué me recomiendan?")));
@@ -1121,8 +1202,40 @@ document.querySelectorAll("a[data-cat]").forEach(a => a.addEventListener("click"
 
 // ---- Pedido ----
 const pedido = new Map();
+const SIN_MOVIMIENTO = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function rebote() {
+  if (!SIN_MOVIMIENTO) $("#abrir-bolsa").animate([{ transform: "scale(1)" }, { transform: "scale(1.4)" }, { transform: "scale(1)" }], { duration: 450, easing: "cubic-bezier(.3,1.6,.5,1)" });
+}
+// La foto del producto vuela hasta la bolsa
+function volarAlCarrito(boton) {
+  const img = boton && boton.closest(".prod, .res") && boton.closest(".prod, .res").querySelector("img");
+  if (!img || SIN_MOVIMIENTO) { rebote(); return; }
+  const a = img.getBoundingClientRect(), b = $("#abrir-bolsa").getBoundingClientRect();
+  const c = img.cloneNode();
+  c.className = "volando"; c.removeAttribute("loading");
+  Object.assign(c.style, { left: a.left + "px", top: a.top + "px", width: a.width + "px", height: a.height + "px" });
+  document.body.append(c);
+  const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
+  c.animate([
+    { transform: "translate(0, 0) scale(1)", opacity: 1 },
+    { transform: `translate(${dx * .45}px, ${dy * .45 - 90}px) scale(.45)`, opacity: .95, offset: .55 },
+    { transform: `translate(${dx}px, ${dy}px) scale(.06)`, opacity: .4 }
+  ], { duration: 800, easing: "cubic-bezier(.55,0,.3,1)" }).onfinish = () => { c.remove(); rebote(); };
+}
+let totalMostrado = 0;
+function animarTotal(v) {
+  const el = $("#total"), de = totalMostrado, t0 = performance.now();
+  totalMostrado = v;
+  if (SIN_MOVIMIENTO) { el.textContent = fmt$(v); return; }
+  (function paso(t) {
+    const k = Math.min(1, (t - t0) / 600), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmt$(Math.round(de + (v - de) * e));
+    if (k < 1) requestAnimationFrame(paso);
+  })(t0);
+}
 function agregar(id, boton) {
   pedido.set(id, (pedido.get(id) || 0) + 1);
+  volarAlCarrito(boton);
   if (boton) {
     const txt = boton.textContent;
     boton.textContent = "Agregado ✓";
@@ -1147,7 +1260,7 @@ function pintarPedido() {
       h("button", { class: "quitar", type: "button", onclick: () => { pedido.delete(id); pintarPedido(); } }, "Eliminar")));
   }
   $("#items").replaceChildren(...(filas.length ? filas : [h("p", { class: "vacio-bolsa" }, "Tu pedido está vacío.")]));
-  $("#total").textContent = fmt$(total);
+  animarTotal(total);
   $("#contador").textContent = cant;
   $("#contador").hidden = cant === 0;
   const lineas = ["Hola Infinity! Quiero hacer este pedido:"];
@@ -1210,6 +1323,7 @@ if (GSAP) {
 
   // Títulos: palabras que suben con desenfoque
   document.querySelectorAll(".hero h1, .h-sec").forEach(t => {
+    if (t.closest(".paso-a")) return;   // los textos de la anatomía los maneja la escena 3D
     dividirPalabras(t);
     const enHero = t.closest(".hero");
     gsap.from(t.querySelectorAll(".palabra > span"), {
@@ -1241,6 +1355,9 @@ if (GSAP) {
   document.querySelectorAll(".tile .fotos").forEach(f => gsap.from(f, { yPercent: 14, ease: "none",
     scrollTrigger: { trigger: f, start: "top bottom", end: "bottom 70%", scrub: true } }));
 
+  gsap.fromTo("#gigante-img", { scale: .7, borderRadius: 60 }, { scale: 1, borderRadius: 28, ease: "none",
+    scrollTrigger: { trigger: "#gigante-img", start: "top 95%", end: "center 55%", scrub: true } });
+
   // CLAMP: despiece que se arma con el scroll
   const tl = gsap.timeline({ scrollTrigger: { trigger: "#clamp-escena", start: "center center", end: "+=700", scrub: .6, pin: true } });
   tl.from("#c-accesorio", { x: 180, duration: 1 }, 0)
@@ -1263,6 +1380,18 @@ if (GSAP) {
     }), { rootMargin: "0px 0px -8% 0px" });
     revelables.forEach(el => io.observe(el));
   } else revelables.forEach(el => el.classList.add("visible"));
+}
+
+// Tarjetas de la tienda que se inclinan con el mouse
+if (matchMedia("(pointer: fine)").matches && !REDUCIR) {
+  document.addEventListener("pointermove", e => {
+    const t = e.target.closest && e.target.closest(".prod");
+    document.querySelectorAll(".prod.inclinada").forEach(o => { if (o !== t) { o.classList.remove("inclinada"); o.style.transform = ""; } });
+    if (!t) return;
+    const r = t.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    t.classList.add("inclinada");
+    t.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 7).toFixed(2)}deg) translateY(-3px)`;
+  }, { passive: true });
 }
 
 // Luz que sigue al mouse en tarjetas

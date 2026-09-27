@@ -21,6 +21,10 @@ Todo el contenido y las imágenes salen del sitio actual de Infinity (infinityro
 
 ## Mejoras que muestra
 
+- Anatomía en 3D con scroll de cine: el fermentador gira, se levanta la tapa, se desarma la salida CLAMP, se llena y muestra la base.
+- Configurador 3D en el buscador: el tanque elegido a escala real junto a una persona de 1,75 m.
+- Micro-interacciones: la foto vuela al carrito, tarjetas que se inclinan, total animado.
+
 - Buscador de tanque: el cliente ingresa los litros y ve el diámetro que le sirve y la base compatible, con precio.
 - Tabla técnica completa y legible.
 - Pedido armado en la página y enviado por WhatsApp, sin registrarse.
