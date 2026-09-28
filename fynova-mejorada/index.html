@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WRLP7V3F');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fynova — Servicios de ingeniería industrial: incendio y efluentes</title>
+<meta name="description" content="Fynova resuelve proyectos de ingeniería industrial para tu empresa: redes contra incendio, detección y tratamiento de efluentes industriales.">
+<meta property="og:title" content="Fynova — Servicios de ingeniería industrial">
+<meta property="og:description" content="Redes contra incendio, detección y tratamiento de efluentes industriales. Proyectos llave en mano con presupuesto cerrado.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta name="theme-color" content="#1B2229">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#1B2229;
+    --steel:#2E4057;
+    --offwhite:#EDEFF1;
+    --paper:#F6F7F8;
+    --safety-red:#C1391F;
+    --gauge-amber:#E2A33D;
+    --teal:#2F6E62;
+    --water-blue:#1B6FA8;
+    --line-silver:#8592A0;
+    --ink:#1B2229;
+    --radius:2px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.02em;font-weight:600;line-height:1.15;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  :focus-visible{outline:3px solid var(--gauge-amber);outline-offset:2px;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px;}
+
+  /* PRELOADER — pantalla con el logo al cargar la página */
+  #preloader{
+    position:fixed;inset:0;z-index:9999;
+    background:rgba(10,13,17,0.55);
+    backdrop-filter:blur(6px) brightness(0.6);-webkit-backdrop-filter:blur(6px) brightness(0.6);
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .45s ease, visibility .45s ease;
+  }
+  #preloader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .preloader-stack{display:flex;flex-direction:column;align-items:center;gap:18px;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.4));animation:preloaderPulse 1.2s ease-in-out infinite;}
+  .preloader-icon{width:min(220px,46vw);height:auto;}
+  .preloader-word{width:min(340px,72vw);height:auto;}
+  @keyframes preloaderPulse{
+    0%,100%{opacity:0.55;transform:scale(0.97);}
+    50%{opacity:1;transform:scale(1);}
+  }
+  @media(prefers-reduced-motion: reduce){
+    .preloader-stack{animation:none;}
+    #preloader{transition:none;}
+  }
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--safety-red);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .eyebrow::before{content:'';width:22px;height:2px;background:var(--safety-red);display:inline-block;}
+  .eyebrow.teal{color:var(--teal);}
+  .eyebrow.teal::before{background:var(--teal);}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:60;background:#FFFFFF;border-bottom:1px solid #E4E6E9;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;max-width:1160px;margin:0 auto;position:relative;}
+  .logo{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.4rem;color:var(--gauge-amber);letter-spacing:0.03em;text-decoration:none;}
+  .logo span{color:var(--gauge-amber);}
+  .nav-links{display:flex;align-items:center;gap:30px;}
+  .nav ul{list-style:none;display:flex;gap:44px;align-items:center;}
+  .nav a.navlink{color:#2C2C2C;text-decoration:none;font-size:0.98rem;font-family:'Poppins',sans-serif;font-weight:500;letter-spacing:0.01em;padding-bottom:4px;border-bottom:2px solid transparent;transition:color .2s, border-color .2s;}
+  .nav a.navlink:hover{color:var(--steel);}
+  .nav a.navlink.active{color:var(--steel);border-bottom-color:var(--steel);}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:var(--steel);color:#fff;font-family:'IBM Plex Sans',sans-serif;font-weight:500;font-size:0.86rem;letter-spacing:0.02em;text-decoration:none;border:none;border-radius:var(--radius);cursor:pointer;transition:background .2s, transform .15s;}
+  .btn:hover{background:#1f2f42;transform:translateY(-1px);}
+
+  @media(max-width:900px){
+    .nav ul{display:none;}
+  }
+
+  .btn-form-white{background:#fff;color:#1B2229;}
+  .btn-form-white:hover{background:#EDEFF1;color:#1B2229;}
+
+  /* PROYECTOS — carrusel de fotos */
+  .proyectos{padding:76px 0 84px;background:var(--paper);}
+  .proyectos-head{text-align:center;margin-bottom:44px;}
+  .proyectos-head .eyebrow{justify-content:center;}
+  .proyectos-head h2{font-size:clamp(1.6rem,3vw,2.2rem);}
+
+  .carousel{position:relative;}
+  .carousel-track{
+    display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:4px 28px 10px;scroll-padding-left:28px;list-style:none;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .carousel-track::-webkit-scrollbar{display:none;}
+  .carousel-track:focus-visible{outline:3px solid var(--gauge-amber);outline-offset:4px;}
+  .carousel-slide{
+    position:relative;flex:0 0 auto;width:min(56vw,420px);aspect-ratio:4/3;
+    scroll-snap-align:start;border-radius:12px;overflow:hidden;background:#DDE0E3;
+    box-shadow:0 10px 26px rgba(27,34,41,0.12);
+  }
+  .carousel-slide img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+  .carousel-slide:hover img{transform:scale(1.04);}
+  .carousel-caption{
+    position:absolute;left:0;right:0;bottom:0;padding:20px 20px 16px;
+    background:linear-gradient(to top,rgba(15,19,24,0.85),rgba(15,19,24,0) 70%);
+    color:#fff;font-family:'Poppins',sans-serif;font-weight:500;font-size:0.95rem;letter-spacing:0.01em;
+  }
+  .carousel-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;
+    border-radius:50%;border:none;background:#fff;color:var(--steel);font-size:1.5rem;line-height:1;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 6px 20px rgba(27,34,41,0.2);transition:background .18s, color .18s, transform .15s;
+    z-index:5;
+  }
+  .carousel-arrow:hover{background:var(--steel);color:#fff;transform:translateY(-50%) scale(1.06);}
+  .carousel-arrow.prev{left:6px;}
+  .carousel-arrow.next{right:6px;}
+  .carousel-dots{display:flex;justify-content:center;gap:10px;margin-top:26px;}
+  .carousel-dots button{
+    width:8px;height:8px;border-radius:50%;border:none;background:#C9CED4;
+    padding:0;cursor:pointer;transition:background .2s, width .2s;
+  }
+  .carousel-dots button.active{background:var(--steel);width:26px;border-radius:4px;}
+  @media(prefers-reduced-motion: reduce){
+    .carousel-track{scroll-behavior:auto;}
+    .carousel-slide:hover img{transform:none;}
+  }
+  @media(max-width:800px){
+    .carousel-arrow{display:none;}
+  }
+  @media(max-width:640px){
+    .carousel-slide{width:78vw;}
+  }
+
+  /* PANELES de servicios (Incendios / Efluentes) */
+  .split-hero{display:grid;grid-template-columns:1fr 1fr;min-height:460px;}
+  .split-panel{position:relative;display:flex;align-items:center;padding:56px 64px;overflow:hidden;background-size:cover;background-position:center;}
+  .split-panel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+  .split-panel.p-fire .split-panel-video{filter:saturate(1.35) brightness(0.62);}
+  .split-panel.p-efluentes .split-panel-video{filter:saturate(1.2) brightness(0.7);}
+  .split-panel::after{content:'';position:absolute;inset:0;z-index:0;}
+  .split-panel.p-fire::after{background:linear-gradient(135deg,rgba(10,13,16,0.50) 0%,rgba(18,23,28,0.42) 55%,rgba(28,15,13,0.50) 100%);}
+  .split-panel.p-efluentes::after{background:linear-gradient(135deg,rgba(8,28,45,0.58) 0%,rgba(27,111,168,0.20) 55%,rgba(8,28,45,0.58) 100%);}
+  .split-panel-content{position:relative;z-index:1;color:#fff;max-width:460px;}
+  .split-panel h2{font-size:clamp(1.8rem,3.2vw,2.6rem);color:#fff;margin-bottom:18px;}
+  .split-panel p.sub{color:rgba(255,255,255,0.82);font-size:1.05rem;margin-bottom:28px;}
+  .split-panel .stars{color:var(--gauge-amber);font-size:0.85rem;margin-top:18px;letter-spacing:2px;}
+  .split-panel .stars-label{display:block;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;color:rgba(255,255,255,0.6);margin-bottom:6px;text-transform:uppercase;}
+  @media(max-width:800px){
+    .split-hero{grid-template-columns:1fr;}
+    .split-panel{padding:40px 26px;min-height:300px;}
+  }
+
+  /* ACERCA DE NOSOTROS */
+  .acerca{padding:90px 0;}
+  .acerca-head{text-align:center;margin-bottom:52px;}
+  .acerca-head h2{font-size:clamp(1.6rem,3vw,2.2rem);}
+  .acerca-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-bottom:56px;}
+  .acerca-grid p.intro{color:#37414D;font-size:1.05rem;line-height:1.7;}
+  .porque h3{font-size:1.25rem;margin-bottom:18px;}
+  .porque ul{list-style:none;}
+  .porque li{font-size:0.95rem;color:#37414D;padding:11px 0;border-top:1px solid #E4E6E9;display:flex;gap:10px;}
+  .porque li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gauge-amber);margin-top:8px;flex-shrink:0;}
+  .mision{margin-top:34px;}
+  .mision h3{font-size:1.25rem;margin-bottom:12px;}
+  .mision p{color:#37414D;font-size:0.98rem;}
+
+  .fynova-card{
+    background:var(--graphite);color:#fff;border-radius:8px;padding:34px 30px;
+    display:flex;flex-direction:column;gap:22px;
+  }
+  .fynova-card .fc-title{font-family:'Oswald',sans-serif;font-size:1.3rem;letter-spacing:0.02em;}
+  .fynova-card .fc-sub{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.08em;margin-top:6px;}
+  .fc-item{display:flex;align-items:center;gap:14px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.12);}
+  .fc-icon{
+    width:36px;height:36px;border-radius:50%;background:rgba(226,163,61,0.15);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gauge-amber);font-size:1rem;
+  }
+  .fc-item span.label{font-size:0.92rem;font-family:'IBM Plex Sans',sans-serif;}
+
+  /* CLIENTES */
+  .clientes{background:var(--offwhite);padding:70px 0;text-align:center;}
+  .clientes h2{font-size:clamp(1.3rem,2.4vw,1.7rem);margin-bottom:38px;}
+  .logos-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;}
+  .logo-pill{
+    width:96px;height:96px;border-radius:50%;background:#fff;border:1px solid #DDE0E3;
+    display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;color:#8592A0;text-align:center;padding:8px;box-shadow:0 2px 6px rgba(27,34,41,0.05);
+  }
+
+  /* MODELO — cómo conecta */
+  .modelo{padding:64px 0 76px;}
+  .modelo-row{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;text-align:center;}
+  .modelo-node{
+    padding:20px 30px;border-radius:999px;font-family:'Poppins',sans-serif;font-size:0.92rem;
+    font-weight:500;background:#fff;border:1px solid #DDE0E3;color:#37414D;
+    box-shadow:0 2px 6px rgba(27,34,41,0.04);
+  }
+  .modelo-node.mid{
+    background:var(--steel);border-color:var(--steel);color:#fff;font-weight:600;
+    letter-spacing:0.04em;text-transform:uppercase;font-family:'Oswald',sans-serif;font-size:0.95rem;
+    box-shadow:0 4px 14px rgba(46,64,87,0.25);
+  }
+  .modelo-arrow{padding:0 22px;color:var(--line-silver);font-size:1.3rem;}
+
+  /* SERVICIOS SECCIONES */
+  section.svc{padding:90px 0;scroll-margin-top:90px;}
+  .svc.alt{background:var(--offwhite);}
+  .svc-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;align-items:start;}
+  .svc h2{font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:16px;}
+  .svc p.desc{color:#4A5461;font-size:1.12rem;max-width:52ch;}
+  .svc-list{list-style:none;margin-top:20px;}
+  .svc-list li{font-size:1.08rem;color:#37414D;padding:14px 4px;border-top:1px solid #E4E6E9;display:flex;gap:12px;line-height:1.5;}
+  .svc-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gauge-amber);margin-top:8px;flex-shrink:0;}
+  .svc-list.teal li::before{background:var(--teal);}
+  .svc-grid > div > .svc-list{
+    background:#fff;border:1px solid #E4E6E9;border-radius:14px;
+    padding:6px 24px;box-shadow:0 8px 24px rgba(27,34,41,0.06);
+  }
+  .svc-grid > div > .svc-list li{border-top-color:#EEF0F2;padding:16px 4px;align-items:center;}
+  .svc-grid > div > .svc-list li:first-child{border-top:none;}
+  .svc-grid > div > .svc-list li::before{
+    width:22px;height:22px;border-radius:50%;margin-top:0;flex-shrink:0;
+    background-color:var(--gauge-amber);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-8' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:center;background-size:13px 13px;
+  }
+  .svc-grid > div > .svc-list.teal li::before{background-color:var(--teal);}
+  .svc-note{margin-top:22px;padding:14px 16px;background:rgba(47,110,98,0.08);border-left:3px solid var(--teal);font-size:0.86rem;color:#2F4A44;}
+
+  /* SUBSECCIONES DENTRO DE UN SERVICIO */
+  .svc-sub{margin-top:64px;}
+  .svc-sub-title{font-size:1.3rem;margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid #DDE0E3;}
+  .svc-sub-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;}
+  .svc-sub-cols .svc-list{margin-top:0;}
+  .svc-images{display:flex;flex-direction:column;gap:16px;margin-top:24px;}
+  .svc-images img{width:100%;border-radius:6px;border:1px solid #DDE0E3;object-fit:cover;}
+
+  /* Grilla 2x2 estilo Chehin (Extinción y Detección) */
+  .ext-det-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:40px;align-items:stretch;}
+  .ext-det-lists .svc-list{margin-top:0;}
+  .ext-det-lists .svc-list + .svc-list{margin-top:32px;}
+  .ext-photos{display:flex;flex-direction:column;gap:20px;height:100%;}
+  .ext-photo-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;}
+  .ext-photo-row img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block;}
+  @media(max-width:800px){
+    .ext-det-grid{grid-template-columns:1fr;}
+    .ext-photos{height:auto;}
+    .ext-photo-row{grid-template-columns:1fr 1fr;flex:none;}
+    .ext-photo-row img{height:140px;}
+  }
+  .svc-block-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .svc-block h4{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--steel);margin-bottom:12px;}
+  .svc-block ul{list-style:none;}
+  .svc-block li{font-size:0.88rem;color:#37414D;padding:8px 0;border-top:1px solid #DDE0E3;display:flex;gap:8px;}
+  .svc-block li::before{content:'—';color:var(--gauge-amber);font-weight:600;flex-shrink:0;}
+
+  .efluentes-photos{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px;}
+  .efluentes-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block;box-shadow:0 10px 26px rgba(27,34,41,0.10);}
+  @media(max-width:520px){
+    .efluentes-photos{grid-template-columns:1fr;}
+  }
+
+  .svc-badge{
+    display:inline-block;background:var(--steel);color:#fff;
+    padding:14px 28px;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    letter-spacing:0.02em;font-size:1.1rem;margin-bottom:36px;
+  }
+  .featured-block{
+    display:grid;grid-template-columns:0.8fr 1fr;gap:36px;align-items:stretch;
+    margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid #DDE0E3;
+  }
+  .featured-block img{width:100%;height:100%;border-radius:12px;object-fit:cover;display:block;}
+  .featured-block h4{font-family:'Oswald',sans-serif;font-size:1.05rem;text-transform:none;letter-spacing:0.01em;color:var(--steel);margin-bottom:14px;}
+  .col-block h4{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--steel);margin-bottom:12px;text-align:left;}
+
+  @media(max-width:800px){
+    .svc-sub-cols{grid-template-columns:1fr !important;}
+    .svc-block-grid{grid-template-columns:1fr 1fr;}
+    .featured-block{grid-template-columns:1fr;}
+  }
+  @media(max-width:520px){
+    .svc-block-grid[style]{grid-template-columns:1fr !important;}
+  }
+  @media(max-width:520px){
+    .svc-block-grid{grid-template-columns:1fr;}
+  }
+
+  /* NOSOTROS breve */
+  .nosotros{padding:70px 0;text-align:center;}
+  .nosotros .wrap{max-width:640px;}
+  .nosotros p{color:#4A5461;font-size:1.02rem;}
+
+  /* CONTACTO */
+  .contact{background:var(--steel);color:#fff;padding:52px 0;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  .contact h2{color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:14px;}
+  .contact p.lead{color:rgba(255,255,255,0.8);max-width:44ch;margin-bottom:22px;}
+  .contact-detail{display:flex;gap:12px;margin-bottom:14px;font-family:'IBM Plex Sans',sans-serif;font-size:0.98rem;}
+  .contact-detail .k{color:#fff;font-weight:600;min-width:100px;}
+  form{display:flex;flex-direction:column;gap:14px;}
+  .field label{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.7);display:block;margin-bottom:6px;}
+  .field input,.field textarea{width:100%;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'IBM Plex Sans',sans-serif;border-radius:var(--radius);font-size:0.93rem;}
+  .field textarea{resize:vertical;min-height:80px;}
+
+  footer{background:var(--graphite);color:rgba(237,239,241,0.6);padding:30px 0;}
+  .footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.85rem;}
+
+  .wa-fab{position:fixed;bottom:24px;right:24px;z-index:80;width:68px;height:68px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.3);text-decoration:none;}
+  .wa-fab svg{width:32px;height:32px;}
+
+  @media(max-width:800px){
+    .svc-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .modelo-row{flex-direction:column;}
+    .modelo-arrow{transform:rotate(90deg);padding:6px 0;}
+  }
+
+  /* ===================== MEJORAS ===================== */
+  /* Los enlaces del menú no dejan los títulos debajo del encabezado fijo */
+  #proyectos,#nosotros,#contacto,#anatomia,#efluentes{scroll-margin-top:90px;}
+  @media(max-width:900px){ .nav ul.abierto{text-align:left;} }
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  /* Header: se achica y toma sombra al bajar */
+  header{transition:box-shadow .3s ease, background .3s ease;}
+  header .nav{transition:padding .3s ease;}
+  header .logo img{transition:height .3s ease;}
+  header.compacto{box-shadow:0 6px 24px rgba(27,34,41,0.08);background:rgba(255,255,255,0.92);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);}
+  header.compacto .nav{padding-top:8px;padding-bottom:8px;}
+  header.compacto .logo img{height:64px !important;}
+
+  /* Menú en celular (antes no había forma de navegar) */
+  .menu-btn{display:none;width:44px;height:44px;border:none;background:transparent;cursor:pointer;border-radius:8px;align-items:center;justify-content:center;}
+  .menu-btn span,.menu-btn span::before,.menu-btn span::after{display:block;width:22px;height:2px;background:var(--steel);position:relative;transition:transform .25s ease, background .25s ease;}
+  .menu-btn span::before,.menu-btn span::after{content:'';position:absolute;left:0;}
+  .menu-btn span::before{top:-7px;} .menu-btn span::after{top:7px;}
+  .menu-btn[aria-expanded="true"] span{background:transparent;}
+  .menu-btn[aria-expanded="true"] span::before{transform:translateY(7px) rotate(45deg);}
+  .menu-btn[aria-expanded="true"] span::after{transform:translateY(-7px) rotate(-45deg);}
+  @media(max-width:900px){
+    .menu-btn{display:inline-flex;}
+    .nav ul.abierto{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:#fff;border-bottom:1px solid #E4E6E9;box-shadow:0 18px 30px rgba(27,34,41,0.12);padding:8px 28px 18px;}
+    .nav ul.abierto li{border-top:1px solid #EEF0F2;}
+    .nav ul.abierto li:first-child{border-top:none;}
+    .nav ul.abierto a.navlink{display:block;padding:14px 0;border-bottom:none;}
+    header .logo img{height:72px !important;}
+  }
+
+  /* Paneles de portada: más presencia y botones con vida */
+  .split-hero{min-height:min(78vh,680px);}
+  .split-panel{align-items:flex-end;padding-bottom:72px;}
+  .split-panel h2{font-size:clamp(2rem,3.6vw,3rem);}
+  .split-panel-video{transform-origin:center;will-change:transform;}
+  .btn{box-shadow:0 6px 18px rgba(27,34,41,0.18);}
+  .split-panel .btn{padding:14px 28px;font-size:0.95rem;}
+
+  /* Palabras que aparecen en los títulos */
+  .palabra{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em;}
+  .palabra > span{display:inline-block;}
+
+  /* Aparición al bajar (respaldo sin GSAP) */
+  .io .revelar{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease;}
+  .io .revelar.visible{opacity:1;transform:none;}
+
+  /* Listas y fotos */
+  .svc-list li{transition:background .2s ease;}
+  .svc-grid > div > .svc-list li:hover{background:rgba(226,163,61,0.06);}
+  .ext-photo-row img,.efluentes-photos img,.featured-block img{transition:transform .6s ease, box-shadow .6s ease;}
+  .ext-photo-row img:hover,.efluentes-photos img:hover,.featured-block img:hover{transform:scale(1.02);box-shadow:0 16px 36px rgba(27,34,41,0.18);}
+  .carousel-slide{transition:transform .4s ease, box-shadow .4s ease;}
+  .carousel-slide:hover{box-shadow:0 18px 40px rgba(27,34,41,0.2);}
+
+  /* ANATOMÍA — cómo actúa una red contra incendio (fotos reales + video que avanza con el scroll) */
+  .anatomia{background:#11171d;color:#fff;}
+  .anat-pin{position:relative;height:100vh;min-height:560px;overflow:hidden;}
+  .anat-pin::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(17,23,29,.95) 0%,rgba(17,23,29,.72) 34%,rgba(17,23,29,0) 58%);}
+  .anat-lienzo{position:absolute;inset:0;}
+  .capa{position:absolute;inset:0;overflow:hidden;opacity:0;will-change:opacity;}
+  .capa.primera{opacity:1;}
+  .capa img,.capa canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform;}
+  .anat-textos{position:absolute;z-index:2;left:max(28px,calc((100vw - 1160px)/2 + 28px));top:50%;width:min(440px,40vw);pointer-events:none;}
+  .paso-a{position:absolute;left:0;right:0;top:0;transform:translateY(-40%);opacity:0;transition:opacity .6s ease, transform .6s ease;}
+  .paso-a.activo{opacity:1;transform:translateY(-50%);}
+  .paso-a .eyebrow{color:var(--gauge-amber);}
+  .paso-a .eyebrow::before{background:var(--gauge-amber);}
+  .paso-a h2,.paso-a h3{color:#fff;font-size:clamp(1.9rem,3.6vw,3rem);}
+  .paso-a p{color:rgba(255,255,255,0.75);font-size:1.08rem;margin-top:14px;}
+  .marca-real{position:absolute;z-index:2;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;border:2px solid var(--gauge-amber);animation:onda 1.8s infinite;opacity:0;transition:opacity .4s;pointer-events:none;}
+  .marca-real span{position:absolute;left:24px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:rgba(27,34,41,.85);padding:6px 10px;border-radius:4px;white-space:nowrap;}
+  .marca-real.izq span{left:auto;right:24px;}
+  @keyframes onda{70%{box-shadow:0 0 0 16px rgba(226,163,61,0);}0%{box-shadow:0 0 0 0 rgba(226,163,61,.6);}100%{box-shadow:0 0 0 0 rgba(226,163,61,0);}}
+  .progreso-anat{position:absolute;z-index:2;right:28px;top:50%;transform:translateY(-50%);display:grid;gap:10px;}
+  .progreso-anat i{width:4px;height:26px;border-radius:2px;background:rgba(255,255,255,.2);overflow:hidden;position:relative;}
+  .progreso-anat i b{position:absolute;left:0;right:0;top:0;height:0;background:var(--gauge-amber);}
+  @media(max-width:760px){
+    .anat-pin::before{background:linear-gradient(0deg,rgba(17,23,29,.92) 0%,rgba(17,23,29,0) 48%);}
+    .anat-textos{left:16px;right:16px;width:auto;top:auto;bottom:5%;}
+    .paso-a{top:auto;bottom:0;transform:translateY(10px);background:rgba(17,23,29,.88);padding:16px 18px;border-radius:12px;}
+    .paso-a.activo{transform:none;}
+    .paso-a h2,.paso-a h3{font-size:1.5rem;} .paso-a p{font-size:0.95rem;margin-top:6px;}
+    .progreso-anat{display:none;}
+  }
+  .anatomia.estatico .anat-pin{height:auto;min-height:0;display:grid;}
+  .anatomia.estatico .anat-lienzo{position:relative;height:420px;}
+  .anatomia.estatico .capa{opacity:0;} .anatomia.estatico .capa.final-estatico{opacity:1;}
+  .anatomia.estatico .anat-textos{position:relative;left:auto;top:auto;bottom:auto;width:auto;max-width:1160px;margin:0 auto;padding:56px 28px;display:grid;gap:26px;}
+  .anatomia.estatico .paso-a{position:relative;opacity:1;transform:none;background:none;padding:0;}
+
+  @media(prefers-reduced-motion: reduce){
+    .io .revelar{opacity:1;transform:none;transition:none;}
+    .marca-real{animation:none;}
+    .carousel-slide,.ext-photo-row img,.efluentes-photos img,.featured-block img{transition:none;}
+  }
+</style>
+</head>
+<body>
+<!-- Pantalla de carga: se ve un instante cada vez que se abre la página -->
+<div id="preloader" aria-hidden="true">
+  <div class="preloader-stack">
+    <img src="img/fynova-icono-pre.webp" alt="" class="preloader-icon" width="440" height="410">
+    <img src="img/fynova-wordmark-pre.webp" alt="Fynova" class="preloader-word" width="680" height="83">
+  </div>
+</div>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRLP7V3F"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="logo" style="display:flex;align-items:center;">
+      <img src="img/logo-fynova-horizontal-hd.webp" alt="Fynova" width="385" height="300" style="height:104px;width:auto;display:block;">
+    </a>
+    <div class="nav-links">
+      <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal"><span></span></button>
+      <ul id="menu-principal">
+        <li><a href="#top" class="navlink active">Inicio</a></li>
+        <li><a href="#proyectos" class="navlink">Servicios</a></li>
+        <li><a href="#contacto" class="navlink">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <h1 class="sr-only">Fynova — Servicios de ingeniería industrial: redes contra incendio, detección y tratamiento de efluentes</h1>
+
+  <!-- SERVICIOS — los dos paneles, ahora al principio -->
+  <div id="servicios-preview" class="split-hero">
+    <div class="split-panel p-fire">
+      <video class="split-panel-video" autoplay muted loop playsinline aria-hidden="true">
+        <source src="img/redes-incendio.webm" type="video/webm">
+        <source src="img/redes-incendio.mp4" type="video/mp4">
+      </video>
+      <div class="split-panel-content">
+        <span class="eyebrow" style="color:var(--gauge-amber)"></span>
+        <h2>Redes y Detección de Incendios</h2>
+        <p class="sub">Proyecto e instalaciones llave en mano.</p>
+        <a href="#contacto" class="btn" data-servicio="Redes y Detección de Incendios">Contáctenos</a>
+      </div>
+    </div>
+    <div class="split-panel p-efluentes">
+      <video class="split-panel-video" autoplay muted loop playsinline aria-hidden="true">
+        <source src="img/efluentes-video.webm" type="video/webm">
+        <source src="img/efluentes-video.mp4" type="video/mp4">
+      </video>
+      <div class="split-panel-content">
+        <span class="eyebrow teal"></span>
+        <h2>Soluciones integrales en agua y saneamiento</h2>
+        <p class="sub">Diagnóstico, diseño y gestión ambiental junto a especialistas del sector.</p>
+        <a href="https://www.hidrareco.com.ar" class="btn" style="background:var(--teal)">Contáctenos</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROYECTOS — carrusel de fotos -->
+  <section id="proyectos" class="proyectos">
+    <div class="wrap proyectos-head revelar">
+      <span class="eyebrow">Trabajos realizados</span>
+      <h2>Redes de incendio</h2>
+    </div>
+
+    <div class="carousel">
+      <ul class="carousel-track" id="carouselTrack" tabindex="0" aria-roledescription="carrusel" aria-label="Fotos de instalaciones realizadas">
+        <li class="carousel-slide">
+          <img src="img/sprinkler.webp" alt="Rociador de sprinkler contra incendio" loading="lazy">
+          <span class="carousel-caption">Rociadores contra incendio</span>
+        </li>
+        <li class="carousel-slide">
+          <img src="img/canieria-roja.webp" alt="Red de cañerías contra incendio en cielorraso" loading="lazy">
+          <span class="carousel-caption">Redes de cañerías industriales</span>
+        </li>
+        <li class="carousel-slide">
+          <img src="img/sala-bombas.webp" alt="Sala de bombas contra incendio" loading="lazy">
+          <span class="carousel-caption">Salas de bombas</span>
+        </li>
+        <li class="carousel-slide">
+          <img src="img/cartel-fuego.webp" alt="Detector de incendio instalado en pared" loading="lazy">
+          <span class="carousel-caption">Sistemas de detección</span>
+        </li>
+        <li class="carousel-slide">
+          <img src="img/wellpoint.webp" alt="Equipo WellPoint amarillo para depresión de napas freáticas" loading="lazy">
+          <span class="carousel-caption">Equipos WellPoint</span>
+        </li>
+      </ul>
+
+      <button class="carousel-arrow prev" id="carouselPrev" aria-label="Foto anterior" type="button">‹</button>
+      <button class="carousel-arrow next" id="carouselNext" aria-label="Foto siguiente" type="button">›</button>
+
+      <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Seleccionar foto"></div>
+    </div>
+  </section>
+
+  <!-- ACERCA DE NOSOTROS -->
+  <section id="nosotros" class="acerca">
+    <div class="wrap">
+      <div class="acerca-head">
+        <h2>Quiénes somos</h2>
+      </div>
+
+      <div class="acerca-grid revelar">
+        <div>
+          <p class="intro">Ingeniería industrial para tu empresa: redes contra incendio, tratamiento de efluentes y mantenimiento industrial.</p>
+          <div class="mision">
+            <h3>Nuestra misión</h3>
+            <p>Que cada proyecto técnico se resuelva bien, a tiempo y sin sorpresas.</p>
+          </div>
+        </div>
+
+        <div class="porque">
+          <h3>¿Por qué elegirnos?</h3>
+          <ul>
+            <li>Cumplimiento estricto de normativa vigente</li>
+            <li>Presupuesto cerrado, sin sorpresas en la ejecución</li>
+            <li>Especialistas matriculados en cada rubro técnico</li>
+            <li>Seguimiento del proyecto de punta a punta</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIO 1: INCENDIOS -->
+  <section id="incendios" class="svc alt">
+    <div class="wrap">
+      <div class="svc-grid">
+        <div>
+          <h2>Redes y Detección de Incendios</h2>
+          <p class="desc">Nuestro equipo técnico tiene más de 40 años de trayectoria en instalaciones industriales.</p>
+        </div>
+        <div>
+          <ul class="svc-list">
+            <li>Piping industrial y redes de tuberías</li>
+            <li>Redes fijas contra incendio</li>
+            <li>Sistemas de detección de humo y calor</li>
+            <li>Instalaciones llave en mano</li>
+            <li>Montaje y mantenimiento industrial</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Extinción y Detección -->
+      <div class="svc-sub">
+        <h3 class="svc-sub-title">Extinción y Detección</h3>
+        <div class="ext-det-grid revelar">
+          <div class="ext-det-lists">
+            <ul class="svc-list">
+              <li>Sistemas a base de agua y espuma</li>
+              <li>Hidrantes / bocas de incendio</li>
+              <li>Redes de sprinklers</li>
+              <li>Salas de bombas</li>
+              <li>Monitores</li>
+              <li>Cámaras de espuma</li>
+              <li>Riesgos especiales</li>
+            </ul>
+            <ul class="svc-list">
+              <li>Actualización y adecuación de instalaciones existentes</li>
+              <li>Normas NFPA, COVENIN, IRAM</li>
+              <li>Defensa pasiva y activa</li>
+            </ul>
+          </div>
+          <div class="ext-photos">
+            <div class="ext-photo-row">
+              <img src="img/sprinkler.webp" alt="Rociador de sprinkler contra incendio" loading="lazy">
+              <img src="img/canieria-roja.webp" alt="Red de cañerías contra incendio en cielorraso" loading="lazy">
+            </div>
+            <div class="ext-photo-row">
+              <img src="img/sala-bombas.webp" alt="Sala de bombas contra incendio" loading="lazy">
+              <img src="img/cartel-fuego.webp" alt="Detector de incendio instalado en pared" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instalaciones Industriales -->
+      <div class="svc-sub">
+        <span class="svc-badge">Instalaciones Industriales</span>
+
+        <div class="featured-block revelar">
+          <div>
+            <h4>División de Aguas</h4>
+            <ul class="svc-list">
+              <li>Fabricantes e instaladores de equipos WellPoint para depresión de napas freáticas en obras civiles</li>
+              <li>Plantas de tratamiento</li>
+              <li>Trabajos llave en mano</li>
+            </ul>
+          </div>
+          <img src="img/wellpoint.webp" alt="Equipo WellPoint amarillo para depresión de napas freáticas" loading="lazy">
+        </div>
+
+        <div class="svc-block-grid revelar" style="grid-template-columns:repeat(3,1fr);">
+          <div class="col-block">
+            <h4>Mantenimiento</h4>
+            <ul class="svc-list">
+              <li>Mantenimiento preventivo y predictivo de equipos y maquinaria industrial</li>
+              <li>Bombas de vacío</li>
+              <li>Bombas centrífugas</li>
+              <li>Equipos industriales en general</li>
+            </ul>
+          </div>
+          <div class="col-block">
+            <h4>Piping</h4>
+            <ul class="svc-list">
+              <li>Intercambiadores de calor</li>
+              <li>Instalación de calderas</li>
+              <li>Centrales de vacío</li>
+              <li>Instalaciones termomecánicas en general</li>
+            </ul>
+          </div>
+          <div class="col-block">
+            <h4>Gas Natural</h4>
+            <ul class="svc-list">
+              <li>Conversión a gas natural de calderas y hornos</li>
+              <li>Estaciones de regulación y medición</li>
+              <li>Proyecto y montaje de estaciones de GNC</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANATOMÍA: cómo actúa una red contra incendio (fotos reales y video del rociador que avanza con el scroll) -->
+  <section id="anatomia" class="anatomia" aria-label="Cómo actúa una red contra incendio">
+    <div class="anat-pin">
+      <div class="anat-lienzo" id="anat-lienzo" role="img" aria-label="Recorrido con fotos reales: red de cañerías, pulsador de alarma, sala de bombas, rociador descargando agua y detalle del rociador">
+        <div class="capa primera"><img src="img/canieria-roja.webp" alt="" data-foco="0.5,0.4"></div>
+        <div class="capa"><img src="img/cartel-fuego.webp" alt="" data-foco="0.8,0.78"></div>
+        <div class="capa"><img src="img/sala-bombas.webp" alt="" data-foco="0.87,0.42"></div>
+        <div class="capa"><canvas id="cuadros-rociador" width="960" height="540"></canvas></div>
+        <div class="capa final-estatico"><img src="img/sprinkler.webp" alt="" data-foco="0.5,0.45"></div>
+      </div>
+      <div class="marca-real" data-capa="1"><span>Pulsador manual de alarma</span></div>
+      <div class="marca-real" data-capa="2"><span>Tablero de control de bombas</span></div>
+      <div class="marca-real" data-capa="3"><span>Rociador activado</span></div>
+      <div class="progreso-anat" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+      <div class="anat-textos">
+        <div class="paso-a activo"><span class="eyebrow">Cómo actúa</span><h2>Una red contra incendio, paso a paso</h2><p>Seguí bajando.</p></div>
+        <div class="paso-a"><span class="eyebrow">01 · Detección</span><h3>Segundos cuentan</h3><p>Detectores y pulsadores disparan la alarma apenas aparece el fuego.</p></div>
+        <div class="paso-a"><span class="eyebrow">02 · Bombeo</span><h3>La red se presuriza</h3><p>La sala de bombas arranca y mantiene la presión en toda la red.</p></div>
+        <div class="paso-a"><span class="eyebrow">03 · Extinción</span><h3>Solo donde hay fuego</h3><p>Los rociadores cercanos al foco se activan por temperatura y descargan agua.</p></div>
+        <div class="paso-a"><span class="eyebrow">04 · Fynova</span><h3>Diseñada para funcionar el día que la necesitás</h3><p>Cálculo hidráulico, montaje y mantenimiento bajo normas NFPA, COVENIN e IRAM.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIO 2: EFLUENTES -->
+  <section id="efluentes" class="svc">
+    <div class="wrap">
+      <div class="svc-grid">
+        <div>
+          <h2>Soluciones integrales en agua y saneamiento</h2>
+          <p class="desc">Diagnóstico, diseño y gestión del tratamiento de efluentes industriales para tu empresa.</p>
+        </div>
+        <div>
+          <ul class="svc-list teal">
+            <li>Diagnóstico de efluentes industriales</li>
+            <li>Diseño de sistemas de tratamiento</li>
+            <li>Cumplimiento de normativa ambiental</li>
+            <li>Seguimiento técnico del proyecto</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="svc-sub">
+        <h3 class="svc-sub-title">Monitoreo y ejecución en planta</h3>
+        <div class="efluentes-photos revelar">
+          <img src="img/laboratorio-calidad-agua.webp" alt="Control de calidad del efluente tratado en laboratorio, panel de monitoreo de cumplimiento normativo" loading="lazy">
+          <img src="img/planta-tratamiento-aerea.webp" alt="Vista aérea de planta de tratamiento de efluentes industriales con clarificadores circulares" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="contact">
+    <div class="wrap contact-grid revelar">
+      <div>
+        <h2>Contáctanos</h2>
+        <p class="lead">Contanos qué necesitás y te ponemos en contacto con el especialista adecuado.</p>
+        <div class="contact-detail"><span class="k">WhatsApp</span><span>+54 11 2670-4249</span></div>
+        <div class="contact-detail"><span class="k">Email</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd9e9290988f9e949c91bd9b8493928b9cd39e9290d39c8f">[email&#160;protected]</a></span></div>
+      </div>
+      <form id="contactForm">
+        <!-- Honeypot anti-spam: campo oculto, invisible para personas, los bots lo completan -->
+        <div style="position:absolute;left:-9999px;" aria-hidden="true">
+          <label for="sitio_web">No completar este campo</label>
+          <input type="text" id="sitio_web" name="sitio_web" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="nombre">Nombre y empresa</label>
+          <input type="text" id="nombre" placeholder="Nombre / Razón social" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="tu@empresa.com" required>
+        </div>
+        <div class="field">
+          <label for="servicio">¿Qué servicio te interesa?</label>
+          <select id="servicio" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:2px;font-family:'IBM Plex Sans',sans-serif;">
+            <option value="Redes y Detección de Incendios" style="color:#000">Redes y Detección de Incendios</option>
+            <option value="Soluciones integrales en agua y saneamiento" style="color:#000">Soluciones integrales en agua y saneamiento</option>
+            <option value="No estoy seguro" style="color:#000">No estoy seguro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mensaje">Contanos tu proyecto</label>
+          <textarea id="mensaje" placeholder="Tipo de instalación, planta, urgencia..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-form-white" id="submitBtn">Enviar consulta</button>
+        <div id="formStatus" style="font-size:0.9rem;margin-top:4px;"></div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row" style="justify-content:center;">
+    <span>© 2026 Fynova — Servicios de ingeniería industrial</span>
+  </div>
+</footer>
+
+<a class="wa-fab" href="https://wa.me/541126704249" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1s-.7.8-.9 1c-.2.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.4 7.4 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.5c.1-.1.2-.3.2-.4a.5.5 0 0 0 0-.5c-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.6 1.1 2.8.1.2 1.9 2.9 4.6 4a15.6 15.6 0 0 0 1.6.6 3.8 3.8 0 0 0 1.7.1c.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg>
+</a>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Video de fondo del hero: si el usuario prefiere menos movimiento, no autoreproducir
+  (function(){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('.hero-video-bg, .split-panel-video').forEach(function(v){
+      if (reduceMotion) {
+        v.removeAttribute('autoplay');
+        v.pause();
+      }
+    });
+  })();
+
+  // Preloader: se muestra un instante al cargar y después se desvanece
+  (function(){
+    const preloader = document.getElementById('preloader');
+    if(!preloader) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ocultar = () => preloader.classList.add('hide');
+    if(reduceMotion){
+      ocultar();
+    } else {
+      window.addEventListener('load', () => setTimeout(ocultar, 500));
+    }
+  })();
+
+  // Formulario -> envía mail vía contacto.php
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formStatus = document.getElementById('formStatus');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const datos = new FormData();
+    datos.append('nombre', document.getElementById('nombre').value);
+    datos.append('email', document.getElementById('email').value);
+    datos.append('servicio', document.getElementById('servicio').value);
+    datos.append('mensaje', document.getElementById('mensaje').value);
+    datos.append('sitio_web', document.getElementById('sitio_web').value); // honeypot
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    formStatus.textContent = '';
+    formStatus.style.color = '';
+
+    fetch('contacto.php', { method: 'POST', body: datos })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          formStatus.textContent = '¡Listo! Recibimos tu consulta, te vamos a contactar a la brevedad.';
+          formStatus.style.color = '#8FD3B6';
+          form.reset();
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({'event': 'form_submit_success'});
+        } else {
+          formStatus.textContent = data.error || 'Hubo un problema al enviar. Probá de nuevo.';
+          formStatus.style.color = '#E8A33D';
+        }
+      })
+      .catch(() => {
+        formStatus.textContent = 'No pudimos conectar con el servidor. Probá de nuevo o escribinos por WhatsApp.';
+        formStatus.style.color = '#E8A33D';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar consulta';
+      });
+  });
+
+  // Carrusel de proyectos — scroll nativo (funciona con swipe en celular),
+  // más flechas, puntos y autoplay que se pausa al tocar/pasar el mouse.
+  (function(){
+    const track = document.getElementById('carouselTrack');
+    if(!track) return;
+
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    const dotsWrap = document.getElementById('carouselDots');
+    const slides = Array.from(track.children);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', `Ir a la foto ${i + 1} de ${slides.length}`);
+      dot.addEventListener('click', () => irASlide(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function irASlide(i){
+      const destino = slides[i].offsetLeft - track.offsetLeft;
+      track.scrollTo({ left: destino, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+
+    function indiceActivo(){
+      let masCercano = 0, distanciaMinima = Infinity;
+      slides.forEach((slide, i) => {
+        const distancia = Math.abs(slide.offsetLeft - track.scrollLeft - track.offsetLeft);
+        if(distancia < distanciaMinima){ distanciaMinima = distancia; masCercano = i; }
+      });
+      return masCercano;
+    }
+
+    function actualizarPuntos(){
+      const i = indiceActivo();
+      dots.forEach((dot, di) => dot.classList.toggle('active', di === i));
+    }
+
+    let timeoutScroll;
+    track.addEventListener('scroll', () => {
+      clearTimeout(timeoutScroll);
+      timeoutScroll = setTimeout(actualizarPuntos, 80);
+    }, { passive: true });
+
+    prevBtn.addEventListener('click', () => {
+      const i = indiceActivo();
+      irASlide(i === 0 ? slides.length - 1 : i - 1);
+    });
+    nextBtn.addEventListener('click', () => {
+      const i = indiceActivo();
+      irASlide(i === slides.length - 1 ? 0 : i + 1);
+    });
+
+    track.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight'){ e.preventDefault(); nextBtn.click(); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); prevBtn.click(); }
+    });
+
+    actualizarPuntos();
+
+    if(!reduceMotion){
+      let autoplay = setInterval(() => nextBtn.click(), 5000);
+      const pausar = () => clearInterval(autoplay);
+      const reanudar = () => { clearInterval(autoplay); autoplay = setInterval(() => nextBtn.click(), 5000); };
+      ['mouseenter', 'focusin', 'touchstart'].forEach(ev => track.addEventListener(ev, pausar, { passive: true }));
+      ['mouseleave', 'focusout'].forEach(ev => track.addEventListener(ev, reanudar));
+    }
+  })();
+</script>
+
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/motion.js"></script>
+<script>
+/* ===================== MEJORAS ===================== */
+(function(){
+  "use strict";
+  var REDUCIR = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var GSAP = !REDUCIR && window.gsap && window.ScrollTrigger;
+  var $ = function(s){ return document.querySelector(s); };
+
+  // Preloader: se oculta apenas está el contenido (antes esperaba que carguen los videos)
+  var pre = document.getElementById('preloader');
+  if (pre) { document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', function(){ setTimeout(function(){ pre.classList.add('hide'); }, 350); }) : setTimeout(function(){ pre.classList.add('hide'); }, 350); }
+
+  // Header que se achica al bajar
+  var header = document.querySelector('header');
+  var alBajar = function(){ header.classList.toggle('compacto', window.scrollY > 40); };
+  window.addEventListener('scroll', alBajar, { passive: true }); alBajar();
+
+  // Menú en celular
+  var btnMenu = document.querySelector('.menu-btn'), menu = document.getElementById('menu-principal');
+  btnMenu.addEventListener('click', function(){ var abrir = !menu.classList.contains('abierto'); menu.classList.toggle('abierto', abrir); btnMenu.setAttribute('aria-expanded', String(abrir)); btnMenu.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú'); });
+  menu.addEventListener('click', function(e){ if (e.target.closest('a')) { menu.classList.remove('abierto'); btnMenu.setAttribute('aria-expanded', 'false'); } });
+
+  // El link activo del menú sigue la sección visible
+  var enlaces = { top: document.querySelector('a.navlink[href="#top"]'), proyectos: document.querySelector('a.navlink[href="#proyectos"]'), contacto: document.querySelector('a.navlink[href="#contacto"]') };
+  var marcar = function(k){ Object.keys(enlaces).forEach(function(x){ enlaces[x] && enlaces[x].classList.toggle('active', x === k); }); };
+  var secciones = [['top', '#servicios-preview'], ['proyectos', '#proyectos'], ['proyectos', '#nosotros'], ['proyectos', '#incendios'], ['proyectos', '#anatomia'], ['proyectos', '#efluentes'], ['contacto', '#contacto']];
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { var k = secciones.find(function(x){ return document.querySelector(x[1]) === e.target; }); if (k) marcar(k[0]); } }); }, { rootMargin: '-45% 0px -50% 0px' });
+    secciones.forEach(function(x){ var el = document.querySelector(x[1]); el && io.observe(el); });
+  }
+
+  // Los botones "Contáctenos" eligen el servicio en el formulario
+  document.querySelectorAll('[data-servicio]').forEach(function(a){ a.addEventListener('click', function(){ var sel = document.getElementById('servicio'); if (sel) sel.value = a.dataset.servicio; setTimeout(function(){ document.getElementById('nombre').focus({ preventScroll: true }); }, 700); }); });
+
+  // Videos: solo se reproducen cuando se ven (ahorra batería y datos en celular)
+  if (!REDUCIR && 'IntersectionObserver' in window) document.querySelectorAll('.split-panel-video').forEach(function(v){ new IntersectionObserver(function(es){ es[0].isIntersecting ? v.play().catch(function(){}) : v.pause(); }).observe(v); });
+
+  // ---------- Animaciones ----------
+  function dividirPalabras(el){
+    Array.from(el.childNodes).forEach(function(n){
+      if (n.nodeType !== 3) return;
+      var frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach(function(t){
+        if (!t) return;
+        if (/^\s+$/.test(t)) { frag.appendChild(document.createTextNode(t)); return; }
+        var w = document.createElement('span'); w.className = 'palabra'; var i = document.createElement('span'); i.textContent = t; w.appendChild(i); frag.appendChild(w);
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
+  if (GSAP) {
+    gsap.registerPlugin(ScrollTrigger);
+    // Portada: títulos palabra por palabra y videos con leve zoom al bajar
+    document.querySelectorAll('.split-panel h2').forEach(function(t, i){ dividirPalabras(t); gsap.from(t.querySelectorAll('.palabra > span'), { yPercent: 110, opacity: 0, duration: .9, ease: 'power4.out', stagger: .06, delay: .5 + i * .15 }); });
+    gsap.from('.split-panel p.sub, .split-panel .btn', { y: 20, opacity: 0, duration: .8, ease: 'power3.out', stagger: .08, delay: .9 });
+    gsap.to('.split-panel-video', { scale: 1.12, ease: 'none', scrollTrigger: { trigger: '.split-hero', start: 'top top', end: 'bottom top', scrub: true } });
+    // Títulos de sección
+    document.querySelectorAll('.proyectos-head h2, .acerca-head h2, .svc h2, .svc-sub-title, .contact h2').forEach(function(t){ dividirPalabras(t); gsap.from(t.querySelectorAll('.palabra > span'), { yPercent: 110, opacity: 0, duration: .9, ease: 'power4.out', stagger: .05, scrollTrigger: { trigger: t, start: 'top 88%' } }); });
+    // Bloques y listas en cascada
+    document.querySelectorAll('.revelar').forEach(function(el){ gsap.from(el, { y: 36, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }); });
+    document.querySelectorAll('.svc-list').forEach(function(ul){ gsap.from(ul.children, { x: -14, opacity: 0, duration: .6, ease: 'power2.out', stagger: .06, scrollTrigger: { trigger: ul, start: 'top 88%' } }); });
+  } else {
+    document.documentElement.classList.add('io');
+    var ioR = 'IntersectionObserver' in window && !REDUCIR ? new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('visible'); ioR.unobserve(e.target); } }); }) : null;
+    document.querySelectorAll('.revelar').forEach(function(el){ ioR ? ioR.observe(el) : el.classList.add('visible'); });
+  }
+  // Resortes (Motion): botones y flechas se hunden y rebotan
+  if (window.Motion && !REDUCIR) {
+    var M = window.Motion;
+    M.press('.btn, .carousel-arrow, .wa-fab', function(el){ M.animate(el, { scale: .94 }, { type: 'spring', stiffness: 420, damping: 22 }); return function(){ M.animate(el, { scale: 1 }, { type: 'spring', stiffness: 500, damping: 12 }); }; });
+  }
+
+  // ---------- Anatomía con imágenes reales ----------
+  var CUADROS = ["img/rociador/f000.webp","img/rociador/f001.webp","img/rociador/f002.webp","img/rociador/f003.webp","img/rociador/f004.webp","img/rociador/f005.webp","img/rociador/f006.webp","img/rociador/f007.webp","img/rociador/f008.webp","img/rociador/f009.webp","img/rociador/f010.webp","img/rociador/f011.webp","img/rociador/f012.webp","img/rociador/f013.webp","img/rociador/f014.webp","img/rociador/f015.webp","img/rociador/f016.webp","img/rociador/f017.webp","img/rociador/f018.webp","img/rociador/f019.webp","img/rociador/f020.webp","img/rociador/f021.webp","img/rociador/f022.webp","img/rociador/f023.webp","img/rociador/f024.webp","img/rociador/f025.webp","img/rociador/f026.webp","img/rociador/f027.webp","img/rociador/f028.webp","img/rociador/f029.webp","img/rociador/f030.webp","img/rociador/f031.webp","img/rociador/f032.webp","img/rociador/f033.webp","img/rociador/f034.webp","img/rociador/f035.webp","img/rociador/f036.webp","img/rociador/f037.webp","img/rociador/f038.webp","img/rociador/f039.webp","img/rociador/f040.webp","img/rociador/f041.webp","img/rociador/f042.webp","img/rociador/f043.webp","img/rociador/f044.webp","img/rociador/f045.webp","img/rociador/f046.webp","img/rociador/f047.webp","img/rociador/f048.webp","img/rociador/f049.webp","img/rociador/f050.webp","img/rociador/f051.webp","img/rociador/f052.webp","img/rociador/f053.webp","img/rociador/f054.webp","img/rociador/f055.webp","img/rociador/f056.webp","img/rociador/f057.webp","img/rociador/f058.webp","img/rociador/f059.webp","img/rociador/f060.webp","img/rociador/f061.webp","img/rociador/f062.webp"];
+  (function(){
+    var sec = document.getElementById('anatomia'); if (!sec) return;
+    var lienzo = document.getElementById('anat-lienzo');
+    var capas = Array.from(sec.querySelectorAll('.capa')), marcas = Array.from(sec.querySelectorAll('.marca-real'));
+    var pasos = Array.from(sec.querySelectorAll('.paso-a')), barras = Array.from(sec.querySelectorAll('.progreso-anat b'));
+    var canvas = document.getElementById('cuadros-rociador'), ctx = canvas.getContext('2d');
+    var imgs = CUADROS.map(function(src){ var i = new Image(); i.decoding = 'async'; i.src = src; return i; });
+    var T = [[0, .16], [.16, .36], [.36, .58], [.58, .82], [.82, 1]];
+    var suave = function(a, b, x){ var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+    // Cada foto se encuadra centrada en su equipo, así no queda afuera en pantallas verticales
+    capas.forEach(function(c){ var img = c.querySelector('img'); if (img) { var f = img.dataset.foco.split(',').map(Number); img.style.objectPosition = (f[0] * 100) + '% ' + (f[1] * 100) + '%'; } });
+    function aPantalla(img, fx, fy){
+      var W = lienzo.clientWidth, H = lienzo.clientHeight, iw = img.naturalWidth || 16, ih = img.naturalHeight || 9;
+      var esc = Math.max(W / iw, H / ih), dw = iw * esc, dh = ih * esc;
+      return { x: Math.min(W, Math.max(0, (W - dw) * fx + fx * dw)), y: Math.min(H, Math.max(0, (H - dh) * fy + fy * dh)) };
+    }
+    var desplazar = function(y){ return lienzo.clientWidth <= 760 ? Math.min(0, lienzo.clientHeight * .36 - y) : 0; };
+    var cuadroActual = -1;
+    function dibujar(k){
+      k = Math.max(0, Math.min(imgs.length - 1, k)); var im = imgs[k];
+      if (!im.complete || !im.naturalWidth) { im.onload = function(){ dibujar(k); }; return; }
+      var W = canvas.clientWidth, H = canvas.clientHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (canvas.width !== Math.round(W * dpr)) { canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); }
+      var esc = Math.max(canvas.width / im.naturalWidth, canvas.height / im.naturalHeight), dw = im.naturalWidth * esc, dh = im.naturalHeight * esc;
+      ctx.drawImage(im, (canvas.width - dw) / 2, (canvas.height - dh) / 2, dw, dh); cuadroActual = k;
+    }
+    var activo = -1;
+    function estado(p){
+      capas.forEach(function(c, i){
+        var a = T[i][0], b = T[i][1];
+        var entra = i === 0 ? 1 : suave(a - .03, a + .03, p), sale = i === capas.length - 1 ? 0 : suave(b - .03, b + .03, p);
+        c.style.opacity = Math.max(0, entra - sale);
+        var local = suave(a, b, p), img = c.querySelector('img');
+        if (img) {
+          var f = img.dataset.foco.split(',').map(Number), o = aPantalla(img, f[0], f[1]);
+          img.style.transformOrigin = o.x + 'px ' + o.y + 'px';
+          img.style.transform = 'translateY(' + (desplazar(o.y) * local) + 'px) scale(' + (i === capas.length - 1 ? 1.25 - .2 * local : 1.02 + .5 * local) + ')';
+        }
+      });
+      var k = Math.round(suave(T[3][0] + .02, T[3][1] - .02, p) * (imgs.length - 1));
+      if (k !== cuadroActual) dibujar(k);
+      marcas.forEach(function(m){
+        var i = +m.dataset.capa, a = T[i][0], b = T[i][1], on = p > a + .03 && p < b - .03;
+        m.style.opacity = on ? 1 : 0; if (!on) return;
+        if (i === 3) { m.style.left = (lienzo.clientWidth * .47) + 'px'; m.style.top = (lienzo.clientHeight * .24) + 'px'; m.classList.remove('izq'); return; }
+        var img = capas[i].querySelector('img'), f = img.dataset.foco.split(',').map(Number), o = aPantalla(img, f[0], f[1]);
+        m.style.left = o.x + 'px'; m.style.top = (o.y + desplazar(o.y) * suave(a, b, p)) + 'px';
+        m.classList.toggle('izq', o.x > lienzo.clientWidth * .68);
+      });
+      barras.forEach(function(bar, i){ bar.style.height = (suave(T[i + 1][0], T[i + 1][1], p) * 100) + '%'; });
+      var i2 = 0; T.forEach(function(t, k2){ if (p >= t[0]) i2 = k2; });
+      if (i2 !== activo) { activo = i2; pasos.forEach(function(el, k2){ el.classList.toggle('activo', k2 === i2); }); }
+    }
+    if (GSAP) {
+      ScrollTrigger.create({ trigger: sec, start: 'top top', end: '+=3600', pin: '.anat-pin', scrub: .4, refreshPriority: 1, onUpdate: function(st){ estado(st.progress); } });
+      ScrollTrigger.sort(); ScrollTrigger.refresh(); estado(0);
+    } else { sec.classList.add('estatico'); dibujar(40); }
+  })();
+})();
+</script>
+
+</body>
+</html>
