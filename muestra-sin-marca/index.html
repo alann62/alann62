@@ -290,7 +290,7 @@
   .haz { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, conic-gradient(from var(--ang), transparent 0 65%, #34d27b 82%, #0f9d58 90%, transparent 97%) border-box; animation: giro 4s linear infinite; }
   @keyframes giro { to { --ang: 360deg; } }
 
-  .clamp-escena { will-change: transform; }
+  .clamp-escena { will-change: transform; overflow: hidden; }   /* las piezas del despiece arrancan corridas: que no desborden la pantalla */
 
   /* ---------- Fotos reales ---------- */
   .hero-foto { width: min(1000px, 100%); height: auto; margin: 44px auto 0; display: block; will-change: transform; }
@@ -353,6 +353,23 @@
   .config-lienzo { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
   .config-3d .chip-litros { opacity: 1; }
   .escala { position: absolute; left: 20px; bottom: 16px; font-size: 12px; color: var(--terciario); }
+  @media (max-width: 600px) {
+    #buscador { padding-top: 64px; }
+    #tipos { flex-wrap: nowrap; }
+    #tipos button { padding: 10px 11px; font-size: 13px; min-height: 44px; }
+    /* Categorías de la tienda: una fila que se desliza de costado */
+    #filtros { flex-wrap: nowrap; max-width: 100%; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+    #filtros::-webkit-scrollbar { display: none; }
+    #filtros button { flex: none; min-height: 44px; }
+    .control-litros { margin: 32px auto 36px; }
+    .config-3d { height: 440px; border-radius: 22px; }
+    .config-3d .chip-litros { left: 12px; right: auto; top: 12px; padding: 8px 12px; border-radius: 14px; }
+    .config-3d .chip-litros small { font-size: 11px; }
+    .config-3d .chip-litros b { font-size: 20px; }
+    .escala { left: 12px; right: 12px; bottom: 10px; font-size: 11px; }
+    .wa { width: 48px; height: 48px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+    .wa svg { width: 24px; height: 24px; }
+  }
 
   /* ---------- Gran volumen ---------- */
   .gigante-foto { display: flex; justify-content: center; margin: 56px 0 64px; padding-inline: 22px; }
@@ -556,6 +573,33 @@
   </svg>
 </section>
 
+<!-- BUSCADOR -->
+<section class="gris" id="buscador">
+  <div class="wrap ancho">
+    <div class="cabeza centro" style="margin-bottom:36px">
+      <h2 class="h-sec">¿Cuál es para vos?</h2>
+      <p class="sub">Decinos cuántos litros necesitás. Te mostramos la medida y la base que lleva.</p>
+    </div>
+    <div class="centro"><div class="segmento" role="group" aria-label="Tipo de tanque" id="tipos"></div></div>
+    <div class="control-litros">
+      <label class="litros-grande" for="litros">
+        <input type="number" id="litros" min="10" max="15000" step="10" value="1000" inputmode="numeric" class="num">
+        <span>litros</span>
+      </label>
+      <input type="range" id="litros-rango" min="0" max="100" value="60" aria-label="Capacidad aproximada">
+      <div class="rango-ayuda num"><span id="r-min"></span><span id="r-max"></span></div>
+    </div>
+    <div class="config-3d" id="config-3d">
+      <div class="config-lienzo" id="config-lienzo" role="img" aria-label="Vista 3D a escala del tanque elegido junto a una persona de 1,75 m"></div>
+      <div class="chip-litros" id="config-chip"><small>Cónico Ø 970</small><b class="num">1.000 L</b></div>
+      <div class="punto" data-p="tapa"><i></i><span>Tapa</span></div>
+      <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
+      <span class="escala">A escala real · persona de referencia de 1,75 m · arrastrá para girar</span>
+    </div>
+    <div class="resultados" id="resultados" aria-live="polite"></div>
+  </div>
+</section>
+
 <!-- CIFRAS -->
 <section style="padding-block:80px">
   <div class="wrap">
@@ -672,33 +716,6 @@
       <div class="ventaja revelar"><b>Rápido</b><span>de sanitizar: el sistema agiliza la limpieza y desinfección.</span></div>
       <div class="ventaja revelar"><b>Probado</b><span>Miles de clientes ya comprobaron la superioridad del sistema.</span></div>
     </div>
-  </div>
-</section>
-
-<!-- BUSCADOR -->
-<section class="gris" id="buscador">
-  <div class="wrap ancho">
-    <div class="cabeza centro" style="margin-bottom:36px">
-      <h2 class="h-sec">¿Cuál es para vos?</h2>
-      <p class="sub">Decinos cuántos litros necesitás. Te mostramos la medida y la base que lleva.</p>
-    </div>
-    <div class="centro"><div class="segmento" role="group" aria-label="Tipo de tanque" id="tipos"></div></div>
-    <div class="control-litros">
-      <label class="litros-grande" for="litros">
-        <input type="number" id="litros" min="10" max="15000" step="10" value="1000" inputmode="numeric" class="num">
-        <span>litros</span>
-      </label>
-      <input type="range" id="litros-rango" min="0" max="100" value="60" aria-label="Capacidad aproximada">
-      <div class="rango-ayuda num"><span id="r-min"></span><span id="r-max"></span></div>
-    </div>
-    <div class="config-3d" id="config-3d">
-      <div class="config-lienzo" id="config-lienzo" role="img" aria-label="Vista 3D a escala del tanque elegido junto a una persona de 1,75 m"></div>
-      <div class="chip-litros" id="config-chip"><small>Cónico Ø 970</small><b class="num">1.000 L</b></div>
-      <div class="punto" data-p="tapa"><i></i><span>Tapa</span></div>
-      <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
-      <span class="escala">A escala real · persona de referencia de 1,75 m · arrastrá para girar</span>
-    </div>
-    <div class="resultados" id="resultados" aria-live="polite"></div>
   </div>
 </section>
 
@@ -1172,7 +1189,7 @@ function elegirTipo(t) {
   marcar($("#tipos"), t);
   buscar();
 }
-segmento($("#tipos"), Object.entries(LINEAS).map(([k, l]) => [k, l.nombre === "BIN" ? "Contenedor BIN" : l.nombre]), "conico", elegirTipo);
+segmento($("#tipos"), Object.entries(LINEAS).map(([k, l]) => [k, l.nombre === "BIN" ? (innerWidth < 600 ? "BIN" : "Contenedor BIN") : l.nombre]), "conico", elegirTipo);
 $("#litros").addEventListener("input", e => {
   const v = parseInt(e.target.value, 10);
   if (!Number.isFinite(v) || v <= 0) return;
