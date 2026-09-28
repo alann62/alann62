@@ -1,7 +1,7 @@
 // Escenas 3D de la propuesta (Three.js). Se empaqueta con esbuild en js/escena3d.js (ver README).
 //  - Anatomía: fermentador cónico que se arma con el scroll (GSAP ScrollTrigger).
 //  - Configurador: el tanque del buscador, a escala real junto a una persona de 1,75 m.
-//  - Visores del equipo: base, torpedo, accesorios y cónico CLAMP para girar.
+//  - Visores del equipo: base, torpedo, tanque plano, cónico y cilíndrico CLAMP para girar.
 // Si no hay WebGL, cada escena deja visible su foto de respaldo.
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -216,6 +216,8 @@ function modeloHorizontal(V, M) {
   const liquido = new THREE.Mesh(new THREE.CapsuleGeometry(r * .95, largo - 2 * r, 24, 64), liqMat);
   liquido.rotation.z = Math.PI / 2; liquido.position.y = yc; liquido.scale.set(.94, 1, 1); g.add(liquido);
   const nivel = frac => { plano.constant = yc - r * .95 + 2 * r * .95 * Math.min(.98, Math.max(.02, frac)); };
+  // Nervaduras moldeadas a lo largo del cuerpo
+  for (const x of [-.3, -.1, .1, .3]) { const n = new THREE.Mesh(new THREE.TorusGeometry(r * .97, r * .045, 12, 64), M.pe); n.rotation.y = Math.PI / 2; n.position.set(x * largo, yc, 0); n.scale.set(1, 1, .94); n.castShadow = true; g.add(n); }
   const rt = Math.min(.2, r * .35);
   const tapa = new THREE.Mesh(new THREE.CylinderGeometry(rt, rt, .06, 48), M.verde);
   tapa.position.y = yc + r * .94 + .03; tapa.castShadow = true; g.add(tapa);
@@ -426,7 +428,7 @@ function configurador() {
 }
 
 // ======================================================================
-// 3) Visores del equipo: base, torpedo y accesorios, para girar con el dedo
+// 3) Visores del equipo: bases, torpedo y tanques, para girar con el dedo
 // ======================================================================
 function materialesEquipo(M) {
   return {
@@ -500,45 +502,6 @@ function modeloTorpedo(M) {
   return g;
 }
 
-// Juego de accesorios CLAMP, como en la foto
-function modeloAccesorios(M) {
-  const g = new THREE.Group();
-  const poner = (pieza, x, z, giro = 0) => { pieza.position.x = x; pieza.position.z = z; pieza.rotation.y = giro; g.add(pieza); return pieza; };
-  // Abrazadera plástica verde con bulón y mariposa
-  const abr = new THREE.Group();
-  const arco = malla(abr, new THREE.TorusGeometry(.04, .009, 12, 48, Math.PI * 1.65), M.verde, 0, .05); arco.rotation.z = -Math.PI * .32;
-  malla(abr, new THREE.CylinderGeometry(.0045, .0045, .07, 12), M.inox, .045, .05).rotation.z = Math.PI / 2;
-  const mar = new THREE.Group(); mar.position.set(.085, .05, 0); abr.add(mar);
-  malla(mar, new THREE.CylinderGeometry(.008, .008, .014, 12), M.gris).rotation.z = Math.PI / 2;
-  malla(mar, new THREE.BoxGeometry(.006, .022, .05), M.gris, .002);
-  poner(abr, -.16, -.05, .4);
-  // Manguito roscado clamp (blanco, tipo trompeta)
-  const perfil = [[.018, 0], [.02, 0], [.02, .05], [.03, .058], [.045, .07], [.045, .078], [.018, .078]].map(([x, y]) => new THREE.Vector2(x, y));
-  const mang = new THREE.Group(); malla(mang, new THREE.LatheGeometry(perfil, 48), M.blanco).material.side = THREE.DoubleSide;
-  poner(mang, .15, -.09);
-  // Junta de silicona (azul)
-  const junta = malla(new THREE.Group(), new THREE.TorusGeometry(.028, .008, 16, 48), M.azul, 0, .008); junta.rotation.x = Math.PI / 2;
-  poner(junta.parent, .06, .12);
-  // Llave de paso desarmable 3/4 (azul)
-  const llave = new THREE.Group();
-  malla(llave, new THREE.CylinderGeometry(.032, .032, .06, 40), M.azul, 0, .032);
-  malla(llave, new THREE.CylinderGeometry(.034, .034, .012, 40), M.azul, 0, .066);
-  const salida = malla(llave, new THREE.CylinderGeometry(.014, .014, .05, 24), M.azul, .04, .03); salida.rotation.z = Math.PI / 2;
-  poner(llave, .07, -.01, -.5);
-  // Airlock transparente con conector a rosca
-  const air = new THREE.Group();
-  malla(air, new THREE.CylinderGeometry(.012, .012, .03, 6), M.negro, 0, .015);
-  malla(air, new THREE.CylinderGeometry(.009, .009, .02, 16), M.bronce, 0, .04);
-  malla(air, new THREE.CylinderGeometry(.026, .026, .09, 40, 1, true), M.cristal, 0, .095);
-  malla(air, new THREE.CylinderGeometry(.027, .027, .01, 40), M.cristal, 0, .145);
-  malla(air, new THREE.CylinderGeometry(.009, .009, .07, 20), M.cristal, 0, .09);
-  poner(air, -.1, .09);
-  // Tuerca y tapón chicos
-  const tapon = new THREE.Group(); malla(tapon, new THREE.CylinderGeometry(.01, .013, .03, 16), M.azul, 0, .015); poner(tapon, .15, .06);
-  const aro = malla(new THREE.Group(), new THREE.TorusGeometry(.022, .01, 12, 6), M.azul, 0, .01); aro.rotation.x = Math.PI / 2; poner(aro.parent, -.02, .17);
-  return g;
-}
-
 // Tanque de fondo plano sobre base de cuatro patas, con canilla de descarga
 function modeloPlanoBase(M) {
   const g = new THREE.Group(), alto = .42, D = .97;
@@ -583,31 +546,42 @@ function modeloCilindrico(M, h = 2.05) {
 }
 
 // ---------- Bases del catálogo (según las fotos de la tienda) ----------
-const COLOR_BASE = { verde: 0x1d7a3c, azul: 0x103a82, petroleo: 0x1f5a5c, rojo: 0xd0231a };
+const COLOR_BASE = { verde: 0x1f9448, azul: 0x0f4470, celeste: 0x4f8fcf, petroleo: 0x1f5a5c, rojo: 0xd0231a };
 function matBase(color) {
   return color === "rojo" ? new THREE.MeshPhysicalMaterial({ color: COLOR_BASE.rojo, roughness: .42, clearcoat: .4 })
     : new THREE.MeshPhysicalMaterial({ color: COLOR_BASE[color], metalness: .15, roughness: .42, clearcoat: .6, clearcoatRoughness: .3 });
 }
 const alturaCono = D => Math.max(.32, .5 * D) + 1.05 * D / 2;   // misma altura a la que apoya el cónico del configurador
 
-// Base cónica: aro superior, aro interior donde calza el cono, cuatro patas y marcos cuadrados
-function baseConicaCatalogo(D, { reforzada = false, color = "azul" } = {}) {
-  const g = new THREE.Group(), mat = matBase(color), r = D / 2, h = alturaCono(D);
-  const l = Math.max(.02, D * .032) * (reforzada ? 1.3 : 1), rA = r * 1.03, lado = r * 1.08;
-  malla(g, new THREE.TorusGeometry(rA, l * .6, 12, 96), mat, 0, h).rotation.x = Math.PI / 2;
-  const yInt = h - 1.05 * r * .55, rInt = r * .5;
-  malla(g, new THREE.TorusGeometry(rInt, l * .45, 10, 64), mat, 0, yInt).rotation.x = Math.PI / 2;
+// Base cónica, según las fotos de la tienda. Las chicas (D40 a D69) son altas y angostas:
+// aro arriba, patas casi rectas, dos marcos cuadrados cerca del piso y, salvo las D40 más chicas,
+// cuatro tirantes en diagonal que bajan del aro a un aro interior donde apoya la punta del cono.
+const altoBase = D => D <= .7 ? D * 1.75 : D <= 1 ? D * 1.05 : D * .85;
+function baseConicaCatalogo(D, { reforzada = false, color = "azul", simple = false } = {}) {
+  const g = new THREE.Group(), mat = matBase(color), r = D / 2, h = altoBase(D);
+  const l = Math.max(.016, D * .028) * (reforzada ? 1.3 : 1), rA = r * 1.02;
+  const arriba = rA * .72, abajo = D > 1 ? arriba * 1.1 : arriba * .93;
+  malla(g, new THREE.TorusGeometry(rA, l * .5, 12, 96), mat, 0, h).rotation.x = Math.PI / 2;
   const esq = [[1, 1], [1, -1], [-1, -1], [-1, 1]];
-  const enPata = (sx, sz, y) => { const k = y / h, rx = mezclar(lado, rA * .707, k); return [sx * rx, y, sz * rx]; };
+  const enPata = (sx, sz, y) => { const a = mezclar(abajo, arriba, y / h); return [sx * a, y, sz * a]; };
   esq.forEach(([sx, sz]) => {
-    barra(g, [sx * rA * .707, h, sz * rA * .707], [sx * lado, .02, sz * lado], l, mat);
-    malla(g, new THREE.BoxGeometry(l * 2.6, .008, l * 2.6), mat, sx * lado, .004, sz * lado);
-    const p = enPata(sx, sz, yInt); barra(g, p, [sx * rInt * .707, yInt, sz * rInt * .707], l * .7, mat);
+    barra(g, [sx * arriba, h, sz * arriba], [sx * abajo, .01, sz * abajo], l, mat);
+    malla(g, new THREE.BoxGeometry(l * 2.6, .008, l * 2.6), mat, sx * abajo, .004, sz * abajo);
   });
-  const marcos = reforzada ? [.1, h * .4, h * .62] : [.1, h * .45];
+  const marcos = reforzada ? [h * .1, h * .24, h * .4] : [h * .1, h * .24];
   for (const y of marcos) for (let i = 0; i < 4; i++) {
     const [ax, az] = esq[i], [bx, bz] = esq[(i + 1) % 4];
     barra(g, enPata(ax, az, y), enPata(bx, bz, y), l * .8, mat);
+  }
+  if (!simple) {
+    const yInt = h * (D <= .7 ? .56 : .45), rInt = r * .4;
+    malla(g, new THREE.TorusGeometry(rInt, l * .45, 10, 64), mat, 0, yInt).rotation.x = Math.PI / 2;
+    esq.forEach(([sx, sz]) => {
+      // tirante diagonal desde el aro de arriba y rayo horizontal desde la pata
+      const a = Math.atan2(sz, sx);
+      barra(g, [Math.cos(a) * rA, h, Math.sin(a) * rA], [Math.cos(a) * rInt, yInt, Math.sin(a) * rInt], l * .75, mat);
+      barra(g, enPata(sx, sz, yInt), [sx * rInt * .707, yInt, sz * rInt * .707], l * .6, mat);
+    });
   }
   return { grupo: g, alto: h };
 }
@@ -655,7 +629,7 @@ function armarBase(sel, M) {
     const Mt = { ...M, pe: M.fantasma };
     let t;
     if (sel.tipo === "plana") { t = modeloPlano(sel.D, sel.litros || 500, Mt); t.grupo.position.y = b.alto; }
-    else { t = modeloConico(sel.D, sel.litros || 100, Mt, M.agua); t.base.visible = false; if (sel.tipo === "plastica") t.grupo.position.y = .012; }
+    else { t = modeloConico(sel.D, sel.litros || 100, Mt, M.agua); t.base.visible = false; t.grupo.position.y = sel.tipo === "plastica" ? .012 : b.alto - alturaCono(sel.D); }
     g.add(t.grupo);
   }
   return g;
@@ -667,7 +641,7 @@ function visorEquipo(el) {
   const { renderer, scene, camera, sol } = m;
   const M = materialesEquipo(materiales());
   const tipo = el.dataset.modelo;
-  const hecho = tipo === "base" ? { grupo: armarBase(el._eleccion || { tipo: "conica", D: .97 }, M) } : tipo === "torpedo" ? { grupo: modeloTorpedo(M) } : tipo === "accesorios" ? { grupo: modeloAccesorios(M) }
+  const hecho = tipo === "base" ? { grupo: armarBase(el._eleccion || { tipo: "conica", D: .97 }, M) } : tipo === "torpedo" ? { grupo: modeloTorpedo(M) }
     : tipo === "plano" ? modeloPlanoBase(M) : tipo === "cilindrico" ? modeloCilindrico(M) : modeloConico(.5, 110, M, M.agua);
   const modelo = hecho.grupo;
   scene.add(modelo);
@@ -688,9 +662,9 @@ function visorEquipo(el) {
   controls.autoRotate = !REDUCIR; controls.autoRotateSpeed = 1.6;
   controls.minPolarAngle = Math.PI * .15; controls.maxPolarAngle = Math.PI * .47;
   controls.target.copy(centro);
-  const factor = tipo === "accesorios" ? .8 : tipo === "cilindrico" ? .95 : tipo === "base" ? 1.2 : 1.05;
+  const factor = tipo === "cilindrico" ? .95 : tipo === "base" ? 1.2 : 1.05;
   const dist = radio / Math.sin(camera.fov * Math.PI / 360) * factor;
-  camera.position.copy(centro).add(new THREE.Vector3(.75, tipo === "accesorios" ? .75 : .38, 1).setLength(dist));
+  camera.position.copy(centro).add(new THREE.Vector3(.75, .38, 1).setLength(dist));
   // Encuadre objetivo (para las bases, que cambian de tamaño al elegir otra)
   const destino = { centro: centro.clone(), dist };
   let actual = modelo;
@@ -730,62 +704,6 @@ function visores() {
 // ======================================================================
 // 4) Modelo 3D de cada producto de la tienda (para el aviso "Agregado" y el pedido)
 // ======================================================================
-function piezaJunta(M, color = "blanco") {
-  const g = new THREE.Group();
-  const perfil = [[.024, 0], [.042, 0], [.042, .006], [.03, .006], [.03, .01], [.024, .01]].map(([x, y]) => new THREE.Vector2(x, y));
-  malla(g, new THREE.LatheGeometry(perfil, 64), color === "azul" ? M.azul : M.blanco).material.side = THREE.DoubleSide;
-  return g;
-}
-function piezaAbrazadera(M) {
-  const g = new THREE.Group();
-  const arco = malla(g, new THREE.TorusGeometry(.045, .01, 12, 48, Math.PI * 1.7), M.verde, 0, .06); arco.rotation.z = -Math.PI * .35;
-  malla(g, new THREE.BoxGeometry(.03, .022, .02), M.verde, .05, .06);
-  malla(g, new THREE.CylinderGeometry(.005, .005, .08, 12), M.inox, .055, .06).rotation.z = Math.PI / 2;
-  const mar = new THREE.Group(); mar.position.set(.1, .06, 0); g.add(mar);
-  malla(mar, new THREE.CylinderGeometry(.009, .009, .016, 12), M.blanco).rotation.z = Math.PI / 2;
-  malla(mar, new THREE.BoxGeometry(.006, .026, .06), M.blanco, .002);
-  return g;
-}
-function piezaManguito(M) {
-  const g = new THREE.Group();
-  const perfil = [[.012, 0], [.016, 0], [.016, .04], [.024, .05], [.042, .062], [.042, .07], [.012, .07]].map(([x, y]) => new THREE.Vector2(x, y));
-  malla(g, new THREE.LatheGeometry(perfil, 48), M.blanco).material.side = THREE.DoubleSide;
-  for (let i = 0; i < 5; i++) malla(g, new THREE.TorusGeometry(.0165, .0015, 6, 32), M.blanco, 0, .006 + i * .007).rotation.x = Math.PI / 2;
-  return g;
-}
-function piezaLlave(M) {
-  const g = new THREE.Group();
-  malla(g, new THREE.SphereGeometry(.05, 32, 24), M.verde, 0, .06);
-  for (const s of [-1, 1]) {
-    const b = malla(g, new THREE.CylinderGeometry(.03, .034, .05, 32), M.verde, s * .06, .06); b.rotation.z = Math.PI / 2;
-    const f = malla(g, new THREE.CylinderGeometry(.042, .042, .01, 32), M.verde, s * .088, .06); f.rotation.z = Math.PI / 2;
-  }
-  malla(g, new THREE.CylinderGeometry(.01, .01, .04, 16), M.blanco, 0, .12);
-  const m = malla(g, new THREE.BoxGeometry(.16, .014, .04), M.blanco, 0, .145); m.rotation.y = .5;
-  return g;
-}
-function piezaAirlock(M) {
-  const g = new THREE.Group();
-  malla(g, new THREE.CylinderGeometry(.012, .012, .03, 6), M.negro, 0, .015);
-  malla(g, new THREE.CylinderGeometry(.009, .009, .02, 16), M.bronce, 0, .04);
-  malla(g, new THREE.CylinderGeometry(.026, .026, .09, 40, 1, true), M.cristal, 0, .095);
-  malla(g, new THREE.CylinderGeometry(.027, .027, .01, 40), M.cristal, 0, .145);
-  malla(g, new THREE.CylinderGeometry(.009, .009, .07, 20), M.cristal, 0, .09);
-  return g;
-}
-function piezaTapa(M, r, color) {
-  const g = new THREE.Group(), mat = color === "beige" ? new THREE.MeshPhysicalMaterial({ color: 0xe6c9b4, roughness: .5 }) : M.verde;
-  malla(g, new THREE.CylinderGeometry(r, r, r * .22, 64), mat, 0, r * .11);
-  malla(g, new THREE.TorusGeometry(r * .55, r * .035, 10, 48), mat, 0, r * .22).rotation.x = Math.PI / 2;
-  if (color !== "beige") for (let i = 0; i < 30; i++) { const a = i / 30 * Math.PI * 2; malla(g, new THREE.BoxGeometry(r * .06, r * .2, r * .08), mat, Math.cos(a) * r, r * .11, Math.sin(a) * r).rotation.y = -a; }
-  return g;
-}
-function juntar(piezas) {   // pone varias piezas en fila
-  const g = new THREE.Group(); let x = 0;
-  piezas.forEach(p => { const c = new THREE.Box3().setFromObject(p), w = c.max.x - c.min.x; p.position.x = x - c.min.x; x += w + .03; g.add(p); });
-  g.children.forEach(p => { p.position.x -= x / 2; });
-  return g;
-}
 // Batea antiderrame: caja abierta de paredes gruesas, algo más ancha arriba
 function modeloBatea(V, M) {
   const g = new THREE.Group(), mat = new THREE.MeshPhysicalMaterial({ color: 0xe8e4de, roughness: .55, clearcoat: .2 });
@@ -844,19 +762,9 @@ function modeloProducto(p, M) {
   }
   if (p.cat === "Bases") {
     const D = (+d || 40) / 100, tipo = /plástica/.test(n) ? "plastica" : /plana/.test(n) ? "plana" : "conica";
-    return armarBase({ tipo, D: tipo === "plastica" ? .4 : D, color: +d === 40 ? "verde" : "azul", reforzada: /reforzada/.test(n), disco: /disco/.test(n), piso: /piso/.test(n) }, M);
+    return armarBase({ tipo, D: tipo === "plastica" ? .4 : D, color: +d === 40 ? "verde" : /liviana/.test(n) ? "celeste" : "azul", simple: +d === 40 && (p.dmax || 0) <= 70, reforzada: /reforzada/.test(n), disco: /disco/.test(n), piso: /piso/.test(n) }, M);
   }
-  if (p.cat === "Accesorios CLAMP") {
-    if (/Kit/.test(n)) return juntar([piezaAbrazadera(M), piezaManguito(M), piezaJunta(M)]);
-    if (/Llave.*abrazadera/.test(n)) return juntar([piezaLlave(M), piezaAbrazadera(M), piezaJunta(M)]);
-    if (/Llave/.test(n)) return piezaLlave(M);
-    if (/Abrazadera/.test(n)) return piezaAbrazadera(M);
-    if (/Junta/.test(n)) return juntar([piezaJunta(M), piezaJunta(M)]);
-    if (/Tapa ciega/.test(n)) return juntar([piezaTapa(M, .045, "beige"), piezaTapa(M, .045, "beige")]);
-    if (/Manguito/.test(n)) return piezaManguito(M);
-    if (/Airlock/.test(n)) return piezaAirlock(M);
-    if (/Tapa/.test(n)) return piezaTapa(M, .125);
-  }
+  if (p.cat === "Accesorios CLAMP") return null;   // accesorios chicos: se muestra la foto real
   if (/Batea/.test(n)) return modeloBatea(litros, M);
   if (/cajón/.test(n)) return modeloCajon(M);
   if (/Recipiente/.test(n)) return modeloRecipiente(litros, M, litros >= 100);

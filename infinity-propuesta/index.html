@@ -441,6 +441,7 @@
   .visor.listo.ver-foto .visor-foto span { left: auto; right: 14px; bottom: 14px; padding: 6px 12px; border-radius: 99px; background: var(--texto); }
   .visor.listo.ver-foto .visor-foto span::before { content: "Volver al 3D · "; }
   .visor-foto:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
+  .visor-solo-foto img { width: 100%; height: 100%; object-fit: contain; padding: 28px; }
   .visor-pista { position: absolute; left: 18px; top: 16px; z-index: 1; font-size: 12px; color: var(--terciario); opacity: 0; transition: opacity .4s; }
   .visor.listo .visor-pista { opacity: 1; }
   .equipo-texto h3 { font-size: clamp(32px, 4vw, 44px); letter-spacing: -.02em; line-height: 1.08; }
@@ -483,6 +484,8 @@
   .base-tanque input { accent-color: var(--verde); width: 16px; height: 16px; }
   /* Aviso "Agregado" con el producto en 3D */
   .aviso3d { position: fixed; right: 24px; bottom: 104px; z-index: 95; width: min(380px, calc(100vw - 32px)); display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: center; background: rgba(255,255,255,.94); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 22px; padding: 12px 16px 12px 12px; box-shadow: 0 20px 50px rgba(0,0,0,.18), 0 0 0 1px rgba(0,0,0,.04); opacity: 0; transform: translateY(20px) scale(.97); transition: opacity .35s var(--curva), transform .35s var(--curva); }
+  .aviso3d[hidden] { display: none; }
+  .aviso3d:not(.visible) { pointer-events: none; }
   .aviso3d.visible { opacity: 1; transform: none; }
   .aviso3d-lienzo, .aviso3d-foto { position: relative; width: 150px; height: 150px; border-radius: 16px; background: #f5f5f7; overflow: hidden; }
   .aviso3d-foto { object-fit: contain; padding: 8px; }
@@ -990,10 +993,8 @@
       </div>
     </div>
     <div class="equipo-fila">
-      <div class="visor revelar" data-modelo="accesorios">
-        <div class="visor-lienzo" role="img" aria-label="Modelo 3D: Accesorios CLAMP: abrazadera, manguito, juntas, llave de paso y airlock. Arrastrá para girar."></div>
-        <button type="button" class="visor-foto" aria-pressed="false" aria-label="Ver foto real"><img src="img/eq-accesorios.webp" alt="Accesorios CLAMP: abrazadera, manguito, juntas, llave de paso y airlock" loading="lazy"><span>Foto real</span></button>
-        <span class="visor-pista">3D · arrastrá para girar</span>
+      <div class="visor visor-solo-foto revelar">
+        <img src="img/eq-accesorios.webp" alt="Accesorios CLAMP: abrazadera, manguito, juntas, llave de paso y airlock" loading="lazy">
       </div>
       <div class="equipo-texto revelar">
         <span class="eyebrow">Accesorios</span>
@@ -1542,7 +1543,7 @@ function animarTotal(v) {
     const d = +(p.nombre.match(/D(\d+)/) || [, 40])[1], D = d >= 100 ? d / 100 : d / 100;
     const tipo = /plástica/.test(p.nombre) ? "plastica" : /plana/.test(p.nombre) ? "plana" : "conica";
     const corto = tipo === "plastica" ? "D40" : "D" + d + (/liviana/.test(p.nombre) ? " liviana" : /reforzada/.test(p.nombre) ? " reforzada" : "") + (p.dmin ? " · " + miles(p.dmin) + "–" + miles(p.dmax) + " L" : "");
-    return { p, tipo, D: tipo === "plastica" ? .4 : D, corto, color: d === 40 && tipo === "conica" ? "verde" : "azul",
+    return { p, tipo, D: tipo === "plastica" ? .4 : D, corto, color: d === 40 && tipo === "conica" ? "verde" : /liviana/.test(p.nombre) ? "celeste" : "azul", simple: d === 40 && (p.dmax || 0) <= 70,
       reforzada: /reforzada/.test(p.nombre), disco: /disco/.test(p.nombre), piso: /piso/.test(p.nombre),
       litros: p.dmax ? Math.round((p.dmin + p.dmax) / 2) : tipo === "plastica" ? 60 : Math.round(Math.PI * Math.pow(D / 2, 2) * D * 1.3 * 1000) };
   });
@@ -1556,7 +1557,7 @@ function animarTotal(v) {
     document.getElementById("base-precio").textContent = fmt$(b.p.precio);
     document.getElementById("base-agregar").replaceChildren(btnAgregar(b.p));
     foto.src = b.p.img; foto.alt = b.p.nombre;
-    const det = { tipo: b.tipo, D: b.D, color: b.color, reforzada: b.reforzada, disco: b.disco, piso: b.piso, litros: b.litros, tanque: tanque.checked };
+    const det = { tipo: b.tipo, D: b.D, color: b.color, simple: b.simple, reforzada: b.reforzada, disco: b.disco, piso: b.piso, litros: b.litros, tanque: tanque.checked };
     visor._eleccion = det;   // si el 3D todavía no arrancó, lo toma al iniciar
     visor.dispatchEvent(new CustomEvent("elegir", { detail: det }));
   }
