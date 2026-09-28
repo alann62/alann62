@@ -28,14 +28,16 @@ function tramo(claves, p) {
 function materiales() {
   return {
     pe: new THREE.MeshPhysicalMaterial({ color: 0xf2f4f1, roughness: .38, transmission: .78, thickness: .25, ior: 1.46, clearcoat: .5, clearcoatRoughness: .25, side: THREE.DoubleSide }),
-    acero: new THREE.MeshStandardMaterial({ color: 0xd3d8dc, metalness: 1, roughness: .26 }),
+    acero: new THREE.MeshStandardMaterial({ color: 0xc9ced2, metalness: .55, roughness: .3 }),   // metal moderado: con 1 se ve negro en algunos equipos
     verde: new THREE.MeshPhysicalMaterial({ color: 0x12a150, roughness: .32, clearcoat: .6 }),
     junta: new THREE.MeshStandardMaterial({ color: 0x34d27b, roughness: .5 }),
     cerveza: new THREE.MeshStandardMaterial({ color: 0xc46a05, roughness: .12, emissive: 0x7a3a00, emissiveIntensity: .35 }),
     agua: new THREE.MeshStandardMaterial({ color: 0x7cc4e8, roughness: .1, emissive: 0x0d4a70, emissiveIntensity: .2 }),
     persona: new THREE.MeshStandardMaterial({ color: 0xc7c7cc, roughness: .8 }),
     jaula: new THREE.MeshStandardMaterial({ color: 0x9aa3a8, metalness: .8, roughness: .35 }),
-    pallet: new THREE.MeshStandardMaterial({ color: 0x2c2c2e, roughness: .7 })
+    pallet: new THREE.MeshStandardMaterial({ color: 0x2c2c2e, roughness: .7 }),
+    blanco: new THREE.MeshPhysicalMaterial({ color: 0xf3f3f0, roughness: .42, clearcoat: .35 }),
+    verdeClamp: new THREE.MeshPhysicalMaterial({ color: 0x2fbf4a, roughness: .3, clearcoat: .7 })
   };
 }
 
@@ -88,28 +90,66 @@ function tubo(padre, a, b, r, mat) {
   m.castShadow = true; padre.add(m); return m;
 }
 
-// Salida CLAMP lateral (sobre +X). Devuelve las piezas para poder desarmarla.
+// Salida CLAMP lateral (sobre +X), como la de Infinity: férula blanca moldeada en el tanque, junta,
+// abrazadera plástica verde con bulón y mariposa, y llave de paso verde con manija de acero.
+// Devuelve las piezas para poder desarmarla en la anatomía.
 function salidaClamp(padre, x, y, M, esc = 1) {
   const g = new THREE.Group(); g.position.set(x, y, 0); padre.add(g);
-  const r = .032 * esc;
-  const fijo = tubo(g, [-.02 * esc, 0, 0], [.1 * esc, 0, 0], r * .8, M.acero);
-  const ferulaA = new THREE.Mesh(new THREE.CylinderGeometry(r * 2, r * 2, .02 * esc, 40), M.acero);
-  ferulaA.rotation.z = Math.PI / 2; ferulaA.position.x = .1 * esc; g.add(ferulaA);
-  const junta = new THREE.Mesh(new THREE.CylinderGeometry(r * 1.9, r * 1.9, .01 * esc, 40), M.junta);
-  junta.rotation.z = Math.PI / 2; junta.position.x = .116 * esc; g.add(junta);
-  const accesorio = new THREE.Group(); accesorio.position.x = .132 * esc; g.add(accesorio);
-  const ferulaB = new THREE.Mesh(new THREE.CylinderGeometry(r * 2, r * 2, .02 * esc, 40), M.acero);
-  ferulaB.rotation.z = Math.PI / 2; accesorio.add(ferulaB);
-  tubo(accesorio, [0, 0, 0], [.09 * esc, 0, 0], r * .8, M.acero);
-  const cuerpoValv = new THREE.Mesh(new THREE.BoxGeometry(.07 * esc, .065 * esc, .065 * esc), M.acero);
-  cuerpoValv.position.x = .1 * esc; accesorio.add(cuerpoValv);
-  tubo(accesorio, [.1 * esc, .03 * esc, 0], [.1 * esc, .09 * esc, 0], .008 * esc, M.acero);
-  const manija = new THREE.Mesh(new THREE.BoxGeometry(.012 * esc, .012 * esc, .09 * esc), M.verde);
-  manija.position.set(.1 * esc, .095 * esc, 0); accesorio.add(manija);
-  const abrazadera = new THREE.Mesh(new THREE.TorusGeometry(r * 2.15, .009 * esc, 12, 48), M.acero);
-  abrazadera.rotation.y = Math.PI / 2; abrazadera.position.x = .116 * esc; g.add(abrazadera);
-  [fijo, ferulaA, junta, ferulaB, cuerpoValv, abrazadera].forEach(m => { m.castShadow = true; });
+  const r = .032 * esc, blanco = M.blanco || M.pe, verde = M.verdeClamp || M.verde;
+  const eje = (m) => { m.rotation.z = Math.PI / 2; m.castShadow = true; return m; };
+  const cil = (grupo, rad, largo, mat, px, seg = 40) => { const m = eje(new THREE.Mesh(new THREE.CylinderGeometry(rad, rad, largo, seg), mat)); m.position.x = px; grupo.add(m); return m; };
+  // Férula del tanque: cuello blanco con reborde
+  cil(g, r * .95, .1 * esc, blanco, .05 * esc);
+  const ferulaA = cil(g, r * 1.9, .016 * esc, blanco, .104 * esc, 48);
+  // Junta sanitaria
+  const junta = cil(g, r * 1.75, .008 * esc, M.junta, .116 * esc, 48);
+  // Accesorio: férula verde, cuerpo y llave esférica con manija tipo mariposa
+  const accesorio = new THREE.Group(); accesorio.position.x = .128 * esc; g.add(accesorio);
+  const ferulaB = cil(accesorio, r * 1.9, .016 * esc, verde, 0, 48);
+  cil(accesorio, r * 1.05, .07 * esc, verde, .045 * esc);
+  const esfera = new THREE.Mesh(new THREE.SphereGeometry(r * 1.55, 32, 24), verde); esfera.position.x = .1 * esc; esfera.castShadow = true; accesorio.add(esfera);
+  cil(accesorio, r * .8, .07 * esc, verde, .15 * esc);
+  cil(accesorio, r * 1.1, .012 * esc, verde, .185 * esc);
+  const vastago = new THREE.Mesh(new THREE.CylinderGeometry(r * .22, r * .22, r * 1.4, 16), M.acero); vastago.position.set(.1 * esc, r * 1.9, 0); accesorio.add(vastago);
+  const manija = new THREE.Group(); manija.position.set(.1 * esc, r * 2.6, 0); accesorio.add(manija);
+  for (const s2 of [-1, 1]) { const ala = new THREE.Mesh(new THREE.SphereGeometry(r * .9, 20, 12), M.acero); ala.scale.set(.35, .6, 1.4); ala.position.z = s2 * r * 1.1; ala.castShadow = true; manija.add(ala); }
+  // Abrazadera plástica en C con bulón y tuerca mariposa blanca
+  const abrazadera = new THREE.Group(); abrazadera.position.x = .116 * esc; g.add(abrazadera);
+  const arco = new THREE.Mesh(new THREE.TorusGeometry(r * 2.2, r * .32, 14, 48, Math.PI * 1.75), verde);
+  arco.rotation.y = Math.PI / 2; arco.rotation.x = Math.PI * .125 + Math.PI / 2; arco.scale.set(1, 1, 1.4); arco.castShadow = true; abrazadera.add(arco);
+  const bulon = new THREE.Mesh(new THREE.CylinderGeometry(r * .13, r * .13, r * 3.2, 12), M.acero); bulon.position.set(0, -r * 2.2, r * .4); bulon.rotation.x = Math.PI / 2; abrazadera.add(bulon);
+  const mariposa = new THREE.Group(); mariposa.position.set(0, -r * 2.2, r * 1.9); abrazadera.add(mariposa);
+  const cubo = new THREE.Mesh(new THREE.CylinderGeometry(r * .3, r * .3, r * .5, 16), blanco); cubo.rotation.x = Math.PI / 2; mariposa.add(cubo);
+  for (const s2 of [-1, 1]) { const a2 = new THREE.Mesh(new THREE.BoxGeometry(r * .18, r * .9, r * .5), blanco); a2.position.y = s2 * r * .6; mariposa.add(a2); }
+  [ferulaA, junta, ferulaB].forEach(m => { m.castShadow = true; });
   return { grupo: g, junta, accesorio, abrazadera, base: { junta: junta.position.x, accesorio: accesorio.position.x, abrazadera: abrazadera.position.y } };
+}
+
+// Logo pintado en la pared del tanque (se dibuja una vez y se reutiliza)
+let texturaLogo = null;
+function logoInfinity() {
+  if (texturaLogo) return texturaLogo;
+  const c = document.createElement("canvas"); c.width = 512; c.height = 400;
+  const ctx = c.getContext("2d");
+  texturaLogo = new THREE.CanvasTexture(c); texturaLogo.colorSpace = THREE.SRGBColorSpace; texturaLogo.anisotropy = 4;
+  const img = new Image();
+  const texto = h => {
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#8cc63f"; ctx.font = "300 78px 'Helvetica Neue', Arial, sans-serif";
+    ctx.fillText("INFINITY".split("").join(String.fromCharCode(8202)), 256, 40 + h + 70);
+    ctx.fillStyle = "#4a4a4a"; ctx.font = "400 40px 'Helvetica Neue', Arial, sans-serif";
+    ctx.fillText("ROTOMOLDING", 256, 40 + h + 118);
+    texturaLogo.needsUpdate = true;
+  };
+  img.onerror = () => texto(150);
+  img.onload = () => {
+    const w = 190, h = w * img.height / img.width;
+    ctx.drawImage(img, (512 - w) / 2, 20, w, h);
+    try { ctx.getImageData(0, 0, 1, 1); } catch (e) { ctx.clearRect(0, 0, 512, 400); texto(150); return; }
+    texto(h);
+  };
+  img.src = "img/logo.png";
+  return texturaLogo;
 }
 
 // ---------- Modelos ----------
@@ -121,7 +161,7 @@ function modeloConico(D, V, M, liquidoMat = M.cerveza) {
   const hc = 1.05 * r;                                   // altura del cono
   const vCono = Math.PI * r * r * hc / 3;
   const hy = Math.max(.35 * D, (V3 - vCono) / (Math.PI * r * r));
-  const y0 = Math.max(.32, .5 * D);                      // punta del cono sobre el piso
+  const y0 = altoBase(D) - hc;                           // punta del cono: el cono apoya en el aro de la base
   const rSal = Math.max(.03, r * .09);
   const yTecho = y0 + hc + hy;
   const radio = y => y < y0 + hc ? rSal + (r - rSal) * Math.max(0, y - y0) / hc : r;
@@ -140,41 +180,47 @@ function modeloConico(D, V, M, liquidoMat = M.cerveza) {
     liquido.geometry.dispose(); liquido.geometry = new THREE.LatheGeometry(pts, 96);
   }
 
-  // Tapa a rosca
-  const rt = Math.min(.23, r * .44), ht = Math.max(.05, D * .07);
+  // Tapa a rosca de boca ancha, moleteada, con reborde
+  const rt = Math.min(.26, r * .5), ht = Math.max(.055, D * .085);
   const tapa = new THREE.Group(); tapa.position.y = yTecho + .11 * r; g.add(tapa);
-  const disco = new THREE.Mesh(new THREE.CylinderGeometry(rt, rt, ht, 64), M.verde);
+  const disco = new THREE.Mesh(new THREE.CylinderGeometry(rt * .97, rt, ht, 72), M.verde);
   disco.position.y = ht / 2; disco.castShadow = true; tapa.add(disco);
-  const rosca = new THREE.Mesh(new THREE.TorusGeometry(rt * 1.02, ht * .12, 12, 64), M.verde);
-  rosca.rotation.x = Math.PI / 2; rosca.position.y = ht * .2; tapa.add(rosca);
-
-  // Base metálica
-  const base = new THREE.Group(); g.add(base);
-  const gr = Math.max(.012, D * .022);
-  const aro = (rad, y, grosor) => { const t = new THREE.Mesh(new THREE.TorusGeometry(rad, grosor, 16, 128), M.acero); t.rotation.x = Math.PI / 2; t.position.y = y; t.castShadow = true; base.add(t); };
-  aro(r * 1.03, y0 + hc, gr);
-  const rPie = r * 1.28, yMedio = (y0 + hc) * .32;
-  aro(mezclar(rPie, r * 1.03, yMedio / (y0 + hc)), yMedio, gr * .7);
-  for (let k = 0; k < 4; k++) {
-    const a = Math.PI / 4 + k * Math.PI / 2, c = Math.cos(a), s = Math.sin(a);
-    tubo(base, [r * 1.03 * c, y0 + hc, r * 1.03 * s], [rPie * c, 0, rPie * s], gr, M.acero);
-    const pie = new THREE.Mesh(new THREE.CylinderGeometry(gr * 2.4, gr * 2.4, .01, 24), M.acero);
-    pie.position.set(rPie * c, .005, rPie * s); base.add(pie);
+  const nMol = 56;
+  for (let i = 0; i < nMol; i++) {
+    const a = i / nMol * Math.PI * 2, m = new THREE.Mesh(new THREE.BoxGeometry(rt * .05, ht * .8, rt * .07), M.verde);
+    m.position.set(Math.cos(a) * rt, ht * .45, Math.sin(a) * rt); m.rotation.y = -a; tapa.add(m);
   }
+  const borde = new THREE.Mesh(new THREE.TorusGeometry(rt * .9, ht * .08, 10, 72), M.verde); borde.rotation.x = Math.PI / 2; borde.position.y = ht; tapa.add(borde);
+  const rosca = new THREE.Mesh(new THREE.TorusGeometry(rt * 1.02, ht * .12, 12, 64), M.verde);
+  rosca.rotation.x = Math.PI / 2; rosca.position.y = ht * .1; tapa.add(rosca);
+  // Venteo blanco chico sobre el hombro
+  const venteo = new THREE.Mesh(new THREE.CylinderGeometry(r * .07, r * .07, r * .06, 24), M.blanco);
+  venteo.position.set(r * .62, yTecho + .075 * r, -r * .3); venteo.castShadow = true; g.add(venteo);
 
-  // Descarga de fondo y salida lateral CLAMP
-  tubo(g, [0, y0 + .01, 0], [0, y0 - .1, 0], rSal * .6, M.acero);
-  const valvula = new THREE.Mesh(new THREE.BoxGeometry(.07, .06, .06), M.acero);
-  valvula.position.set(0, y0 - .13, 0); valvula.castShadow = true; g.add(valvula);
+  // Logo en la pared, mirando al frente
+  const altoLogo = Math.min(hy * .7, r * .95), arcoLogo = 1.15;
+  const logo = new THREE.Mesh(new THREE.CylinderGeometry(r * 1.003, r * 1.003, altoLogo, 48, 1, true, .45 - arcoLogo / 2, arcoLogo),
+    new THREE.MeshStandardMaterial({ map: logoInfinity(), transparent: true, roughness: .5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }));
+  logo.position.y = yTecho - hy * .45; g.add(logo);
+
+  // Base metálica como la de la tienda (verde en D40, azul en las demás)
+  const b = baseConicaCatalogo(D, { color: D <= .4 ? "verde" : "azul" }), base = b.grupo; g.add(base);
+
+  // Pico de descarga inferior blanco con mini abrazadera
+  tubo(g, [0, y0 + .01, 0], [0, y0 - .06, 0], rSal * .75, M.blanco);
+  const reborde = new THREE.Mesh(new THREE.CylinderGeometry(rSal * 1.2, rSal * 1.2, .012, 32), M.blanco); reborde.position.y = y0 - .065; g.add(reborde);
+  const mini = new THREE.Mesh(new THREE.TorusGeometry(rSal * 1.25, rSal * .18, 10, 32, Math.PI * 1.7), M.verdeClamp); mini.rotation.x = Math.PI / 2; mini.position.y = y0 - .065; g.add(mini);
+  const tapon = new THREE.Mesh(new THREE.CylinderGeometry(rSal * 1.15, rSal * 1.15, .02, 32), M.blanco); tapon.position.y = y0 - .082; tapon.castShadow = true; g.add(tapon);
   const ySal = y0 + hc + Math.min(.3, hy * .25);
-  const esc = Math.min(1.6, Math.max(.7, D));
+  const esc = Math.min(1.8, Math.max(.9, D * 1.3));
   const clamp = salidaClamp(g, r * .98, ySal, M, esc);
+  const rPie = r * 1.05, yMedio = b.alto * .24;
 
   nivel(.7);
   return {
     grupo: g, nivel, tapa, tapaY: tapa.position.y, clamp, base,
     alto: tapa.position.y + ht, ancho: rPie * 2, radio: r,
-    puntos: { tapa: new THREE.Vector3(0, tapa.position.y + ht + .03, 0), clamp: new THREE.Vector3(r + .2 * esc, ySal, 0), valvula: new THREE.Vector3(0, y0 - .16, 0), base: new THREE.Vector3(rPie * .7, yMedio, rPie * .7) }
+    puntos: { tapa: new THREE.Vector3(0, tapa.position.y + ht + .03, 0), clamp: new THREE.Vector3(r + .26 * esc, ySal, 0), valvula: new THREE.Vector3(0, y0 - .1, 0), base: new THREE.Vector3(r * .72, yMedio, r * .72) }, y0
   };
 }
 
@@ -435,7 +481,7 @@ function materialesEquipo(M) {
     ...M,
     esmalte: new THREE.MeshPhysicalMaterial({ color: 0x103a82, metalness: .15, roughness: .42, clearcoat: .6, clearcoatRoughness: .3 }),
     esmalteVerde: new THREE.MeshPhysicalMaterial({ color: 0x1f5a5c, metalness: .15, roughness: .42, clearcoat: .6, clearcoatRoughness: .3 }),
-    inox: new THREE.MeshStandardMaterial({ color: 0xdfe3e6, metalness: .85, roughness: .3 }),
+    inox: new THREE.MeshStandardMaterial({ color: 0xd6dbdf, metalness: .55, roughness: .28 }),
     blanco: new THREE.MeshPhysicalMaterial({ color: 0xf4f4f2, roughness: .45, clearcoat: .3 }),
     azul: new THREE.MeshPhysicalMaterial({ color: 0x2456b8, roughness: .35, clearcoat: .5 }),
     gris: new THREE.MeshStandardMaterial({ color: 0x9ea3a6, metalness: .2, roughness: .5 }),
@@ -492,13 +538,11 @@ function modeloTorpedo(M) {
   malla(g, new THREE.CylinderGeometry(.051, .051, largo, 48), M.inox, 0, yTubo + largo / 2);
   malla(g, new THREE.SphereGeometry(.051, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), M.inox, 0, yTubo);
   malla(g, new THREE.CylinderGeometry(.052, .052, .012, 48), M.inox, 0, yTubo + largo);
-  // Dos tubos de 13 mm que atraviesan la tapa y la vaina del sensor
+  // Dos tubos de 13 mm que atraviesan la tapa (como en la foto)
   for (const [x, z] of [[.022, 0], [-.022, 0]]) {
     tubo(g, [x, yTubo + largo, z], [x, yTapa + .09, z], .0065, M.inox);
     malla(g, new THREE.CylinderGeometry(.009, .009, .018, 6), M.inox, x, yTapa + .1, z);
   }
-  tubo(g, [0, yTubo + largo, .026], [0, yTapa + .05, .026], .004, M.inox);
-  malla(g, new THREE.CylinderGeometry(.008, .008, .014, 6), M.inox, 0, yTapa + .058, .026);
   return g;
 }
 
@@ -551,7 +595,6 @@ function matBase(color) {
   return color === "rojo" ? new THREE.MeshPhysicalMaterial({ color: COLOR_BASE.rojo, roughness: .42, clearcoat: .4 })
     : new THREE.MeshPhysicalMaterial({ color: COLOR_BASE[color], metalness: .15, roughness: .42, clearcoat: .6, clearcoatRoughness: .3 });
 }
-const alturaCono = D => Math.max(.32, .5 * D) + 1.05 * D / 2;   // misma altura a la que apoya el cónico del configurador
 
 // Base cónica, según las fotos de la tienda. Las chicas (D40 a D69) son altas y angostas:
 // aro arriba, patas casi rectas, dos marcos cuadrados cerca del piso y, salvo las D40 más chicas,
@@ -629,7 +672,7 @@ function armarBase(sel, M) {
     const Mt = { ...M, pe: M.fantasma };
     let t;
     if (sel.tipo === "plana") { t = modeloPlano(sel.D, sel.litros || 500, Mt); t.grupo.position.y = b.alto; }
-    else { t = modeloConico(sel.D, sel.litros || 100, Mt, M.agua); t.base.visible = false; t.grupo.position.y = sel.tipo === "plastica" ? .012 : b.alto - alturaCono(sel.D); }
+    else { t = modeloConico(sel.D, sel.litros || 100, Mt, M.agua); t.base.visible = false; t.grupo.position.y = sel.tipo === "plastica" ? .012 - (t.y0 - .32) : b.alto - altoBase(sel.D); }
     g.add(t.grupo);
   }
   return g;
@@ -745,7 +788,7 @@ function modeloRecipiente(V, M, negro) {
 // Cónico sin base: baja el tanque para que la válvula quede cerca del piso
 function conicoSolo(D, V, M) {
   const t = modeloConico(D, V, M, M.agua); t.base.visible = false;
-  t.grupo.position.y = -(Math.max(.32, .5 * D) - .19);
+  t.grupo.position.y = -(t.y0 - .12);
   const g = new THREE.Group(); g.add(t.grupo); return g;
 }
 function modeloProducto(p, M) {
