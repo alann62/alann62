@@ -13,7 +13,8 @@ Parte del `index.html` original de Fynova y lo mejora **sin cambiar su estructur
 - El botón "Contáctenos" de Incendios lleva al formulario con el servicio elegido (antes iba a la sección de servicios).
 - Preloader que se oculta cuando está el contenido (antes esperaba a que cargaran los videos).
 - Videos que se reproducen solo cuando se ven.
-- Nueva sección entre Incendios y Efluentes: cómo actúa una red contra incendio, con fotos reales y el video del rociador que avanza con el scroll.
+- Nueva sección entre Incendios y Efluentes: cómo actúa una red contra incendio, con fotos reales y el video del rociador que avanza con el scroll. El paso de detección usa la foto real del detector de humo.
+- Nuevo bloque "Sistemas de detección y alarma" dentro de Incendios (después de Extinción y Detección): plano interactivo convencional vs. inteligente con simulación de alarma, funcionamiento, fotos reales y componentes.
 
 ## Pendiente de confirmar
 
