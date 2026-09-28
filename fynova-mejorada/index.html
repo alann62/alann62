@@ -831,7 +831,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="capa"><img src="img/detector-humo.webp" alt="" data-foco="0.557,0.29"></div>
         <div class="capa"><img src="img/sala-bombas.webp" alt="" data-foco="0.87,0.42"></div>
         <div class="capa"><canvas id="cuadros-rociador" width="960" height="540"></canvas></div>
-        <div class="capa final-estatico"><img src="img/sprinkler.webp" alt="" data-foco="0.5,0.45"></div>
+        <div class="capa final-estatico"><img src="img/rociador-final.webp" alt="" data-foco="0.84,0.5"></div>
       </div>
       <div class="marca-real" data-capa="1"><span>Detector de humo</span></div>
       <div class="marca-real" data-capa="2"><span>Tablero de control de bombas</span></div>
@@ -1210,7 +1210,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         if (img) {
           var f = img.dataset.foco.split(',').map(Number), o = aPantalla(img, f[0], f[1]);
           img.style.transformOrigin = o.x + 'px ' + o.y + 'px';
-          img.style.transform = 'translateY(' + (desplazar(o.y) * local) + 'px) scale(' + (i === capas.length - 1 ? 1.25 - .2 * local : 1.02 + .5 * local) + ')';
+          img.style.transform = 'translateY(' + (desplazar(o.y) * local) + 'px) scale(' + (i === capas.length - 1 ? 1.08 - .08 * local : 1.02 + .5 * local) + ')';
         }
       });
       var k = Math.round(suave(T[3][0] + .02, T[3][1] - .02, p) * (imgs.length - 1));
