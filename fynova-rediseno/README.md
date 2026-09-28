@@ -1,13 +1,14 @@
 # Fynova · rediseño web
 
-Rediseño de fynova.com.ar con la skill `diseno-web-apple`: portada con video, calculadora de red contra incendio (NFPA 13, orientativa) y de efluentes, anatomía 3D de una red contra incendio con scroll, divisiones con video, servicios, trabajos realizados y formulario conectado a `contacto.php`.
+Rediseño de fynova.com.ar con la skill `diseno-web-apple`: portada con video, calculadora de red contra incendio (NFPA 13, orientativa) y de efluentes, anatomía de una red contra incendio con imágenes reales que avanzan con el scroll (fotos de obra con zoom al equipo y el video del rociador cuadro por cuadro), divisiones con video, servicios, trabajos realizados y formulario conectado a `contacto.php`.
 
 ## Archivos
 
 - `index.html` + `img/` + `js/` + `contacto.php` + favicons: **versión para subir al hosting** (misma estructura que el sitio actual). El formulario envía a `contacto.php` (sin cambios) y, si falla, ofrece mandar la consulta por WhatsApp.
 - `fynova.html`: la misma página en un solo archivo (fotos, videos y librerías incluidas), para mostrar o mandar por WhatsApp. El formulario no envía mail desde este archivo: ofrece WhatsApp.
 - `artifact/index.html`: versión para publicar como artifact (`python3 para_artifact.py`).
-- `src/escena.js`: fuente de la escena 3D. Si la cambiás:
+- `img/rociador/`: los 63 cuadros del video del rociador (se dibujan en un canvas según el scroll).
+- `src/escena.js`: versión anterior de la anatomía en 3D (Three.js), ya no se usa en la página. Si la querés volver a usar:
   ```
   npm i three@0.160.0 esbuild
   npx esbuild src/escena.js --bundle --minify --format=iife --outfile=js/escena.js

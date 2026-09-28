@@ -161,10 +161,23 @@
   .anatomia { padding: 0; background: #11171d; color: #f5f5f7; }
   .anat-pin { position: relative; height: 100vh; min-height: 580px; overflow: hidden; }
   .anat-lienzo { position: absolute; inset: 0; }
+  /* Capas reales: fotos y cuadros de video que avanzan con el scroll */
+  .capa { position: absolute; inset: 0; overflow: hidden; opacity: 0; will-change: opacity; }
+  .capa.primera { opacity: 1; }
+  .capa img, .capa canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+  .capa canvas { object-fit: initial; }
+  .marca-real { position: absolute; z-index: 2; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid var(--ambar); box-shadow: 0 0 0 0 rgba(242,169,59,.6); animation: onda 1.8s infinite; opacity: 0; transition: opacity .4s; pointer-events: none; }
+  .marca-real span { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 500; color: #fff; background: rgba(27,34,41,.82); backdrop-filter: blur(10px); padding: 5px 10px; border-radius: 99px; white-space: nowrap; }
+  .marca-real.izq span { left: auto; right: 24px; }
+  @keyframes onda { 70% { box-shadow: 0 0 0 16px rgba(242,169,59,0); } 100% { box-shadow: 0 0 0 0 rgba(242,169,59,0); } }
+  .progreso-anat { position: absolute; z-index: 2; right: 22px; top: 50%; transform: translateY(-50%); display: grid; gap: 10px; }
+  .progreso-anat i { width: 4px; height: 26px; border-radius: 4px; background: rgba(255,255,255,.2); overflow: hidden; position: relative; }
+  .progreso-anat i b { position: absolute; left: 0; right: 0; top: 0; height: 0; background: var(--ambar); }
+  @media (max-width: 760px) { .progreso-anat { display: none; } }
   .anat-lienzo canvas { display: block; width: 100% !important; height: 100% !important; }
   .anatomia .respaldo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; transition: opacity .6s var(--curva); }
   .anatomia.listo .respaldo { opacity: 0; }
-  .anat-pin::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(17,23,29,.92) 0%, rgba(17,23,29,.55) 34%, rgba(17,23,29,0) 56%); }
+  .anat-pin::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(17,23,29,.95) 0%, rgba(17,23,29,.72) 34%, rgba(17,23,29,0) 58%); }
   .anat-textos { position: absolute; z-index: 2; left: max(22px, calc((100vw - 1024px) / 2)); top: 50%; width: min(420px, 40vw); pointer-events: none; }
   @media (max-width: 760px) { .anat-pin::before { background: linear-gradient(0deg, rgba(17,23,29,.9) 0%, rgba(17,23,29,0) 45%); } }
   .paso-a { position: absolute; left: 0; right: 0; top: 0; transform: translateY(-40%); opacity: 0; transition: opacity .6s var(--curva), transform .6s var(--curva); }
@@ -184,6 +197,7 @@
   }
   .anatomia.estatico .anat-pin { height: auto; min-height: 0; display: grid; }
   .anatomia.estatico .anat-lienzo { position: relative; height: 520px; }
+  .anatomia.estatico .capa { opacity: 0; } .anatomia.estatico .capa.final-estatico { opacity: 1; }
   .anatomia.estatico .anat-textos { position: relative; left: auto; top: auto; bottom: auto; width: auto; max-width: 1024px; margin: 0 auto; padding: 60px 22px; display: grid; gap: 28px; }
   .anatomia.estatico .paso-a { position: relative; opacity: 1; transform: none; background: none; padding: 0; }
 
@@ -439,19 +453,25 @@
   </div>
 </section>
 
-<!-- ANATOMÍA -->
+<!-- ANATOMÍA (imágenes reales) -->
 <section id="anatomia" class="anatomia">
   <div class="anat-pin">
-    <div class="anat-lienzo" id="anat-lienzo" role="img" aria-label="Red contra incendio en 3D: detección, bombeo y rociadores actuando sobre un foco de fuego"></div>
-    <img class="respaldo" src="img/canieria-roja.webp" alt="">
-    <div class="punto" data-p="detector"><i></i><span>Detector de humo</span></div>
-    <div class="punto" data-p="bomba"><i></i><span>Sala de bombas</span></div>
-    <div class="punto" data-p="rociador"><i></i><span>Rociador activado</span></div>
+    <div class="anat-lienzo" id="anat-lienzo" role="img" aria-label="Recorrido con fotos reales: red de cañerías, pulsador de alarma, sala de bombas, rociador descargando agua y detalle del rociador">
+      <div class="capa primera" data-capa="0"><img src="img/canieria-roja.webp" alt="" data-foco="0.5,0.4"></div>
+      <div class="capa" data-capa="1"><img src="img/cartel-fuego.webp" alt="" data-foco="0.8,0.78"></div>
+      <div class="capa" data-capa="2"><img src="img/sala-bombas.webp" alt="" data-foco="0.87,0.42"></div>
+      <div class="capa" data-capa="3"><canvas id="cuadros-rociador" width="960" height="540"></canvas></div>
+      <div class="capa final-estatico" data-capa="4"><img src="img/sprinkler.webp" alt="" data-foco="0.5,0.45"></div>
+    </div>
+    <div class="marca-real" data-capa="1"><span>Pulsador manual de alarma</span></div>
+    <div class="marca-real" data-capa="2"><span>Tablero de control de bombas</span></div>
+    <div class="marca-real" data-capa="3"><span>Rociador activado</span></div>
+    <div class="progreso-anat" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
     <div class="anat-textos">
       <div class="paso-a activo"><span class="eyebrow">Anatomía</span><h2 class="h-sec">Cómo actúa una red contra incendio.</h2><p>Seguí bajando.</p></div>
-      <div class="paso-a"><span class="eyebrow">01 · Detección</span><h3>Segundos cuentan.</h3><p>El humo sube al techo, el detector lo identifica y dispara la alarma.</p></div>
-      <div class="paso-a"><span class="eyebrow">02 · Bombeo</span><h3>La red se presuriza.</h3><p>La sala de bombas arranca y el agua recorre la cañería hasta cada ramal.</p></div>
-      <div class="paso-a"><span class="eyebrow">03 · Extinción</span><h3>Solo donde hay fuego.</h3><p>Los rociadores cercanos al foco se activan por temperatura y descargan agua. El resto queda seco.</p></div>
+      <div class="paso-a"><span class="eyebrow">01 · Detección</span><h3>Segundos cuentan.</h3><p>Detectores y pulsadores disparan la alarma apenas aparece el fuego.</p></div>
+      <div class="paso-a"><span class="eyebrow">02 · Bombeo</span><h3>La red se presuriza.</h3><p>La sala de bombas arranca y mantiene la presión en toda la red.</p></div>
+      <div class="paso-a"><span class="eyebrow">03 · Extinción</span><h3>Solo donde hay fuego.</h3><p>Los rociadores cercanos al foco se activan por temperatura y descargan agua.</p></div>
       <div class="paso-a"><span class="eyebrow">04 · Fynova</span><h3>Diseñada para funcionar el día que la necesitás.</h3><p>Cálculo hidráulico, montaje y mantenimiento bajo norma NFPA.</p></div>
     </div>
   </div>
@@ -870,6 +890,89 @@ if (window.Motion && !REDUCIR) {
   document.querySelectorAll(".segmento").forEach(sg => sg.addEventListener("click", latir));
   hover(".obra", el => { animate(el, { y: -6 }, { type: "spring", stiffness: 300, damping: 20 }); return () => animate(el, { y: 0 }, { type: "spring", stiffness: 300, damping: 20 }); });
 }
+// ================= Anatomía con imágenes reales =================
+// Cada paso es una foto real con zoom hacia el equipo; en la extinción, los cuadros del video del rociador avanzan con el scroll.
+const CUADROS = ["img/rociador/f000.webp","img/rociador/f001.webp","img/rociador/f002.webp","img/rociador/f003.webp","img/rociador/f004.webp","img/rociador/f005.webp","img/rociador/f006.webp","img/rociador/f007.webp","img/rociador/f008.webp","img/rociador/f009.webp","img/rociador/f010.webp","img/rociador/f011.webp","img/rociador/f012.webp","img/rociador/f013.webp","img/rociador/f014.webp","img/rociador/f015.webp","img/rociador/f016.webp","img/rociador/f017.webp","img/rociador/f018.webp","img/rociador/f019.webp","img/rociador/f020.webp","img/rociador/f021.webp","img/rociador/f022.webp","img/rociador/f023.webp","img/rociador/f024.webp","img/rociador/f025.webp","img/rociador/f026.webp","img/rociador/f027.webp","img/rociador/f028.webp","img/rociador/f029.webp","img/rociador/f030.webp","img/rociador/f031.webp","img/rociador/f032.webp","img/rociador/f033.webp","img/rociador/f034.webp","img/rociador/f035.webp","img/rociador/f036.webp","img/rociador/f037.webp","img/rociador/f038.webp","img/rociador/f039.webp","img/rociador/f040.webp","img/rociador/f041.webp","img/rociador/f042.webp","img/rociador/f043.webp","img/rociador/f044.webp","img/rociador/f045.webp","img/rociador/f046.webp","img/rociador/f047.webp","img/rociador/f048.webp","img/rociador/f049.webp","img/rociador/f050.webp","img/rociador/f051.webp","img/rociador/f052.webp","img/rociador/f053.webp","img/rociador/f054.webp","img/rociador/f055.webp","img/rociador/f056.webp","img/rociador/f057.webp","img/rociador/f058.webp","img/rociador/f059.webp","img/rociador/f060.webp","img/rociador/f061.webp","img/rociador/f062.webp"];
+(function anatomiaReal() {
+  const sec = $("#anatomia"), lienzo = $("#anat-lienzo");
+  const capas = [...sec.querySelectorAll(".capa")], marcas = [...sec.querySelectorAll(".marca-real")];
+  const pasos = [...sec.querySelectorAll(".paso-a")], barras = [...sec.querySelectorAll(".progreso-anat b")];
+  const canvas = $("#cuadros-rociador"), ctx = canvas.getContext("2d");
+  const imgs = CUADROS.map(src => { const i = new Image(); i.decoding = "async"; i.src = src; return i; });
+  // Tramos del scroll: [inicio, fin] de cada capa
+  const T = [[0, .16], [.16, .36], [.36, .58], [.58, .82], [.82, 1]];
+  const suave = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  // Cada foto se encuadra centrada en su equipo (object-position = foco): en pantallas verticales no queda afuera
+  capas.forEach(c => { const img = c.querySelector("img"); if (img) { const [fx, fy] = img.dataset.foco.split(",").map(Number); img.style.objectPosition = (fx * 100) + "% " + (fy * 100) + "%"; } });
+  // Punto de la foto (0-1) -> coordenadas en pantalla, respetando object-fit: cover y object-position
+  function aPantalla(img, fx, fy) {
+    const W = lienzo.clientWidth, H = lienzo.clientHeight, iw = img.naturalWidth || 16, ih = img.naturalHeight || 9;
+    const esc = Math.max(W / iw, H / ih), dw = iw * esc, dh = ih * esc;
+    const x = (W - dw) * fx + fx * dw, y = (H - dh) * fy + fy * dh;
+    return { x: Math.min(W, Math.max(0, x)), y: Math.min(H, Math.max(0, y)) };
+  }
+  const desplazamiento = y => lienzo.clientWidth <= 760 ? Math.min(0, lienzo.clientHeight * .36 - y) : 0;
+  let cuadroActual = -1;
+  function dibujarCuadro(k) {
+    k = Math.max(0, Math.min(imgs.length - 1, k));
+    const im = imgs[k];
+    if (!im.complete || !im.naturalWidth) { im.onload = () => dibujarCuadro(k); return; }
+    const W = canvas.clientWidth, H = canvas.clientHeight, dpr = Math.min(devicePixelRatio, 2);
+    if (canvas.width !== Math.round(W * dpr)) { canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); }
+    const esc = Math.max(canvas.width / im.naturalWidth, canvas.height / im.naturalHeight);
+    const dw = im.naturalWidth * esc, dh = im.naturalHeight * esc;
+    ctx.drawImage(im, (canvas.width - dw) / 2, (canvas.height - dh) / 2, dw, dh);
+    cuadroActual = k;
+  }
+  let activo = -1;
+  function estado(p) {
+    capas.forEach((c, i) => {
+      const [a, b] = T[i];
+      // Entra con fundido y sale con fundido; la primera arranca visible y la última queda
+      const entra = i === 0 ? 1 : suave(a - .03, a + .03, p), sale = i === capas.length - 1 ? 0 : suave(b - .03, b + .03, p);
+      c.style.opacity = Math.max(0, entra - sale);
+      const local = suave(a, b, p);
+      const img = c.querySelector("img");
+      if (img) {
+        const [fx, fy] = img.dataset.foco.split(",").map(Number);
+        const o = aPantalla(img, fx, fy);
+        img.style.transformOrigin = o.x + "px " + o.y + "px";
+        // En celular el texto va abajo: el equipo sube hacia el tercio superior mientras se acerca
+        const dy = desplazamiento(o.y) * local;
+        img.style.transform = "translateY(" + dy + "px) scale(" + (i === capas.length - 1 ? 1.25 - .2 * local : 1.02 + .5 * local) + ")";
+      }
+    });
+    // Video del rociador cuadro por cuadro
+    const k = Math.round(suave(T[3][0] + .02, T[3][1] - .02, p) * (imgs.length - 1));
+    if (k !== cuadroActual) dibujarCuadro(k);
+    // Marcas sobre el equipo de cada foto
+    marcas.forEach(m => {
+      const i = +m.dataset.capa, [a, b] = T[i];
+      const on = p > a + .03 && p < b - .03;
+      m.style.opacity = on ? 1 : 0;
+      if (!on) return;
+      if (i === 3) { m.style.left = (lienzo.clientWidth * .47) + "px"; m.style.top = (lienzo.clientHeight * .24) + "px"; return; }
+      const img = capas[i].querySelector("img"), [fx, fy] = img.dataset.foco.split(",").map(Number);
+      const o = aPantalla(img, fx, fy), local = suave(a, b, p);
+      m.style.left = o.x + "px"; m.style.top = (o.y + desplazamiento(o.y) * local) + "px";   // el zoom se hace sobre este mismo punto, así que no se mueve
+      m.classList.toggle("izq", o.x > lienzo.clientWidth * .68);   // cerca del borde derecho, la etiqueta va a la izquierda
+    });
+    barras.forEach((bar, i) => { const [a, b] = T[i + 1]; bar.style.height = (suave(a, b, p) * 100) + "%"; });
+    let i = 0; T.forEach(([a], k2) => { if (p >= a) i = k2; });
+    if (i !== activo) { activo = i; pasos.forEach((el, k2) => el.classList.toggle("activo", k2 === i)); }
+  }
+  if (GSAP) {
+    ScrollTrigger.create({ trigger: sec, start: "top top", end: "+=3600", pin: ".anat-pin", scrub: .4, refreshPriority: 1, onUpdate: st => estado(st.progress) });
+    ScrollTrigger.sort(); ScrollTrigger.refresh();
+    estado(0);
+    addEventListener("resize", () => estado(ScrollTrigger.getAll().find(t => t.trigger === sec)?.progress || 0));
+  } else {
+    sec.classList.add("estatico");
+    dibujarCuadro(40);
+  }
+})();
+
 // Luz que sigue al mouse en las tarjetas
 document.addEventListener("pointermove", e => {
   const t = e.target.closest && e.target.closest(".tile");
@@ -878,6 +981,5 @@ document.addEventListener("pointermove", e => {
   t.style.setProperty("--mx", (e.clientX - r.left) + "px"); t.style.setProperty("--my", (e.clientY - r.top) + "px");
 }, { passive: true });
 </script>
-<script src="js/escena.js"></script>
 </body>
 </html>
