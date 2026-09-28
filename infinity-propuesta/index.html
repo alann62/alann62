@@ -898,6 +898,7 @@
 
 <script src="js/gsap.min.js"></script>
 <script src="js/ScrollTrigger.min.js"></script>
+<script src="js/motion.js"></script>
 <script>
 "use strict";
 document.documentElement.classList.add("js");
@@ -1193,6 +1194,7 @@ function filtrarTienda() {
   $("#sin-res").hidden = total > 0;
   $("#ver-todos").hidden = !(limitar && total > INICIALES);
   $("#ver-todos").textContent = "Ver los " + PRODUCTOS.length + " productos";
+  window.dispatchEvent(new Event("tienda:filtrada"));
 }
 filtrarTienda();
 // Enlaces que abren la tienda en una categoría
@@ -1380,6 +1382,57 @@ if (GSAP) {
     }), { rootMargin: "0px 0px -8% 0px" });
     revelables.forEach(el => io.observe(el));
   } else revelables.forEach(el => el.classList.add("visible"));
+}
+
+// ---- Resortes con Motion (Framer Motion sin React) ----
+// Motion maneja lo "físico" (presionar, levantar, aparecer con rebote); GSAP maneja el scroll.
+// No se mezclan sobre el mismo elemento para que no se pisen los transform.
+if (window.Motion && !REDUCIR) {
+  const { animate, hover, press, stagger } = window.Motion;
+  const resorte = { type: "spring", stiffness: 420, damping: 22 };
+  const suaveResorte = { type: "spring", stiffness: 260, damping: 20 };
+
+  // Botones: se hunden al presionar y rebotan al soltar
+  press(".pill:not(.iman), .segmento button, .bolsa", el => {
+    animate(el, { scale: .93 }, resorte);
+    return () => animate(el, { scale: 1 }, { type: "spring", stiffness: 500, damping: 12 });
+  });
+
+  // Tarjetas del bento: las fotos se levantan con resorte
+  hover(".tile", tile => {
+    const fotos = tile.querySelectorAll(".fotos img");
+    animate(fotos, { y: -12, scale: 1.03 }, { ...suaveResorte, delay: stagger(.04) });
+    return () => animate(fotos, { y: 0, scale: 1 }, suaveResorte);
+  });
+
+  // Tienda: al filtrar o "ver todos", las tarjetas entran en cascada
+  // (el filtrado inicial ocurre antes de registrar esto, así que no anima al cargar)
+  window.addEventListener("tienda:filtrada", () => {
+    const visibles = [...document.querySelectorAll("#productos .prod:not([hidden]) .fig")].slice(0, 24);
+    animate(visibles, { opacity: [0, 1], y: [28, 0], scale: [.94, 1] }, { ...suaveResorte, delay: stagger(.035) });
+  });
+
+  // Buscador: las tarjetas de resultado aparecen con rebote cuando cambia la recomendación
+  let firmaAnterior = "";
+  new MutationObserver(() => {
+    const firma = [...document.querySelectorAll("#resultados h4")].map(e => e.textContent).join("|");
+    if (firma === firmaAnterior) return;
+    firmaAnterior = firma;
+    animate("#resultados .res", { opacity: [0, 1], y: [20, 0], scale: [.97, 1] }, { ...suaveResorte, delay: stagger(.06) });
+  }).observe(document.getElementById("resultados"), { childList: true });
+
+  // Configurador: el cartel de litros "late" en cada cambio
+  let ultimaClave = "";
+  window.addEventListener("tanque", e => {
+    const clave = e.detail.tipo + e.detail.diam;
+    if (clave === ultimaClave) return;
+    ultimaClave = clave;
+    animate("#config-chip", { scale: [.9, 1] }, { type: "spring", stiffness: 400, damping: 14 });
+  });
+
+  // Contador de la bolsa: salta cuando cambia
+  new MutationObserver(() => animate("#contador", { scale: [1.6, 1] }, { type: "spring", stiffness: 500, damping: 12 }))
+    .observe(document.getElementById("contador"), { childList: true });
 }
 
 // Tarjetas de la tienda que se inclinan con el mouse

@@ -1,6 +1,11 @@
 # Animaciones y microinteracciones
 
-Librería: GSAP 3 + ScrollTrigger, copiadas en `js/` (no CDN) y cargadas antes del script principal. Todo tiene que funcionar sin ellas.
+Dos librerías, cada una para lo suyo, copiadas en `js/` (no CDN) y cargadas antes del script principal:
+
+- **GSAP 3 + ScrollTrigger**: todo lo atado al scroll (revelar, pin, scrub, parallax, despieces).
+- **Motion** (Framer Motion sin React, `npm i motion` → `node_modules/motion/dist/motion.js`, global `window.Motion`): lo "físico" con resortes (presionar, levantar al pasar el mouse, entradas en cascada con rebote).
+
+No animes el mismo elemento con las dos: las dos escriben `transform` y se pisan. Todo tiene que funcionar sin ellas.
 
 ```js
 const REDUCIR = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -62,3 +67,23 @@ Separá el SVG en grupos `<g id>` por pieza. Para el despiece en 3D ver `tres-d.
 - **Total animado**: interpolar el número en 600 ms con `requestAnimationFrame` y easing cúbico.
 
 Todo esto se desactiva con "reducir movimiento".
+
+## Resortes con Motion (estilo Framer Motion)
+
+```js
+if (window.Motion && !REDUCIR) {
+  const { animate, hover, press, stagger } = window.Motion;
+  const resorte = { type: "spring", stiffness: 260, damping: 20 };
+  // Botones que se hunden y rebotan (whileTap)
+  press(".pill:not(.iman)", el => { animate(el, { scale: .93 }, { type: "spring", stiffness: 420, damping: 22 });
+    return () => animate(el, { scale: 1 }, { type: "spring", stiffness: 500, damping: 12 }); });
+  // Fotos que se levantan al pasar el mouse (whileHover)
+  hover(".tile", t => { const f = t.querySelectorAll(".fotos img"); animate(f, { y: -12, scale: 1.03 }, { ...resorte, delay: stagger(.04) });
+    return () => animate(f, { y: 0, scale: 1 }, resorte); });
+  // Entrada en cascada al filtrar una grilla
+  animate(".prod:not([hidden]) .fig", { opacity: [0, 1], y: [28, 0], scale: [.94, 1] }, { ...resorte, delay: stagger(.035) });
+}
+```
+
+- Para animar resultados que cambian, usá un `MutationObserver` y compará una "firma" (por ejemplo, los títulos): si no cambió, no animes. Si no, un slider dispara la animación 60 veces por segundo.
+- Contador de la bolsa o cartel que cambia: `animate(el, { scale: [1.6, 1] }, { type: "spring", stiffness: 500, damping: 12 })`.

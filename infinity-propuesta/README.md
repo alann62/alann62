@@ -5,7 +5,7 @@ Maqueta para presentarle a Infinity Rotomolding cómo podría quedar su sitio. *
 - `index.html` + `img/`: versión de trabajo.
 - `propuesta-infinity.html`: la misma página en **un solo archivo**, con las fotos incrustadas, para compartir por WhatsApp o mail. Se regenera con `python3 empaquetar.py` después de editar `index.html`.
 
-Se abre en cualquier navegador, sin servidor y sin internet: Three.js y GSAP van incluidos (`js/`). Si el equipo no tiene WebGL, en lugar del 3D se ve la foto del fermentador.
+Se abre en cualquier navegador, sin servidor y sin internet: Three.js, GSAP y Motion van incluidos (`js/`). Si el equipo no tiene WebGL, en lugar del 3D se ve la foto del fermentador.
 
 Para cambiar la escena 3D, editá `src/escena3d.js` y empaquetala con esbuild:
 

@@ -16,9 +16,12 @@ Esta skill resume cómo construir páginas de producto que se sientan de nivel A
 | Un objeto 3D (producto que gira, despiece con scroll, configurador a escala) | `references/tres-d.md` |
 | Usar fotos reales de producto o logos de clientes | `references/fotos.md` |
 | Arrancar una página nueva rápido | `assets/plantilla.html` |
+| Elegir estilo, paleta o tipografía para un rubro nuevo | skill **ui-ux-pro-max** (ver abajo) |
+| Usar Framer Motion, Spline, Skiper UI, Magic UI o Aceternity | `references/librerias.md` |
 
 ## Flujo de trabajo
 
+0. **Si el rubro o la marca son nuevos**, consultá la skill `ui-ux-pro-max` para paleta, tipografía y patrón de landing, por ejemplo `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "industrial equipment" --domain color`. Tomá sus datos como punto de partida y aplicalos con el sistema visual de esta skill. Si no encuentra nada, decilo y seguí con los valores por defecto de acá.
 1. **Juntá el contenido real antes de diseñar.** Catálogo, medidas, precios, fotos, logos de clientes, distribuidores, medios de pago. Si el cliente tiene un sitio, sacá el contenido de ahí (con `curl` si el navegador del entorno no tiene salida). Una maqueta con contenido real convence; una con "lorem ipsum" no.
 2. **Definí el recorrido de la página** como una presentación, una idea por sección (ver "Estructura tipo").
 3. **Construí con la plantilla** (`assets/plantilla.html`): ya trae tokens, navegación doble, hero, bento, sección negra, tienda con pedido por WhatsApp y los ganchos de animación.
@@ -50,7 +53,7 @@ No hace falta usar todo: una landing chica puede ser hero + bento + buscador + c
 - **Tipografía de sistema** (`-apple-system, "SF Pro Display", Inter…`): en iPhone y Mac se ve la fuente de Apple sin cargar nada.
 - **Grises con intención:** fondo `#f5f5f7`, texto `#1d1d1f`, secundario `#6e6e73`. Un solo color de acento (el de la marca) para botones y enlaces.
 - **El movimiento explica.** Cada animación responde "¿qué entiende el cliente con esto?": el despiece muestra cómo se arma la conexión; la escala junto a la persona muestra el tamaño. Si no explica nada, que sea sutil o no esté.
-- **Nada depende de un CDN en la entrega.** Three.js y GSAP van empaquetados. Un visor que bloquea scripts externos rompe el 3D sin avisar (nos pasó).
+- **Nada depende de un CDN en la entrega.** Three.js, GSAP y Motion van empaquetados. Un visor que bloquea scripts externos rompe el 3D sin avisar (nos pasó).
 - **Siempre hay respaldo.** Si no hay WebGL, se ve una foto; si el usuario pidió "reducir movimiento", no hay pin ni animaciones; si falta GSAP, los bloques aparecen con IntersectionObserver.
 - **Precios y productos reales conectados.** El buscador no dice "consultar" si el producto existe: muestra foto, precio y botón "Agregar". Eso es lo que convierte la maqueta en una herramienta de venta.
 
