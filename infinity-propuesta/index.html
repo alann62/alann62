@@ -393,6 +393,21 @@
     .cinta-pista { animation: none; flex-wrap: wrap; width: auto; justify-content: center; gap: 20px 40px; }
     .panel, .velo, .res, .prod { transition: none; }
   }
+  /* Buscador compacto: controles y resultados a la izquierda, 3D fijo a la derecha */
+  .buscador-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); grid-template-areas: "control escena" "res escena"; gap: 20px 36px; align-items: start; }
+  .punto.izq { flex-direction: row-reverse; }
+  .buscador-control { grid-area: control; min-width: 0; }
+  .buscador-grid .config-3d { grid-area: escena; position: sticky; top: 116px; height: clamp(440px, calc(100vh - 150px), 660px); margin: 0; }
+  .buscador-grid .resultados { grid-area: res; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); justify-content: stretch; }
+  .buscador-grid .res { padding: 24px 22px; }
+  .buscador-grid .res h4 { font-size: 24px; }
+  .buscador-grid .litros-grande input { font-size: clamp(56px, 7vw, 84px); }
+  .buscador-grid .control-litros { margin: 28px auto 8px; }
+  .buscador-grid:has(.config-3d:not(.listo)) { grid-template-columns: 1fr; grid-template-areas: "control" "res"; }
+  @media (max-width: 900px) {
+    .buscador-grid { grid-template-columns: 1fr; grid-template-areas: "control" "escena" "res"; }
+    .buscador-grid .config-3d { position: relative; top: auto; height: 400px; }
+  }
 </style>
 </head>
 <body>
@@ -576,10 +591,12 @@
 <!-- BUSCADOR -->
 <section class="gris" id="buscador">
   <div class="wrap ancho">
-    <div class="cabeza centro" style="margin-bottom:36px">
+    <div class="cabeza centro" style="margin-bottom:28px">
       <h2 class="h-sec">¿Cuál es para vos?</h2>
       <p class="sub">Decinos cuántos litros necesitás. Te mostramos la medida y la base que lleva.</p>
     </div>
+    <div class="buscador-grid">
+    <div class="buscador-control">
     <div class="centro"><div class="segmento" role="group" aria-label="Tipo de tanque" id="tipos"></div></div>
     <div class="control-litros">
       <label class="litros-grande" for="litros">
@@ -589,6 +606,7 @@
       <input type="range" id="litros-rango" min="0" max="100" value="60" aria-label="Capacidad aproximada">
       <div class="rango-ayuda num"><span id="r-min"></span><span id="r-max"></span></div>
     </div>
+    </div>
     <div class="config-3d" id="config-3d">
       <div class="config-lienzo" id="config-lienzo" role="img" aria-label="Vista 3D a escala del tanque elegido junto a una persona de 1,75 m"></div>
       <div class="chip-litros" id="config-chip"><small>Cónico Ø 970</small><b class="num">1.000 L</b></div>
@@ -597,6 +615,7 @@
       <span class="escala">A escala real · persona de referencia de 1,75 m · arrastrá para girar</span>
     </div>
     <div class="resultados" id="resultados" aria-live="polite"></div>
+    </div>
   </div>
 </section>
 

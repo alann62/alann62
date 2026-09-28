@@ -279,7 +279,10 @@ function etiquetador(contenedor, camera) {
       const lado = v.clone().setY(0).normalize().dot(camera.position.clone().setY(0).normalize());
       const oculto = v.clone().sub(camera.position).dot(dir) < 0 || (el.dataset.p === "clamp" && lado < -.15);
       v.project(camera);
-      el.style.transform = `translate(${(v.x * .5 + .5) * w - 7}px, ${(-v.y * .5 + .5) * h - 7}px)`;
+      // Si la etiqueta no entra a la derecha, se muestra a la izquierda del punto
+      const x = (v.x * .5 + .5) * w, izq = x + el.offsetWidth > w - 6;
+      el.classList.toggle("izq", izq);
+      el.style.transform = `translate(${izq ? x + 7 - el.offsetWidth : x - 7}px, ${(-v.y * .5 + .5) * h - 7}px)`;
       el.style.visibility = oculto ? "hidden" : "visible";
     });
   };
