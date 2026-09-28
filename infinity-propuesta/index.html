@@ -115,7 +115,21 @@
   .tile.grande .img svg { height: 380px; }
 
   /* ---------- CLAMP ---------- */
-  .clamp-img { max-width: 760px; margin: 0 auto 80px; }
+  .clamp-img { max-width: 760px; margin: 0 auto 28px; }
+  .clamp-pasos { list-style: none; margin: 0 auto 72px; padding: 0; max-width: 1000px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 20px; }
+  @media (min-width: 834px) { .clamp-pasos { grid-template-columns: repeat(4, 1fr); } }
+  .clamp-pasos li { border-top: 2px solid #3a3a3c; padding-top: 12px; transition: opacity .4s var(--curva), border-color .4s var(--curva); }
+  .clamp-pasos b { display: block; font-size: 15px; font-weight: 600; color: #f5f5f7; }
+  .clamp-pasos span { display: block; margin-top: 4px; font-size: 14px; color: #a1a1a6; line-height: 1.4; }
+  .clamp-anim .clamp-pasos li { opacity: .35; }
+  .clamp-anim .clamp-pasos li.activo { opacity: 1; border-color: #34d27b; }
+  .clamp-pasos li.activo b { color: #34d27b; }
+  .clamp-comp { display: grid; gap: 12px; margin-bottom: 72px; }
+  @media (min-width: 834px) { .clamp-comp { grid-template-columns: repeat(3, 1fr); } }
+  .clamp-comp .comp { background: #1d1d1f; border-radius: 22px; padding: 26px 24px; }
+  .clamp-comp b { display: block; font-size: 19px; color: #f5f5f7; }
+  .clamp-comp span { display: block; margin-top: 8px; font-size: 15px; color: #a1a1a6; line-height: 1.45; }
+  @media (max-width: 600px) { .clamp-pasos span { font-size: 12.5px; } }
   .clamp-img text { font-family: var(--sf); font-size: 13px; fill: #a1a1a6; letter-spacing: -.01em; }
   .ventajas { display: grid; gap: 48px 32px; }
   @media (min-width: 834px) { .ventajas { grid-template-columns: repeat(4, 1fr); } }
@@ -376,7 +390,6 @@
 
   /* ---------- Gran volumen ---------- */
   .gigante-foto { display: flex; justify-content: center; margin: 56px 0 64px; padding-inline: 22px; }
-  #gigante-img { width: min(640px, 100%); height: auto; border-radius: 28px; will-change: transform; }
   .cifras-g { display: grid; gap: 32px; text-align: center; }
   @media (min-width: 760px) { .cifras-g { grid-template-columns: repeat(3, 1fr); } }
   .cifras-g b { display: block; font-size: clamp(40px, 5vw, 56px); font-weight: 600; letter-spacing: -.03em; color: #fff; }
@@ -408,6 +421,53 @@
     .buscador-grid { grid-template-columns: 1fr; grid-template-areas: "control" "escena" "res"; }
     .buscador-grid .config-3d { position: relative; top: auto; height: 400px; }
   }
+  /* Equipo: filas foto 3D + texto */
+  #equipo .cabeza { margin-bottom: 56px; }
+  .equipo-fila { display: grid; gap: 28px; align-items: center; margin-top: 28px; }
+  @media (min-width: 834px) { .equipo-fila { grid-template-columns: 1.05fr 1fr; gap: 64px; margin-top: 56px; } .equipo-fila:nth-child(odd) .visor { order: 2; } }
+  .equipo-fila > * { min-width: 0; }
+  .visor { position: relative; height: clamp(360px, 42vw, 520px); background: #fff; border-radius: 28px; overflow: hidden; }
+  .visor-lienzo { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+  .visor-lienzo:active { cursor: grabbing; }
+  .visor-lienzo canvas { display: block; width: 100% !important; height: 100% !important; }
+  .visor-foto { position: absolute; inset: 0; z-index: 2; margin: 0; padding: 28px; border: 0; background: #fff; cursor: default; transition: all .5s var(--curva); display: flex; align-items: center; justify-content: center; }
+  .visor-foto img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
+  .visor-foto span { display: none; }
+  .visor.listo .visor-foto { inset: auto 14px 14px auto; width: 92px; height: 92px; padding: 0; border-radius: 18px; overflow: hidden; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.14); }
+  .visor.listo .visor-foto img { object-fit: cover; border-radius: 0; }
+  .visor.listo .visor-foto span { display: block; position: absolute; left: 0; right: 0; bottom: 0; font: 600 10px var(--sf); color: #fff; background: rgba(0,0,0,.5); padding: 4px 0; text-align: center; }
+  .visor.listo.ver-foto .visor-foto { inset: 0; width: auto; height: auto; padding: 28px; border-radius: 0; background: #fff; box-shadow: none; }
+  .visor.listo.ver-foto .visor-foto img { object-fit: contain; border-radius: 12px; }
+  .visor.listo.ver-foto .visor-foto span { left: auto; right: 14px; bottom: 14px; padding: 6px 12px; border-radius: 99px; background: var(--texto); }
+  .visor.listo.ver-foto .visor-foto span::before { content: "Volver al 3D · "; }
+  .visor-foto:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
+  .visor-pista { position: absolute; left: 18px; top: 16px; z-index: 1; font-size: 12px; color: var(--terciario); opacity: 0; transition: opacity .4s; }
+  .visor.listo .visor-pista { opacity: 1; }
+  .equipo-texto h3 { font-size: clamp(32px, 4vw, 44px); letter-spacing: -.02em; line-height: 1.08; }
+  .equipo-texto > p { font-size: 19px; color: var(--secundario); margin-top: 12px; }
+  .specs { margin: 22px 0 0; display: grid; gap: 0; }
+  .specs div { padding: 14px 0; border-top: 1px solid #d2d2d7; }
+  .specs dt { font-size: 15px; font-weight: 600; }
+  .specs dd { margin: 4px 0 0; font-size: 16px; color: var(--secundario); }
+  .lista-acc { list-style: none; padding: 0; margin: 18px 0 0; }
+  .lista-acc li { padding: 12px 0 12px 30px; border-top: 1px solid #d2d2d7; font-size: 17px; position: relative; }
+  .lista-acc li::before { content: ""; position: absolute; left: 4px; top: 17px; width: 14px; height: 14px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 4px rgba(15,157,88,.15); }
+  .equipo-texto .acciones { margin-top: 22px; display: flex; gap: 18px; align-items: center; }
+  .visor.listo .punto { opacity: 1; }
+  .visor-gigante { width: min(1040px, 100%); height: clamp(440px, 58vw, 640px); background: #f5f5f7; will-change: transform; }
+  .colores { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 3; display: flex; gap: 4px; background: rgba(255,255,255,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 4px; border-radius: 99px; box-shadow: 0 4px 16px rgba(0,0,0,.1); opacity: 0; transition: opacity .4s; }
+  .visor.listo .colores { opacity: 1; }
+  .colores button { display: flex; align-items: center; gap: 7px; border: 0; background: transparent; padding: 8px 14px; border-radius: 99px; font: 500 13px var(--sf); color: var(--texto); cursor: pointer; }
+  .colores button[aria-pressed="true"] { background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+  .colores i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  .colores button:focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; }
+  .gigante-info { display: grid; gap: 12px; margin-top: 64px; }
+  @media (min-width: 834px) { .gigante-info { grid-template-columns: repeat(4, 1fr); } }
+  .gigante-info .info { background: #1d1d1f; border-radius: 22px; padding: 28px 24px; }
+  .gigante-info h3 { font-size: 21px; color: #f5f5f7; letter-spacing: -.01em; }
+  .gigante-info p { margin: 10px 0 0; font-size: 15px; color: #a1a1a6; line-height: 1.45; }
+  .colores-nota { text-align: center; color: #86868b; font-size: 14px; margin-top: 28px; }
+  @media (max-width: 600px) { .visor-gigante .punto span { font-size: 10px; padding: 4px 8px; } .colores button { padding: 7px 10px; } .visor.listo:not(.ver-foto).visor-gigante .visor-foto { inset: 14px 14px auto auto; width: 72px; height: 72px; } }
 </style>
 </head>
 <body>
@@ -566,6 +626,7 @@
     <div class="der">
       <a href="#lineas">Resumen</a>
       <a href="#comparar">Comparar</a>
+      <a href="#equipo">Accesorios</a>
       <a href="#buscador">¿Cuál es para vos?</a>
       <a class="pill chica" href="#tienda">Pedir</a>
     </div>
@@ -708,7 +769,7 @@
     <div class="cabeza centro">
       <span class="eyebrow" style="color:#34d27b">Tecnología CLAMP</span>
       <h2 class="h-sec">Una sola pieza.<br>Cero roscas.</h2>
-      <p class="sub">La salida se moldea con el mismo material del tanque. Sin roscas que se aflojen ni juntas donde se acumule suciedad. Somos los únicos que la fabrican en Latinoamérica.</p>
+      <p class="sub">La salida se moldea con el mismo material del tanque. Una unión rápida y hermética con abrazadera: sin roscas selladas con cinta ni soldaduras permanentes. Somos los únicos que la fabrican en Latinoamérica.</p>
     </div>
     <div class="clamp-escena" id="clamp-escena"><svg class="clamp-img" viewBox="0 0 760 300" role="img" aria-label="Corte de la conexión clamp: pared del tanque, férula moldeada, junta sanitaria, abrazadera y válvula">
       <defs>
@@ -728,12 +789,23 @@
       <text x="402" y="262" text-anchor="middle" style="fill:#34d27b">Junta sanitaria</text>
       <text x="402" y="44" text-anchor="middle">Abrazadera</text>
       <text x="640" y="212" text-anchor="middle">Válvula</text></g>
-    </svg></div>
+    </svg>
+    <ol class="clamp-pasos" aria-label="Montaje en cuatro pasos">
+      <li class="activo"><b>1 · Alineación</b><span>Se enfrentan la boca del tanque y la del accesorio, con la junta justo en el medio.</span></li>
+      <li><b>2 · Sujeción</b><span>La abrazadera rodea los rebordes de las dos piezas.</span></li>
+      <li><b>3 · Apriete</b><span>Al girar la mariposa, el clamp cierra y empuja los bordes hacia el centro, parejo.</span></li>
+      <li><b>4 · Sellado</b><span>La presión comprime la junta: sello hermético para líquidos o presión.</span></li>
+    </ol></div>
+    <div class="clamp-comp">
+      <div class="comp revelar"><b>Férulas o manguitos</b><span>Los extremos que se enfrentan: uno moldeado en el tanque y otro en la cañería o el accesorio, con un reborde que encaja cara a cara.</span></div>
+      <div class="comp revelar"><b>Junta de sellado</b><span>Un aro flexible de silicona o vitón que va entre las dos férulas y evita filtraciones.</span></div>
+      <div class="comp revelar"><b>Abrazadera</b><span>Pieza en forma de C o de doble media luna, con tornillo o tuerca mariposa.</span></div>
+    </div>
     <div class="ventajas">
-      <div class="ventaja revelar"><b class="verde">+50%</b><span>de vida útil del tanque, como mínimo.</span></div>
+      <div class="ventaja revelar"><b class="verde">Segundos</b><span>para conectar, desconectar, limpiar o sanitizar, sin herramientas complejas.</span></div>
+      <div class="ventaja revelar"><b>Higiene</b><span>Sin cinta de teflón ni roscas donde se acumulen bacterias. Ideal para la industria alimentaria, química o farmacéutica.</span></div>
+      <div class="ventaja revelar"><b>+50%</b><span>de vida útil del tanque, como mínimo: no hay roscas que se gasten.</span></div>
       <div class="ventaja revelar"><b>1 pieza</b><span>La salida es del mismo material que el envase.</span></div>
-      <div class="ventaja revelar"><b>Rápido</b><span>de sanitizar: el sistema agiliza la limpieza y desinfección.</span></div>
-      <div class="ventaja revelar"><b>Probado</b><span>Miles de clientes ya comprobaron la superioridad del sistema.</span></div>
     </div>
   </div>
 </section>
@@ -794,20 +866,145 @@
   </div>
 </section>
 
+<!-- EQUIPO: tanque, bases, torpedos y accesorios en 3D -->
+<section class="gris" id="equipo">
+  <div class="wrap ancho">
+    <div class="cabeza centro">
+      <span class="eyebrow">Sistema completo</span>
+      <h2 class="h-sec">Todo para tu fermentador.</h2>
+      <p class="sub">Tanque, base, torpedo y accesorios CLAMP. Girá cada pieza en 3D o mirá la foto real.</p>
+    </div>
+    <div class="equipo-fila">
+      <div class="visor revelar" data-modelo="conico">
+        <div class="visor-lienzo" role="img" aria-label="Modelo 3D: Tanque cónico Infinity con salida CLAMP, tapa, abrazadera y llave. Arrastrá para girar."></div>
+        <button type="button" class="visor-foto" aria-pressed="false" aria-label="Ver foto real"><img src="img/eq-conico-clamp.webp" alt="Tanque cónico Infinity con salida CLAMP, tapa, abrazadera y llave" loading="lazy"><span>Foto real</span></button>
+        <span class="visor-pista">3D · arrastrá para girar</span>
+      </div>
+      <div class="equipo-texto revelar">
+        <span class="eyebrow">Tanques cónicos</span>
+        <h3>Únicos con tecnología CLAMP.</h3>
+        <p>Infinity Rotomolding fabrica los únicos tanques con salida tipo clamp en toda Latinoamérica.</p>
+        <dl class="specs">
+          <div><dt>Calidad</dt><dd>Materias primas 100% vírgenes, aptas para uso alimenticio.</dd></div>
+          <div><dt>Translúcido</dt><dd>Permite ver el nivel del contenido.</dd></div>
+          <div><dt>Resistencia</dt><dd>Hasta 60 °C continuos y picos de 80 °C.</dd></div>
+          <div><dt>Limpieza</dt><dd>Con detergente alcalino. Se desinfecta con alcohol, agua clorada o ácido peracético.</dd></div>
+        </dl>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="conico">Elegir medida</a></div>
+      </div>
+    </div>
+    <div class="equipo-fila">
+      <div class="visor revelar" data-modelo="plano">
+        <div class="visor-lienzo" role="img" aria-label="Modelo 3D: tanque de fondo plano sobre base metálica. Arrastrá para girar."></div>
+        <div class="punto" data-p="tapa"><i></i><span>Tapa a rosca</span></div>
+        <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP</span></div>
+        <button type="button" class="visor-foto" aria-pressed="false" aria-label="Ver foto real"><img src="img/p240.webp" alt="Tanque de fondo plano Infinity" loading="lazy"><span>Foto real</span></button>
+        <span class="visor-pista">3D · arrastrá para girar</span>
+      </div>
+      <div class="equipo-texto revelar">
+        <span class="eyebrow">Tanques planos</span>
+        <h3>También con tecnología CLAMP.</h3>
+        <p>Los tanques de fondo plano tienen las mismas ventajas que los cónicos: materia prima 100% virgen apta para alimentos, pared translúcida, hasta 60 °C continuos y picos de 80 °C, y limpieza simple.</p>
+        <dl class="specs">
+          <div><dt>Montaje</dt><dd>Sobre base metálica esmaltada, con canilla de descarga y salida CLAMP.</dd></div>
+        </dl>
+        <div class="acciones"><a class="pill" href="#buscador" data-tipo="plano">Elegir medida</a></div>
+      </div>
+    </div>
+    <div class="equipo-fila">
+      <div class="visor revelar" data-modelo="base">
+        <div class="visor-lienzo" role="img" aria-label="Modelo 3D: Tanque cónico Infinity sobre base metálica azul. Arrastrá para girar."></div>
+        <button type="button" class="visor-foto" aria-pressed="false" aria-label="Ver foto real"><img src="img/eq-base.webp" alt="Tanque cónico Infinity sobre base metálica azul" loading="lazy"><span>Foto real</span></button>
+        <span class="visor-pista">3D · arrastrá para girar</span>
+      </div>
+      <div class="equipo-texto revelar">
+        <span class="eyebrow">Bases</span>
+        <h3>Firmes en cada medida.</h3>
+        <dl class="specs">
+          <div><dt>Bases metálicas</dt><dd>Acero reforzado, recubierto con esmalte sobre antióxido. Su forma da estabilidad y un ajuste perfecto en todos los modelos de tanque.</dd></div>
+          <div><dt>Bases plásticas</dt><dd>Material de primera calidad. Para tanques cónicos de 400 mm de diámetro; toleran hasta 90 kg.</dd></div>
+        </dl>
+        <div class="acciones"><a class="pill" href="#tienda" data-cat="Bases">Ver bases</a></div>
+      </div>
+    </div>
+    <div class="equipo-fila">
+      <div class="visor revelar" data-modelo="torpedo">
+        <div class="visor-lienzo" role="img" aria-label="Modelo 3D: Torpedo de acero inoxidable con tapa verde. Arrastrá para girar."></div>
+        <button type="button" class="visor-foto" aria-pressed="false" aria-label="Ver foto real"><img src="img/eq-torpedo.webp" alt="Torpedo de acero inoxidable con tapa verde" loading="lazy"><span>Foto real</span></button>
+        <span class="visor-pista">3D · arrastrá para girar</span>
+      </div>
+      <div class="equipo-texto revelar">
+        <span class="eyebrow">Torpedos</span>
+        <h3>La temperatura, bajo control.</h3>
+        <p>Fabricados en acero inoxidable AISI 304 con pulido sanitario.</p>
+        <dl class="specs">
+          <div><dt>Tubos</dt><dd>Un tubo principal de 4" y dos de 13 mm enroscados en la punta (rosca BSP ¼), donde se conecta el fluido.</dd></div>
+          <div><dt>Sensor</dt><dd>Incluye la vaina con conector para el sensor de temperatura.</dd></div>
+          <div><dt>Tapa</dt><dd>Viene ensamblado en tapa verde a rosca o blanca con 10 insertos.</dd></div>
+        </dl>
+        <div class="acciones"><a class="pill" href="#contacto">Consultar</a></div>
+      </div>
+    </div>
+    <div class="equipo-fila">
+      <div class="visor revelar" data-modelo="accesorios">
+        <div class="visor-lienzo" role="img" aria-label="Modelo 3D: Accesorios CLAMP: abrazadera, manguito, juntas, llave de paso y airlock. Arrastrá para girar."></div>
+        <button type="button" class="visor-foto" aria-pressed="false" aria-label="Ver foto real"><img src="img/eq-accesorios.webp" alt="Accesorios CLAMP: abrazadera, manguito, juntas, llave de paso y airlock" loading="lazy"><span>Foto real</span></button>
+        <span class="visor-pista">3D · arrastrá para girar</span>
+      </div>
+      <div class="equipo-texto revelar">
+        <span class="eyebrow">Accesorios</span>
+        <h3>Todo compatible.</h3>
+        <p>Los accesorios para fermentadores Infinity:</p>
+        <ul class="lista-acc">
+          <li>Manguito roscado plástico clamp</li>
+          <li>Junta de silicona para uniones clamp</li>
+          <li>Abrazadera plástica para clamp</li>
+          <li>Llave de paso desarmable de ¾ clamp</li>
+          <li>Airlock con conector directo a rosca</li>
+        </ul>
+        <div class="acciones"><a class="pill" href="#tienda" data-cat="Accesorios CLAMP">Ver accesorios</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- GRAN VOLUMEN -->
 <section class="negra" id="gigante">
   <div class="wrap centro">
     <span class="eyebrow" style="color:#34d27b">Gran volumen</span>
-    <h2 class="h-sec">2,5 metros de diámetro.<br>Hasta 15.000 litros.</h2>
-    <p class="sub">Tanques de fondo plano para reserva de agua, agro e industria. Una sola pieza, sin soldaduras.</p>
+    <h2 class="h-sec">Cilíndricos verticales.<br>De 5.000 a 15.000 litros.</h2>
+    <p class="sub">Polietileno de media-alta densidad, apto para agua, gas oil o casi cualquier producto químico. También con tecnología CLAMP.</p>
   </div>
-  <div class="gigante-foto"><img id="gigante-img" src="img/grande.webp" alt="Tanque Infinity de 10.000 litros junto a una persona" width="500" height="449" loading="lazy"></div>
+  <div class="gigante-foto">
+    <div class="visor visor-gigante" id="gigante-visor" data-modelo="cilindrico">
+      <div class="visor-lienzo" role="img" aria-label="Modelo 3D de un tanque cilíndrico de 10.000 litros junto a una persona de 1,75 m. Arrastrá para girar."></div>
+      <div class="punto" data-p="tapa"><i></i><span>Tapa a rosca · 43 cm</span></div>
+      <div class="punto" data-p="canc"><i></i><span>Cáncamos de izaje en vacío</span></div>
+      <div class="punto" data-p="peso"><i></i><span>Peso aprox. 250 kg</span></div>
+      <div class="punto" data-p="uv"><i></i><span>Protección UV · apto intemperie</span></div>
+      <div class="punto" data-p="clamp"><i></i><span>Salida CLAMP termoformada</span></div>
+      <div class="colores" role="group" aria-label="Color del tanque">
+        <button type="button" data-color="natural" aria-pressed="true"><i style="background:#eceee8"></i>Natural</button>
+        <button type="button" data-color="negro" aria-pressed="false"><i style="background:#1f1f21"></i>Negro</button>
+        <button type="button" data-color="rojo" aria-pressed="false"><i style="background:#8c1d18"></i>Rojo</button>
+      </div>
+      <button type="button" class="visor-foto" aria-pressed="false" aria-label="Ver foto real"><img id="gigante-img" src="img/grande.webp" alt="Tanque Infinity de 10.000 litros junto a una persona" width="500" height="449" loading="lazy"><span>Foto real</span></button>
+      <span class="visor-pista">3D · a escala junto a una persona de 1,75 m</span>
+    </div>
+  </div>
   <div class="wrap">
     <div class="cifras-g">
       <div><b class="num">Ø 2.500</b><span>milímetros de diámetro</span></div>
       <div><b class="num">10.000 L</b><span>$ 3.347.190</span></div>
       <div><b class="num">15.000 L</b><span>$ 4.656.960</span></div>
     </div>
+    <div class="gigante-info">
+      <div class="info revelar"><h3>Usos</h3><p>Red de incendio, agua potable o de proceso, productos químicos en la industria en general y acopio de gas oil.</p></div>
+      <div class="info revelar"><h3>Características</h3><p>Espesor orientativo de 1 cm. Se instala en zonas frías de hasta −60 °C y en zonas cálidas soporta hasta 60 °C. Consultá antes el producto a envasar, la temperatura y la ubicación.</p></div>
+      <div class="info revelar"><h3>Accesorios</h3><p>Tapa superior a rosca de 43 cm de paso útil, que evita el ingreso de agua y suciedad. Venteo superior normalmente abierto, necesario para su uso.</p></div>
+      <div class="info revelar"><h3>Optativo</h3><p>Conexiones adicionales soldadas, roscadas con junta o bridadas, según planos. Nivel visible para tanques de color, con llave de ½" y manguera cristal. Se cotizan antes de la compra.</p></div>
+    </div>
+    <p class="colores-nota">Colores: negro, rojo o natural, según el producto a envasar. Te asesoramos para que la instalación sea segura.</p>
   </div>
 </section>
 
@@ -1393,15 +1590,22 @@ if (GSAP) {
   document.querySelectorAll(".tile .fotos").forEach(f => gsap.from(f, { yPercent: 14, ease: "none",
     scrollTrigger: { trigger: f, start: "top bottom", end: "bottom 70%", scrub: true } }));
 
-  gsap.fromTo("#gigante-img", { scale: .7, borderRadius: 60 }, { scale: 1, borderRadius: 28, ease: "none",
-    scrollTrigger: { trigger: "#gigante-img", start: "top 95%", end: "center 55%", scrub: true } });
+  gsap.fromTo("#gigante-visor", { scale: .82, borderRadius: 60 }, { scale: 1, borderRadius: 28, ease: "none",
+    scrollTrigger: { trigger: "#gigante-visor", start: "top 95%", end: "center 55%", scrub: true } });
 
   // CLAMP: despiece que se arma con el scroll
-  const tl = gsap.timeline({ scrollTrigger: { trigger: "#clamp-escena", start: "center center", end: "+=700", scrub: .6, pin: true } });
+  // Los cuatro pasos del montaje se encienden a medida que avanza el despiece
+  const pasosClamp = [...document.querySelectorAll(".clamp-pasos li")];
+  document.getElementById("clamp").classList.add("clamp-anim");
+  const pasoClamp = p => { const i = p < .3 ? 0 : p < .55 ? 1 : p < .8 ? 2 : 3; pasosClamp.forEach((li, k) => li.classList.toggle("activo", k === i)); };
+  const tl = gsap.timeline({ scrollTrigger: { trigger: "#clamp-escena", start: "center center", end: "+=1000", scrub: .6, pin: true, onUpdate: st => pasoClamp(st.progress) } });
   tl.from("#c-accesorio", { x: 180, duration: 1 }, 0)
-    .from("#c-abrazadera", { y: -140, opacity: 0, duration: 1 }, .15)
     .from("#c-junta", { y: 120, opacity: 0, duration: 1 }, .05)
-    .from("#c-textos", { opacity: 0, duration: .6 }, .7);
+    .from("#c-abrazadera", { y: -140, opacity: 0, duration: 1 }, 1)
+    .to("#c-abrazadera", { scaleX: .9, transformOrigin: "402px 150px", duration: .8 }, 2.1)
+    .to("#c-accesorio", { x: -3, duration: .8 }, 2.1)
+    .to("#c-junta rect", { attr: { fill: "#7dffb4" }, duration: .8 }, 2.9)
+    .from("#c-textos", { opacity: 0, duration: .6 }, 3.1);
 
   // Botones magnéticos
   document.querySelectorAll(".iman").forEach(b => {
