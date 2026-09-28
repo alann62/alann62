@@ -295,7 +295,7 @@
 
   /* ---------- Tarjetas con luz que sigue al mouse ---------- */
   .tile, .res, .prod { position: relative; isolation: isolate; }
-  .tile::before, .res::before, .prod::before { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .35s var(--curva); background: radial-gradient(480px circle at var(--mx, 50%) var(--my, 50%), rgba(15,157,88,.10), transparent 60%); }
+  .tile::before, .res::before, .prod::before { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .35s var(--curva); background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(15,157,88,.24), rgba(15,157,88,.10) 30%, transparent 65%); }
   .tile.oscura::before { background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(52,210,123,.20), transparent 60%); }
   .tile:hover::before, .res:hover::before, .prod:hover::before { opacity: 1; }
 
