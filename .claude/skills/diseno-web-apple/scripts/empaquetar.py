@@ -2,7 +2,7 @@
 """Genera un único HTML autocontenido a partir de una página con carpetas js/ e img/.
 
 - Reemplaza cada <script src="js/…"></script> por el código del archivo.
-- Reemplaza cada ruta img/<archivo>.(webp|png|jpg|jpeg|svg) por un data URI, esté en
+- Reemplaza cada ruta img/<archivo>.(webp|png|jpg|jpeg|svg|mp4|webm) por un data URI, esté en
   atributos, CSS (url(...)) o strings de JavaScript.
 - Si el JS arma rutas en tiempo de ejecución (por ejemplo "img/p" + id + ".webp"),
   usá --mapa: agrega `const IMGS = {"img/…": "data:…"}` al principio del primer <script>
@@ -16,7 +16,7 @@ import base64
 import pathlib
 import re
 
-TIPOS = {".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".svg": "image/svg+xml"}
+TIPOS = {".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".svg": "image/svg+xml", ".mp4": "video/mp4", ".webm": "video/webm"}
 
 
 def data_uri(ruta: pathlib.Path) -> str:
@@ -39,7 +39,7 @@ def main():
         return "<script>" + codigo + "</script>"
 
     html = re.sub(r'<script src="(js/[\w./-]+)"></script>', script, html)
-    html = re.sub(r"img/[\w./-]+\.(?:webp|png|jpe?g|svg)", lambda m: data_uri(base / m.group(0)), html)
+    html = re.sub(r"img/[\w./-]+\.(?:webp|png|jpe?g|svg|mp4|webm)", lambda m: data_uri(base / m.group(0)), html)
 
     if a.mapa:
         imgs = sorted(p for p in (base / "img").rglob("*") if p.suffix.lower() in TIPOS)
