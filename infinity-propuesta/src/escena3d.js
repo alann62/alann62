@@ -329,7 +329,11 @@ function anatomia() {
   }
 
   if (!REDUCIR && window.gsap && window.ScrollTrigger) {
-    window.ScrollTrigger.create({ trigger: seccion, start: "top top", end: "+=3200", pin: ".anat-pin", scrub: .5, onUpdate: s => estado(s.progress) });
+    // Se crea después que los demás efectos de scroll: prioridad alta y recálculo para que
+    // los que están más abajo (el despiece CLAMP) tomen en cuenta este tramo fijado.
+    window.ScrollTrigger.create({ trigger: seccion, start: "top top", end: "+=3200", pin: ".anat-pin", scrub: .5, refreshPriority: 1, onUpdate: s => estado(s.progress) });
+    window.ScrollTrigger.sort();
+    window.ScrollTrigger.refresh();
   } else {
     seccion.classList.add("estatico");
     estado(.82);
