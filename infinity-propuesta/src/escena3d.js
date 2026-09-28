@@ -439,6 +439,7 @@ function materialesEquipo(M) {
     gris: new THREE.MeshStandardMaterial({ color: 0x9ea3a6, metalness: .2, roughness: .5 }),
     negro: new THREE.MeshStandardMaterial({ color: 0x1c1c1e, roughness: .55 }),
     bronce: new THREE.MeshStandardMaterial({ color: 0x7a3b1e, metalness: .3, roughness: .45 }),
+    fantasma: new THREE.MeshPhysicalMaterial({ color: 0xf2f4f1, roughness: .35, transmission: .85, thickness: .2, transparent: true, opacity: .55, side: THREE.DoubleSide, depthWrite: false }),
     cristal: new THREE.MeshPhysicalMaterial({ color: 0xdfeaf0, roughness: .12, transmission: .6, thickness: .02, ior: 1.5, clearcoat: 1, side: THREE.DoubleSide }),
     colores: {
       natural: new THREE.MeshPhysicalMaterial({ color: 0xf1f2ee, roughness: .5, transmission: .35, thickness: .5, clearcoat: .3 }),
@@ -557,8 +558,8 @@ function modeloPlanoBase(M) {
 }
 
 // Cilíndrico vertical de gran volumen (10.000 L, Ø 2,5 m) con tapa de 43 cm, cáncamos y salida CLAMP
-function modeloCilindrico(M) {
-  const g = new THREE.Group(), r = 1.25, h = 2.05;
+function modeloCilindrico(M, h = 2.05) {
+  const g = new THREE.Group(), r = 1.25;
   const perfil = [[0, 0], [r - .06, 0], [r, .06], [r, h], [r - .08, h + .16], [r * .72, h + .3], [.36, h + .34], [0, h + .34]].map(([x, y]) => new THREE.Vector2(x, y));
   const cuerpo = malla(g, new THREE.LatheGeometry(perfil, 160), M.colores.natural);
   // Plataforma elevada alrededor de la boca
@@ -581,13 +582,92 @@ function modeloCilindrico(M) {
     clamp: new THREE.Vector3(r + .3, .16, 0), uv: new THREE.Vector3(-r * .7, 1.1, r * .72), peso: new THREE.Vector3(r * .72, 1.3, r * .72) } };
 }
 
+// ---------- Bases del catálogo (según las fotos de la tienda) ----------
+const COLOR_BASE = { verde: 0x1d7a3c, azul: 0x103a82, petroleo: 0x1f5a5c, rojo: 0xd0231a };
+function matBase(color) {
+  return color === "rojo" ? new THREE.MeshPhysicalMaterial({ color: COLOR_BASE.rojo, roughness: .42, clearcoat: .4 })
+    : new THREE.MeshPhysicalMaterial({ color: COLOR_BASE[color], metalness: .15, roughness: .42, clearcoat: .6, clearcoatRoughness: .3 });
+}
+const alturaCono = D => Math.max(.32, .5 * D) + 1.05 * D / 2;   // misma altura a la que apoya el cónico del configurador
+
+// Base cónica: aro superior, aro interior donde calza el cono, cuatro patas y marcos cuadrados
+function baseConicaCatalogo(D, { reforzada = false, color = "azul" } = {}) {
+  const g = new THREE.Group(), mat = matBase(color), r = D / 2, h = alturaCono(D);
+  const l = Math.max(.02, D * .032) * (reforzada ? 1.3 : 1), rA = r * 1.03, lado = r * 1.08;
+  malla(g, new THREE.TorusGeometry(rA, l * .6, 12, 96), mat, 0, h).rotation.x = Math.PI / 2;
+  const yInt = h - 1.05 * r * .55, rInt = r * .5;
+  malla(g, new THREE.TorusGeometry(rInt, l * .45, 10, 64), mat, 0, yInt).rotation.x = Math.PI / 2;
+  const esq = [[1, 1], [1, -1], [-1, -1], [-1, 1]];
+  const enPata = (sx, sz, y) => { const k = y / h, rx = mezclar(lado, rA * .707, k); return [sx * rx, y, sz * rx]; };
+  esq.forEach(([sx, sz]) => {
+    barra(g, [sx * rA * .707, h, sz * rA * .707], [sx * lado, .02, sz * lado], l, mat);
+    malla(g, new THREE.BoxGeometry(l * 2.6, .008, l * 2.6), mat, sx * lado, .004, sz * lado);
+    const p = enPata(sx, sz, yInt); barra(g, p, [sx * rInt * .707, yInt, sz * rInt * .707], l * .7, mat);
+  });
+  const marcos = reforzada ? [.1, h * .4, h * .62] : [.1, h * .45];
+  for (const y of marcos) for (let i = 0; i < 4; i++) {
+    const [ax, az] = esq[i], [bx, bz] = esq[(i + 1) % 4];
+    barra(g, enPata(ax, az, y), enPata(bx, bz, y), l * .8, mat);
+  }
+  return { grupo: g, alto: h };
+}
+
+// Base plana estática: aro o bastidor bajo y cuatro patas; con disco o con piso según el modelo
+function basePlanaCatalogo(D, { disco = false, piso = false } = {}) {
+  const g = new THREE.Group(), mat = matBase("petroleo"), r = D / 2 * 1.02, alto = .32 + D * .08, l = Math.max(.025, D * .035);
+  if (piso) {
+    const a = D / 2;
+    const c = [[a, a], [a, -a], [-a, -a], [-a, a]];
+    for (let i = 0; i < 4; i++) barra(g, [c[i][0], alto, c[i][1]], [c[(i + 1) % 4][0], alto, c[(i + 1) % 4][1]], .03, mat);
+    for (const t of [-.5, 0, .5]) { barra(g, [t * a, alto, -a], [t * a, alto, a], .03, mat); barra(g, [-a, alto, t * a], [a, alto, t * a], .03, mat); }
+    c.forEach(([x, z]) => { barra(g, [x, alto, z], [x, .02, z], .035, mat); malla(g, new THREE.BoxGeometry(.09, .008, .09), mat, x, .004, z); });
+  } else {
+    malla(g, new THREE.TorusGeometry(r, l * .6, 12, 96), mat, 0, alto).rotation.x = Math.PI / 2;
+    for (let k = 0; k < 4; k++) {
+      const an = Math.PI / 4 + k * Math.PI / 2, c = Math.cos(an) * r, z = Math.sin(an) * r;
+      barra(g, [c, alto, z], [c * 1.1, .02, z * 1.1], l, mat);
+      malla(g, new THREE.BoxGeometry(l * 2.6, .008, l * 2.6), mat, c * 1.1, .004, z * 1.1);
+    }
+    if (disco) malla(g, new THREE.CylinderGeometry(r * .98, r * .98, .006, 96), matBase("petroleo"), 0, alto + .004);
+  }
+  return { grupo: g, alto: alto + .01 };
+}
+
+// Base plástica D40: columna central con copa y cuatro aletas en cruz (roja, como la de la tienda)
+function basePlasticaCatalogo() {
+  const g = new THREE.Group(), mat = matBase("rojo");
+  malla(g, new THREE.CylinderGeometry(.045, .05, .3, 32), mat, 0, .19);
+  const copa = [[.03, .3], [.05, .3], [.09, .4], [.09, .41], [.08, .41], [.045, .33], [.03, .33]].map(([x, y]) => new THREE.Vector2(x, y));
+  malla(g, new THREE.LatheGeometry(copa, 48), mat).material.side = THREE.DoubleSide;
+  const forma = new THREE.Shape([[0, 0], [.2, 0], [.2, .035], [.06, .34], [0, .34]].map(([x, y]) => new THREE.Vector2(x, y)));
+  const geo = new THREE.ExtrudeGeometry(forma, { depth: .018, bevelEnabled: true, bevelSize: .004, bevelThickness: .004, bevelSegments: 2 });
+  geo.translate(0, 0, -.009);
+  for (let k = 0; k < 4; k++) { const a = malla(g, geo, mat); a.rotation.y = k * Math.PI / 2 + Math.PI / 4; }
+  return { grupo: g, alto: .4 };
+}
+
+// Arma la base elegida y, si se pide, el tanque que va encima (translúcido)
+function armarBase(sel, M) {
+  const g = new THREE.Group();
+  const b = sel.tipo === "plana" ? basePlanaCatalogo(sel.D, sel) : sel.tipo === "plastica" ? basePlasticaCatalogo() : baseConicaCatalogo(sel.D, sel);
+  g.add(b.grupo);
+  if (sel.tanque) {
+    const Mt = { ...M, pe: M.fantasma };
+    let t;
+    if (sel.tipo === "plana") { t = modeloPlano(sel.D, sel.litros || 500, Mt); t.grupo.position.y = b.alto; }
+    else { t = modeloConico(sel.D, sel.litros || 100, Mt, M.agua); t.base.visible = false; if (sel.tipo === "plastica") t.grupo.position.y = .012; }
+    g.add(t.grupo);
+  }
+  return g;
+}
+
 function visorEquipo(el) {
   const lienzo = el.querySelector(".visor-lienzo");
   const m = motor(lienzo, { sombraOpacidad: .16 });
   const { renderer, scene, camera, sol } = m;
   const M = materialesEquipo(materiales());
   const tipo = el.dataset.modelo;
-  const hecho = tipo === "base" ? { grupo: modeloBaseEquipo(M) } : tipo === "torpedo" ? { grupo: modeloTorpedo(M) } : tipo === "accesorios" ? { grupo: modeloAccesorios(M) }
+  const hecho = tipo === "base" ? { grupo: armarBase(el._eleccion || { tipo: "conica", D: .97 }, M) } : tipo === "torpedo" ? { grupo: modeloTorpedo(M) } : tipo === "accesorios" ? { grupo: modeloAccesorios(M) }
     : tipo === "plano" ? modeloPlanoBase(M) : tipo === "cilindrico" ? modeloCilindrico(M) : modeloConico(.5, 110, M, M.agua);
   const modelo = hecho.grupo;
   scene.add(modelo);
@@ -608,12 +688,29 @@ function visorEquipo(el) {
   controls.autoRotate = !REDUCIR; controls.autoRotateSpeed = 1.6;
   controls.minPolarAngle = Math.PI * .15; controls.maxPolarAngle = Math.PI * .47;
   controls.target.copy(centro);
-  const dist = radio / Math.sin(camera.fov * Math.PI / 360) * (tipo === "accesorios" ? .8 : tipo === "cilindrico" ? .95 : 1.05);
+  const factor = tipo === "accesorios" ? .8 : tipo === "cilindrico" ? .95 : tipo === "base" ? 1.2 : 1.05;
+  const dist = radio / Math.sin(camera.fov * Math.PI / 360) * factor;
   camera.position.copy(centro).add(new THREE.Vector3(.75, tipo === "accesorios" ? .75 : .38, 1).setLength(dist));
+  // Encuadre objetivo (para las bases, que cambian de tamaño al elegir otra)
+  const destino = { centro: centro.clone(), dist };
+  let actual = modelo;
+  if (tipo === "base") el.addEventListener("elegir", e => {
+    scene.remove(actual); actual.traverse(o => o.geometry && o.geometry.dispose());
+    actual = armarBase(e.detail, M); actual.scale.setScalar(.92); scene.add(actual);
+    const c2 = new THREE.Box3().setFromObject(actual), s2 = c2.getSize(new THREE.Vector3());
+    destino.centro = c2.getCenter(new THREE.Vector3()); destino.dist = s2.length() / 2 / .92 / Math.sin(camera.fov * Math.PI / 360) * factor;
+  });
   el.classList.add("listo");
   (function cuadro() {
     requestAnimationFrame(cuadro);
     if (!m.visible) return;
+    if (tipo === "base") {
+      controls.target.lerp(destino.centro, .12);
+      const off = camera.position.clone().sub(controls.target);
+      off.setLength(mezclar(off.length(), destino.dist, .12));
+      camera.position.copy(controls.target).add(off);
+      if (actual.scale.x < 1) actual.scale.setScalar(Math.min(1, actual.scale.x + .01));
+    }
     controls.update(); renderer.render(scene, camera);
     if (etiquetar) etiquetar(hecho.puntos, modelo);
   })();
@@ -629,6 +726,189 @@ function visores() {
   // La miniatura de la foto real se agranda al tocarla
   lista.forEach(el => { const b = el.querySelector(".visor-foto"); b && b.addEventListener("click", () => { const on = el.classList.toggle("ver-foto"); b.setAttribute("aria-pressed", String(on)); b.setAttribute("aria-label", on ? "Volver al 3D" : "Ver foto real"); }); });
 }
+
+// ======================================================================
+// 4) Modelo 3D de cada producto de la tienda (para el aviso "Agregado" y el pedido)
+// ======================================================================
+function piezaJunta(M, color = "blanco") {
+  const g = new THREE.Group();
+  const perfil = [[.024, 0], [.042, 0], [.042, .006], [.03, .006], [.03, .01], [.024, .01]].map(([x, y]) => new THREE.Vector2(x, y));
+  malla(g, new THREE.LatheGeometry(perfil, 64), color === "azul" ? M.azul : M.blanco).material.side = THREE.DoubleSide;
+  return g;
+}
+function piezaAbrazadera(M) {
+  const g = new THREE.Group();
+  const arco = malla(g, new THREE.TorusGeometry(.045, .01, 12, 48, Math.PI * 1.7), M.verde, 0, .06); arco.rotation.z = -Math.PI * .35;
+  malla(g, new THREE.BoxGeometry(.03, .022, .02), M.verde, .05, .06);
+  malla(g, new THREE.CylinderGeometry(.005, .005, .08, 12), M.inox, .055, .06).rotation.z = Math.PI / 2;
+  const mar = new THREE.Group(); mar.position.set(.1, .06, 0); g.add(mar);
+  malla(mar, new THREE.CylinderGeometry(.009, .009, .016, 12), M.blanco).rotation.z = Math.PI / 2;
+  malla(mar, new THREE.BoxGeometry(.006, .026, .06), M.blanco, .002);
+  return g;
+}
+function piezaManguito(M) {
+  const g = new THREE.Group();
+  const perfil = [[.012, 0], [.016, 0], [.016, .04], [.024, .05], [.042, .062], [.042, .07], [.012, .07]].map(([x, y]) => new THREE.Vector2(x, y));
+  malla(g, new THREE.LatheGeometry(perfil, 48), M.blanco).material.side = THREE.DoubleSide;
+  for (let i = 0; i < 5; i++) malla(g, new THREE.TorusGeometry(.0165, .0015, 6, 32), M.blanco, 0, .006 + i * .007).rotation.x = Math.PI / 2;
+  return g;
+}
+function piezaLlave(M) {
+  const g = new THREE.Group();
+  malla(g, new THREE.SphereGeometry(.05, 32, 24), M.verde, 0, .06);
+  for (const s of [-1, 1]) {
+    const b = malla(g, new THREE.CylinderGeometry(.03, .034, .05, 32), M.verde, s * .06, .06); b.rotation.z = Math.PI / 2;
+    const f = malla(g, new THREE.CylinderGeometry(.042, .042, .01, 32), M.verde, s * .088, .06); f.rotation.z = Math.PI / 2;
+  }
+  malla(g, new THREE.CylinderGeometry(.01, .01, .04, 16), M.blanco, 0, .12);
+  const m = malla(g, new THREE.BoxGeometry(.16, .014, .04), M.blanco, 0, .145); m.rotation.y = .5;
+  return g;
+}
+function piezaAirlock(M) {
+  const g = new THREE.Group();
+  malla(g, new THREE.CylinderGeometry(.012, .012, .03, 6), M.negro, 0, .015);
+  malla(g, new THREE.CylinderGeometry(.009, .009, .02, 16), M.bronce, 0, .04);
+  malla(g, new THREE.CylinderGeometry(.026, .026, .09, 40, 1, true), M.cristal, 0, .095);
+  malla(g, new THREE.CylinderGeometry(.027, .027, .01, 40), M.cristal, 0, .145);
+  malla(g, new THREE.CylinderGeometry(.009, .009, .07, 20), M.cristal, 0, .09);
+  return g;
+}
+function piezaTapa(M, r, color) {
+  const g = new THREE.Group(), mat = color === "beige" ? new THREE.MeshPhysicalMaterial({ color: 0xe6c9b4, roughness: .5 }) : M.verde;
+  malla(g, new THREE.CylinderGeometry(r, r, r * .22, 64), mat, 0, r * .11);
+  malla(g, new THREE.TorusGeometry(r * .55, r * .035, 10, 48), mat, 0, r * .22).rotation.x = Math.PI / 2;
+  if (color !== "beige") for (let i = 0; i < 30; i++) { const a = i / 30 * Math.PI * 2; malla(g, new THREE.BoxGeometry(r * .06, r * .2, r * .08), mat, Math.cos(a) * r, r * .11, Math.sin(a) * r).rotation.y = -a; }
+  return g;
+}
+function juntar(piezas) {   // pone varias piezas en fila
+  const g = new THREE.Group(); let x = 0;
+  piezas.forEach(p => { const c = new THREE.Box3().setFromObject(p), w = c.max.x - c.min.x; p.position.x = x - c.min.x; x += w + .03; g.add(p); });
+  g.children.forEach(p => { p.position.x -= x / 2; });
+  return g;
+}
+// Batea antiderrame: caja abierta de paredes gruesas, algo más ancha arriba
+function modeloBatea(V, M) {
+  const g = new THREE.Group(), mat = new THREE.MeshPhysicalMaterial({ color: 0xe8e4de, roughness: .55, clearcoat: .2 });
+  const a = Math.cbrt((V / 1000) / .7), L = a * 1.4, P = a, H = a * .5, e = .04;
+  malla(g, new THREE.BoxGeometry(L, e, P), mat, 0, e / 2);
+  for (const s of [-1, 1]) {
+    const w = malla(g, new THREE.BoxGeometry(e, H, P + e), mat, s * (L / 2), H / 2); w.rotation.z = s * -.06;
+    const w2 = malla(g, new THREE.BoxGeometry(L + e, H, e), mat, 0, H / 2, s * (P / 2)); w2.rotation.x = s * .06;
+  }
+  const borde = [[L + .08, .03, .06, 0, H, P / 2 + .03], [L + .08, .03, .06, 0, H, -P / 2 - .03], [.06, .03, P + .08, L / 2 + .03, H, 0], [.06, .03, P + .08, -L / 2 - .03, H, 0]];
+  borde.forEach(([x, y, z, px, py, pz]) => malla(g, new THREE.BoxGeometry(x, y, z), mat, px, py, pz));
+  return g;
+}
+// Caja cajón con ruedas y tapa entreabierta
+function modeloCajon(M) {
+  const g = new THREE.Group(), mat = new THREE.MeshPhysicalMaterial({ color: 0xeeeeea, roughness: .5, clearcoat: .2 });
+  const L = .8, P = .55, H = .5, y0 = .12;
+  malla(g, new THREE.BoxGeometry(L, H, P), mat, 0, y0 + H / 2);
+  const tapa = new THREE.Group(); tapa.position.set(0, y0 + H, -P / 2); g.add(tapa);
+  malla(tapa, new THREE.BoxGeometry(L + .02, .025, P + .02), mat, 0, 0, P / 2); tapa.rotation.x = -.35;
+  for (const [x, z] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+    malla(g, new THREE.BoxGeometry(.03, y0, .03), M.jaula, x * (L / 2 - .05), y0 / 2 + .02, z * (P / 2 - .05));
+    const rueda = malla(g, new THREE.CylinderGeometry(.035, .035, .025, 24), M.negro, x * (L / 2 - .05), .035, z * (P / 2 - .05)); rueda.rotation.x = Math.PI / 2;
+  }
+  malla(g, new THREE.BoxGeometry(L + .04, .03, P + .04), M.jaula, 0, y0 + .015);
+  return g;
+}
+// Recipiente cilíndrico con tapa y manija
+function modeloRecipiente(V, M, negro) {
+  const g = new THREE.Group(), mat = negro ? M.colores.negro : new THREE.MeshPhysicalMaterial({ color: 0x7ed957, roughness: .42, clearcoat: .4 });
+  const r = Math.cbrt((V / 1000) / (2.4 * Math.PI)), h = r * 2.4;
+  malla(g, new THREE.CylinderGeometry(r, r * .92, h, 64), mat, 0, h / 2);
+  for (let i = 1; i < 4; i++) malla(g, new THREE.TorusGeometry(r * (.92 + .08 * i / 4) + .004, .008, 8, 64), mat, 0, h * i / 4).rotation.x = Math.PI / 2;
+  const tapaMat = negro ? M.colores.negro : new THREE.MeshPhysicalMaterial({ color: 0x8ee063, roughness: .4, clearcoat: .4 });
+  malla(g, new THREE.CylinderGeometry(r * 1.04, r * 1.04, .04, 64), tapaMat, 0, h + .02);
+  malla(g, new THREE.BoxGeometry(r * .8, .04, r * .3), tapaMat, 0, h + .06);
+  return g;
+}
+// Cónico sin base: baja el tanque para que la válvula quede cerca del piso
+function conicoSolo(D, V, M) {
+  const t = modeloConico(D, V, M, M.agua); t.base.visible = false;
+  t.grupo.position.y = -(Math.max(.32, .5 * D) - .19);
+  const g = new THREE.Group(); g.add(t.grupo); return g;
+}
+function modeloProducto(p, M) {
+  const n = p.nombre, d = (n.match(/D(\d+)/) || [])[1], litros = +((n.match(/([\d.]+)\s*L\b/) || [])[1] || "0").replace(/\./g, "");
+  if (p.cat === "Fermentadores") {
+    if (/Madurador/.test(n)) { const t = modeloPlano(litros > 100 ? .69 : .4, litros, M); return t.grupo; }
+    const D = p.diam ? p.diam / 1000 : litros >= 300 ? .69 : .38;
+    return litros >= 200 ? modeloConico(D, litros, M, M.agua).grupo : conicoSolo(D, litros, M);
+  }
+  if (p.cat === "Tanques") {
+    if (p.horiz) return modeloHorizontal(p.horiz, M).grupo;
+    if (p.plano >= 10000) return modeloCilindrico(M, p.plano >= 15000 ? 3.06 : 2.05).grupo;
+    return modeloPlano(.4, p.plano, M).grupo;
+  }
+  if (p.cat === "Bases") {
+    const D = (+d || 40) / 100, tipo = /plástica/.test(n) ? "plastica" : /plana/.test(n) ? "plana" : "conica";
+    return armarBase({ tipo, D: tipo === "plastica" ? .4 : D, color: +d === 40 ? "verde" : "azul", reforzada: /reforzada/.test(n), disco: /disco/.test(n), piso: /piso/.test(n) }, M);
+  }
+  if (p.cat === "Accesorios CLAMP") {
+    if (/Kit/.test(n)) return juntar([piezaAbrazadera(M), piezaManguito(M), piezaJunta(M)]);
+    if (/Llave.*abrazadera/.test(n)) return juntar([piezaLlave(M), piezaAbrazadera(M), piezaJunta(M)]);
+    if (/Llave/.test(n)) return piezaLlave(M);
+    if (/Abrazadera/.test(n)) return piezaAbrazadera(M);
+    if (/Junta/.test(n)) return juntar([piezaJunta(M), piezaJunta(M)]);
+    if (/Tapa ciega/.test(n)) return juntar([piezaTapa(M, .045, "beige"), piezaTapa(M, .045, "beige")]);
+    if (/Manguito/.test(n)) return piezaManguito(M);
+    if (/Airlock/.test(n)) return piezaAirlock(M);
+    if (/Tapa/.test(n)) return piezaTapa(M, .125);
+  }
+  if (/Batea/.test(n)) return modeloBatea(litros, M);
+  if (/cajón/.test(n)) return modeloCajon(M);
+  if (/Recipiente/.test(n)) return modeloRecipiente(litros, M, litros >= 100);
+  return null;
+}
+
+// Visor reutilizable: muestra el producto que se le pase, girando
+function crearVisorProducto(lienzo) {
+  const m = motor(lienzo, { sombraOpacidad: .14 });
+  const { renderer, scene, camera, sol } = m;
+  const M = materialesEquipo(materiales());
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true;
+  controls.autoRotate = !REDUCIR; controls.autoRotateSpeed = 2;
+  controls.minPolarAngle = Math.PI * .15; controls.maxPolarAngle = Math.PI * .47;
+  let actual = null, idActual = null;
+  const destino = { centro: new THREE.Vector3(0, .5, 0), dist: 3 }, humano = persona(M);
+  camera.position.set(2, 1.2, 2.6);
+  function mostrar(p) {
+    if (!p || p.id === idActual) return !!actual;
+    const g = modeloProducto(p, M);
+    if (actual) { scene.remove(actual); actual.traverse(o => o.geometry && o.geometry.dispose()); scene.remove(humano); }
+    actual = g; idActual = p.id;
+    if (!g) return false;
+    scene.add(g); g.scale.setScalar(.85);
+    const caja = new THREE.Box3().setFromObject(g), tam = caja.getSize(new THREE.Vector3());
+    // Tanques grandes: persona de referencia al lado
+    if (tam.y > 1.8) { humano.position.set(caja.min.x - .45, 0, .2); scene.add(humano); caja.expandByObject(humano); }
+    const t2 = caja.getSize(new THREE.Vector3()), radio = t2.length() / 2 / .85;
+    destino.centro = caja.getCenter(new THREE.Vector3()); destino.dist = radio / Math.sin(camera.fov * Math.PI / 360) * 1.02;
+    Object.assign(sol.shadow.camera, { left: -radio * 2, right: radio * 2, top: radio * 2, bottom: -radio * 2 }); sol.shadow.camera.updateProjectionMatrix();
+    sol.position.set(radio * 3, radio * 6, radio * 4);
+    // Encuadre directo (sin esperar la transición): el producto aparece bien desde el primer cuadro
+    controls.target.copy(destino.centro);
+    camera.position.copy(destino.centro).add(new THREE.Vector3(.75, .45, 1).setLength(destino.dist));
+    return true;
+  }
+  (function cuadro() {
+    requestAnimationFrame(cuadro);
+    if (!m.visible || !actual) return;
+    controls.target.lerp(destino.centro, .15);
+    const off = camera.position.clone().sub(controls.target);
+    off.setLength(mezclar(off.length(), destino.dist, .15));
+    camera.position.copy(controls.target).add(off);
+    if (actual.scale.x < 1) actual.scale.setScalar(Math.min(1, actual.scale.x + .012));
+    controls.update(); renderer.render(scene, camera);
+  })();
+  return { mostrar };
+}
+// La página pide visores con esto (el script de la tienda se carga antes que el 3D)
+window.Infinity3D = { visor: lienzo => { try { return crearVisorProducto(lienzo); } catch (e) { console.warn("3D no disponible", e); return null; } } };
+window.dispatchEvent(new Event("infinity3d"));
 
 for (const iniciar of [anatomia, configurador, visores]) {
   try { iniciar(); } catch (err) { console.warn("Escena 3D no disponible, se muestra la foto.", err); }
