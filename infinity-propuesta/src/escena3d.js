@@ -655,50 +655,14 @@ function baseConicaCatalogo(D, { reforzada = false, color = "azul", simple = fal
   return { grupo: g, alto: h };
 }
 
-// Base plana estática: aro o bastidor bajo y cuatro patas; con disco o con piso según el modelo
-function basePlanaCatalogo(D, { disco = false, piso = false } = {}) {
-  const g = new THREE.Group(), mat = matBase("petroleo"), r = D / 2 * 1.02, alto = .32 + D * .08, l = Math.max(.025, D * .035);
-  if (piso) {
-    const a = D / 2;
-    const c = [[a, a], [a, -a], [-a, -a], [-a, a]];
-    for (let i = 0; i < 4; i++) barra(g, [c[i][0], alto, c[i][1]], [c[(i + 1) % 4][0], alto, c[(i + 1) % 4][1]], .03, mat);
-    for (const t of [-.5, 0, .5]) { barra(g, [t * a, alto, -a], [t * a, alto, a], .03, mat); barra(g, [-a, alto, t * a], [a, alto, t * a], .03, mat); }
-    c.forEach(([x, z]) => { barra(g, [x, alto, z], [x, .02, z], .035, mat); malla(g, new THREE.BoxGeometry(.09, .008, .09), mat, x, .004, z); });
-  } else {
-    malla(g, new THREE.TorusGeometry(r, l * .6, 12, 96), mat, 0, alto).rotation.x = Math.PI / 2;
-    for (let k = 0; k < 4; k++) {
-      const an = Math.PI / 4 + k * Math.PI / 2, c = Math.cos(an) * r, z = Math.sin(an) * r;
-      barra(g, [c, alto, z], [c * 1.1, .02, z * 1.1], l, mat);
-      malla(g, new THREE.BoxGeometry(l * 2.6, .008, l * 2.6), mat, c * 1.1, .004, z * 1.1);
-    }
-    if (disco) malla(g, new THREE.CylinderGeometry(r * .98, r * .98, .006, 96), matBase("petroleo"), 0, alto + .004);
-  }
-  return { grupo: g, alto: alto + .01 };
-}
-
-// Base plástica D40: columna central con copa y cuatro aletas en cruz (roja, como la de la tienda)
-function basePlasticaCatalogo() {
-  const g = new THREE.Group(), mat = matBase("rojo");
-  malla(g, new THREE.CylinderGeometry(.045, .05, .3, 32), mat, 0, .19);
-  const copa = [[.03, .3], [.05, .3], [.09, .4], [.09, .41], [.08, .41], [.045, .33], [.03, .33]].map(([x, y]) => new THREE.Vector2(x, y));
-  malla(g, new THREE.LatheGeometry(copa, 48), mat).material.side = THREE.DoubleSide;
-  const forma = new THREE.Shape([[0, 0], [.2, 0], [.2, .035], [.06, .34], [0, .34]].map(([x, y]) => new THREE.Vector2(x, y)));
-  const geo = new THREE.ExtrudeGeometry(forma, { depth: .018, bevelEnabled: true, bevelSize: .004, bevelThickness: .004, bevelSegments: 2 });
-  geo.translate(0, 0, -.009);
-  for (let k = 0; k < 4; k++) { const a = malla(g, geo, mat); a.rotation.y = k * Math.PI / 2 + Math.PI / 4; }
-  return { grupo: g, alto: .4 };
-}
-
 // Arma la base elegida y, si se pide, el tanque que va encima (translúcido)
 function armarBase(sel, M) {
   const g = new THREE.Group();
-  const b = sel.tipo === "plana" ? basePlanaCatalogo(sel.D, sel) : sel.tipo === "plastica" ? basePlasticaCatalogo() : baseConicaCatalogo(sel.D, sel);
+  const b = baseConicaCatalogo(sel.D, sel);   // solo las cónicas metálicas van en 3D; plásticas y planas muestran la foto
   g.add(b.grupo);
   if (sel.tanque) {
     const Mt = { ...M, pe: M.fantasma };
-    let t;
-    if (sel.tipo === "plana") { t = modeloPlano(sel.D, sel.litros || 500, Mt); t.grupo.position.y = b.alto; }
-    else { t = modeloConico(sel.D, sel.litros || 100, Mt, M.agua); t.base.visible = false; t.grupo.position.y = sel.tipo === "plastica" ? .012 - (t.y0 - .32) : b.alto - altoBase(sel.D); }
+    const t = modeloConico(sel.D, sel.litros || 100, Mt, M.agua); t.base.visible = false; t.grupo.position.y = b.alto - altoBase(sel.D);
     g.add(t.grupo);
   }
   return g;
@@ -773,45 +737,6 @@ function visores() {
 // ======================================================================
 // 4) Modelo 3D de cada producto de la tienda (para el aviso "Agregado" y el pedido)
 // ======================================================================
-// Batea antiderrame: caja abierta de paredes gruesas, algo más ancha arriba
-function modeloBatea(V, M) {
-  const g = new THREE.Group(), mat = new THREE.MeshPhysicalMaterial({ color: 0xe8e4de, roughness: .55, clearcoat: .2 });
-  const a = Math.cbrt((V / 1000) / .7), L = a * 1.4, P = a, H = a * .5, e = .04;
-  malla(g, new THREE.BoxGeometry(L, e, P), mat, 0, e / 2);
-  for (const s of [-1, 1]) {
-    const w = malla(g, new THREE.BoxGeometry(e, H, P + e), mat, s * (L / 2), H / 2); w.rotation.z = s * -.06;
-    const w2 = malla(g, new THREE.BoxGeometry(L + e, H, e), mat, 0, H / 2, s * (P / 2)); w2.rotation.x = s * .06;
-  }
-  const borde = [[L + .08, .03, .06, 0, H, P / 2 + .03], [L + .08, .03, .06, 0, H, -P / 2 - .03], [.06, .03, P + .08, L / 2 + .03, H, 0], [.06, .03, P + .08, -L / 2 - .03, H, 0]];
-  borde.forEach(([x, y, z, px, py, pz]) => malla(g, new THREE.BoxGeometry(x, y, z), mat, px, py, pz));
-  return g;
-}
-// Caja cajón con ruedas y tapa entreabierta
-function modeloCajon(M) {
-  const g = new THREE.Group(), mat = new THREE.MeshPhysicalMaterial({ color: 0xeeeeea, roughness: .5, clearcoat: .2 });
-  const L = .8, P = .55, H = .5, y0 = .12;
-  malla(g, new THREE.BoxGeometry(L, H, P), mat, 0, y0 + H / 2);
-  const tapa = new THREE.Group(); tapa.position.set(0, y0 + H, -P / 2); g.add(tapa);
-  malla(tapa, new THREE.BoxGeometry(L + .02, .025, P + .02), mat, 0, 0, P / 2); tapa.rotation.x = -.35;
-  for (const [x, z] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) {
-    malla(g, new THREE.BoxGeometry(.03, y0, .03), M.jaula, x * (L / 2 - .05), y0 / 2 + .02, z * (P / 2 - .05));
-    const rueda = malla(g, new THREE.CylinderGeometry(.035, .035, .025, 24), M.negro, x * (L / 2 - .05), .035, z * (P / 2 - .05)); rueda.rotation.x = Math.PI / 2;
-  }
-  malla(g, new THREE.BoxGeometry(L + .04, .03, P + .04), M.jaula, 0, y0 + .015);
-  const logo = logoPlano(.26); logo.position.set(-.18, y0 + H * .55, P / 2 + .003); g.add(logo);
-  return g;
-}
-// Recipiente cilíndrico con tapa y manija
-function modeloRecipiente(V, M, negro) {
-  const g = new THREE.Group(), mat = negro ? M.colores.negro : new THREE.MeshPhysicalMaterial({ color: 0x7ed957, roughness: .42, clearcoat: .4 });
-  const r = Math.cbrt((V / 1000) / (2.4 * Math.PI)), h = r * 2.4;
-  malla(g, new THREE.CylinderGeometry(r, r * .92, h, 64), mat, 0, h / 2);
-  for (let i = 1; i < 4; i++) malla(g, new THREE.TorusGeometry(r * (.92 + .08 * i / 4) + .004, .008, 8, 64), mat, 0, h * i / 4).rotation.x = Math.PI / 2;
-  const tapaMat = negro ? M.colores.negro : new THREE.MeshPhysicalMaterial({ color: 0x8ee063, roughness: .4, clearcoat: .4 });
-  malla(g, new THREE.CylinderGeometry(r * 1.04, r * 1.04, .04, 64), tapaMat, 0, h + .02);
-  malla(g, new THREE.BoxGeometry(r * .8, .04, r * .3), tapaMat, 0, h + .06);
-  return g;
-}
 // Cónico sin base: baja el tanque para que la válvula quede cerca del piso
 function conicoSolo(D, V, M) {
   const t = modeloConico(D, V, M, M.agua); t.base.visible = false;
@@ -831,14 +756,11 @@ function modeloProducto(p, M) {
     return modeloPlano(.4, p.plano, M).grupo;
   }
   if (p.cat === "Bases") {
-    const D = (+d || 40) / 100, tipo = /plástica/.test(n) ? "plastica" : /plana/.test(n) ? "plana" : "conica";
-    return armarBase({ tipo, D: tipo === "plastica" ? .4 : D, color: +d === 40 ? "verde" : /liviana/.test(n) ? "celeste" : "azul", simple: +d === 40 && (p.dmax || 0) <= 70, reforzada: /reforzada/.test(n), disco: /disco/.test(n), piso: /piso/.test(n) }, M);
+    if (/plástica|plana/.test(n)) return null;   // bases plásticas y planas estáticas: se muestra la foto real
+    return armarBase({ tipo: "conica", D: (+d || 40) / 100, color: +d === 40 ? "verde" : /liviana/.test(n) ? "celeste" : "azul", simple: +d === 40 && (p.dmax || 0) <= 70, reforzada: /reforzada/.test(n) }, M);
   }
   if (p.cat === "Accesorios CLAMP") return null;   // accesorios chicos: se muestra la foto real
-  if (/Batea/.test(n)) return modeloBatea(litros, M);
-  if (/cajón/.test(n)) return modeloCajon(M);
-  if (/Recipiente/.test(n)) return modeloRecipiente(litros, M, litros >= 100);
-  return null;
+  return null;   // bateas, cajón, recipientes y accesorios: se muestra la foto real
 }
 
 // Visor reutilizable: muestra el producto que se le pase, girando

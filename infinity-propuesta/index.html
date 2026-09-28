@@ -440,6 +440,8 @@
   .visor.listo.ver-foto .visor-foto img { object-fit: contain; border-radius: 12px; }
   .visor.listo.ver-foto .visor-foto span { left: auto; right: 14px; bottom: 14px; padding: 6px 12px; border-radius: 99px; background: var(--texto); }
   .visor.listo.ver-foto .visor-foto span::before { content: "Volver al 3D · "; }
+  .visor.solo-foto .visor-foto { pointer-events: none; }
+  .visor.solo-foto .visor-foto span, .visor.solo-foto .visor-pista, .visor.solo-foto .visor-lienzo { display: none; }
   .visor-foto:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
   .visor-solo-foto img { width: 100%; height: 100%; object-fit: contain; padding: 28px; }
   .visor-pista { position: absolute; left: 18px; top: 16px; z-index: 1; font-size: 12px; color: var(--terciario); opacity: 0; transition: opacity .4s; }
@@ -508,6 +510,17 @@
   .item .nom:hover { color: var(--verde); }
   .item.elegido .nom { color: var(--verde); }
   @media (prefers-reduced-motion: reduce) { .aviso3d { transition: none; } }
+  /* Cartel junto al botón de WhatsApp: entra deslizándose y cada tanto "saluda" hacia el botón */
+  .wa-texto { position: fixed; right: 88px; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); z-index: 70; background: #fff; color: var(--texto); font: 700 19px var(--sf); letter-spacing: -.01em; padding: 10px 18px; border-radius: 99px; box-shadow: 0 8px 24px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.04); white-space: nowrap; animation: waEntra .7s var(--curva) 1.2s both, waSaluda 1.2s ease-in-out 5s infinite; }
+  .wa-texto span { color: #25d366; }
+  .wa-texto::after { content: ""; position: absolute; right: -6px; top: 50%; width: 12px; height: 12px; background: #fff; transform: translateY(-50%) rotate(45deg); border-radius: 2px; box-shadow: 3px -3px 6px rgba(0,0,0,.04); }
+  .wa-texto:hover { color: #1a9e4f; }
+  @keyframes waEntra { from { opacity: 0; transform: translateX(24px) scale(.9); } to { opacity: 1; transform: none; } }
+  @keyframes waSaluda { 0%, 70%, 100% { transform: none; } 78% { transform: translateX(6px); } 86% { transform: translateX(-2px); } 93% { transform: translateX(4px); } }
+  @media (max-width: 600px) { .wa-texto { font-size: 15px; padding: 8px 14px; right: 84px; bottom: calc(29px + env(safe-area-inset-bottom, 0px)); } }
+  @media (prefers-reduced-motion: reduce) { .wa-texto { animation: none; } }
+  /* Mientras se ve el aviso de "Agregado", el cartel se corre para no taparlo */
+  body:has(.aviso3d.visible) .wa-texto { opacity: 0; pointer-events: none; transition: opacity .2s; }
 </style>
 </head>
 <body>
@@ -1159,6 +1172,7 @@
 </footer>
 
 <a class="wa" id="wa-flotante" href="#" aria-label="Escribinos por WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
+<a class="wa-texto" id="wa-texto" href="#" tabindex="-1" aria-hidden="true">¡Comunicate con <span>nosotros</span>!</a>
 
 <div class="aviso3d" id="aviso3d" role="status" aria-live="polite" hidden>
   <div class="aviso3d-lienzo" aria-hidden="true"></div>
@@ -1557,6 +1571,11 @@ function animarTotal(v) {
     document.getElementById("base-precio").textContent = fmt$(b.p.precio);
     document.getElementById("base-agregar").replaceChildren(btnAgregar(b.p));
     foto.src = b.p.img; foto.alt = b.p.nombre;
+    // Plásticas y planas estáticas van con su foto real, sin 3D
+    const soloFoto = b.tipo !== "conica";
+    visor.classList.toggle("solo-foto", soloFoto); visor.classList.toggle("ver-foto", soloFoto);
+    tanque.closest("label").hidden = soloFoto;
+    if (soloFoto) return;
     const det = { tipo: b.tipo, D: b.D, color: b.color, simple: b.simple, reforzada: b.reforzada, disco: b.disco, piso: b.piso, litros: b.litros, tanque: tanque.checked };
     visor._eleccion = det;   // si el 3D todavía no arrancó, lo toma al iniciar
     visor.dispatchEvent(new CustomEvent("elegir", { detail: det }));
@@ -1672,7 +1691,7 @@ segmento($("#filtros-pais"), ["Todos", "Argentina", "Chile", "Perú"].map(p => [
 pintarDist("Todos");
 
 // ---- WhatsApp y aviso ----
-["#wa-contacto", "#wa-flotante"].forEach(s => { const a = $(s); a.href = wa("Hola Infinity! Quiero hacer una consulta."); a.target = "_blank"; a.rel = "noopener"; });
+["#wa-contacto", "#wa-flotante", "#wa-texto"].forEach(s => { const a = $(s); a.href = wa("Hola Infinity! Quiero hacer una consulta."); a.target = "_blank"; a.rel = "noopener"; });
 $("#ver-mejoras").addEventListener("click", e => {
   const lista = $("#mejoras"); lista.hidden = !lista.hidden;
   e.currentTarget.setAttribute("aria-expanded", String(!lista.hidden));
