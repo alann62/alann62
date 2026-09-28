@@ -52,6 +52,11 @@ function motor(lienzo, { sombraOpacidad = .14, desplazar = null } = {}) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.localClippingEnabled = true;
   lienzo.append(renderer.domElement);
+  // Algunos visores y ventanas embebidas bloquean la captura del puntero: sin esto el arrastre no gira
+  for (const m of ["setPointerCapture", "releasePointerCapture"]) {
+    const original = renderer.domElement[m];
+    renderer.domElement[m] = function (id) { try { return original.call(this, id); } catch (e) { /* se ignora: el giro sigue andando */ } };
+  }
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -79,6 +84,18 @@ function motor(lienzo, { sombraOpacidad = .14, desplazar = null } = {}) {
   let visible = true;
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(lienzo);
   return { renderer, scene, camera, sol, piso, get visible() { return visible; } };
+}
+
+// Controles de giro: arrastrar gira más rápido y el giro automático se pausa mientras se usa
+function controlesGiro(camera, dom, velocidad) {
+  const c = new OrbitControls(camera, dom);
+  c.enableZoom = false; c.enablePan = false; c.enableDamping = true; c.rotateSpeed = 1.3;
+  c.autoRotate = !REDUCIR; c.autoRotateSpeed = velocidad;
+  let espera = null;
+  c.addEventListener("start", () => { c.autoRotate = false; clearTimeout(espera); });
+  c.addEventListener("end", () => { clearTimeout(espera); if (!REDUCIR) espera = setTimeout(() => { c.autoRotate = true; }, 4000); });
+  dom.addEventListener("contextmenu", e => e.preventDefault());
+  return c;
 }
 
 // Tubo entre dos puntos
@@ -441,9 +458,7 @@ function configurador() {
   const m = motor(lienzo, { sombraOpacidad: .12 });
   const { renderer, scene, camera } = m;
   const M = materiales();
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true;
-  controls.autoRotate = !REDUCIR; controls.autoRotateSpeed = .8;
+  const controls = controlesGiro(camera, renderer.domElement, .8);
   controls.minPolarAngle = Math.PI * .28; controls.maxPolarAngle = Math.PI * .49;
 
   const humano = persona(M); scene.add(humano);
@@ -690,9 +705,7 @@ function visorEquipo(el) {
   const radio = tam.length() / 2;
   Object.assign(sol.shadow.camera, { left: -radio * 2, right: radio * 2, top: radio * 2, bottom: -radio * 2 }); sol.shadow.camera.updateProjectionMatrix();
   sol.position.set(radio * 3, radio * 6, radio * 4);
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true;
-  controls.autoRotate = !REDUCIR; controls.autoRotateSpeed = 1.6;
+  const controls = controlesGiro(camera, renderer.domElement, 1.6);
   controls.minPolarAngle = Math.PI * .15; controls.maxPolarAngle = Math.PI * .47;
   controls.target.copy(centro);
   const factor = tipo === "cilindrico" ? .95 : tipo === "base" ? 1.2 : 1.05;
@@ -768,9 +781,7 @@ function crearVisorProducto(lienzo) {
   const m = motor(lienzo, { sombraOpacidad: .14 });
   const { renderer, scene, camera, sol } = m;
   const M = materialesEquipo(materiales());
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true;
-  controls.autoRotate = !REDUCIR; controls.autoRotateSpeed = 2;
+  const controls = controlesGiro(camera, renderer.domElement, 2);
   controls.minPolarAngle = Math.PI * .15; controls.maxPolarAngle = Math.PI * .47;
   let actual = null, idActual = null;
   const destino = { centro: new THREE.Vector3(0, .5, 0), dist: 3 }, humano = persona(M);
