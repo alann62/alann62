@@ -495,7 +495,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   /* Submenú de Servicios */
   .nav li.tiene-sub{position:relative;}
-  .nav li.tiene-sub > a.navlink::after{content:'';display:inline-block;width:6px;height:6px;margin-left:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-3px) rotate(45deg);opacity:.6;}
+  .nav li.tiene-sub > a.navlink::after{display:none;content:'';display:inline-block;width:6px;height:6px;margin-left:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-3px) rotate(45deg);opacity:.6;}
   .nav .submenu{position:absolute;top:calc(100% + 14px);left:-16px;min-width:240px;flex-direction:column;align-items:stretch;gap:0;background:#fff;border:1px solid #E4E6E9;border-radius:12px;box-shadow:0 18px 40px rgba(27,34,41,0.14);padding:8px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .2s ease, transform .2s ease, visibility .2s;z-index:70;}
   .nav .submenu::before{content:'';position:absolute;left:0;right:0;top:-16px;height:16px;}
   .nav li.tiene-sub:hover .submenu,.nav li.tiene-sub:focus-within .submenu{opacity:1;visibility:visible;transform:none;}
@@ -509,6 +509,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav ul.abierto .submenu a{padding:10px 0;color:#4A5461;}
   }
   /* Portada de una sola columna (páginas de servicio) */
+  /* "Servicios" es un botón: abre el submenú, no mueve la página */
+  .nav button.navlink{background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;color:#2C2C2C;font-size:0.98rem;font-family:'Poppins',sans-serif;font-weight:500;letter-spacing:0.01em;padding:0 0 4px;transition:color .2s, border-color .2s;}
+  .nav button.navlink:hover{color:var(--steel);}
+  .nav button.navlink.active{color:var(--steel);border-bottom-color:var(--steel);}
+  .nav button.navlink:focus-visible{outline:2px solid var(--gauge-amber);outline-offset:4px;border-radius:2px;}
+  .nav li.tiene-sub > button.navlink::after{content:'';display:inline-block;width:6px;height:6px;margin-left:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-3px) rotate(45deg);opacity:.6;transition:transform .2s ease;}
+  .nav li.tiene-sub.abierto > button.navlink::after{transform:translateY(0) rotate(225deg);}
+  .nav li.tiene-sub.abierto .submenu{opacity:1;visibility:visible;transform:none;}
+  @media(max-width:900px){
+    .nav ul.abierto button.navlink{display:block;width:100%;text-align:inherit;padding:14px 0;border-bottom:none;}
+    .nav ul.abierto .submenu{display:none;}
+    .nav ul.abierto li.tiene-sub.abierto .submenu{display:flex;}
+  }
   .split-hero.una{grid-template-columns:1fr;min-height:min(62vh,540px);}
   .split-hero.una .split-panel{padding-left:max(28px,calc((100vw - 1160px)/2 + 28px));}
   .split-hero.una .split-panel-content{max-width:620px;}
@@ -537,8 +550,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal"><span></span></button>
       <ul id="menu-principal">
         <li><a href="index.html" class="navlink">Inicio</a></li>
-        <li class="tiene-sub"><a href="#efluentes" class="navlink active" aria-haspopup="true">Servicios</a>
-          <ul class="submenu" aria-label="Servicios">
+        <li class="tiene-sub"><button type="button" class="navlink sub-btn active" aria-expanded="false" aria-controls="submenu-servicios">Servicios</button>
+          <ul class="submenu" id="submenu-servicios" aria-label="Servicios">
             <li><a href="index.html#incendios">Redes de incendio</a></li>
             <li><a href="aguas-y-saneamiento.html" aria-current="page">Aguas y saneamiento</a></li>
           </ul>
@@ -560,7 +573,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <source src="img/efluentes-video.mp4" type="video/mp4">
       </video>
       <div class="split-panel-content">
-        <span class="eyebrow teal" style="color:#8FD3B6">Servicios</span>
         <h2>Aguas y saneamiento</h2>
         <p class="sub">Diagnóstico, diseño y gestión ambiental junto a especialistas del sector.</p>
         <a href="#contacto" class="btn" style="background:var(--teal)" data-servicio="Soluciones integrales en agua y saneamiento">Contáctenos</a>
@@ -816,8 +828,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   btnMenu.addEventListener('click', function(){ var abrir = !menu.classList.contains('abierto'); menu.classList.toggle('abierto', abrir); btnMenu.setAttribute('aria-expanded', String(abrir)); btnMenu.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú'); });
   menu.addEventListener('click', function(e){ if (e.target.closest('a')) { menu.classList.remove('abierto'); btnMenu.setAttribute('aria-expanded', 'false'); } });
 
+  // Submenú de Servicios: se abre y cierra tocando, sin mover la página
+  var subLi = document.querySelector('li.tiene-sub'), subBtn = subLi && subLi.querySelector('button.navlink');
+  if (subBtn) {
+    var abrirSub = function(si){ subLi.classList.toggle('abierto', si); subBtn.setAttribute('aria-expanded', String(si)); };
+    subBtn.addEventListener('click', function(e){ e.stopPropagation(); abrirSub(!subLi.classList.contains('abierto')); });
+    document.addEventListener('click', function(e){ if (!subLi.contains(e.target)) abrirSub(false); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && subLi.classList.contains('abierto')) { abrirSub(false); subBtn.focus(); } });
+    subLi.querySelectorAll('.submenu a').forEach(function(a){ a.addEventListener('click', function(){ abrirSub(false); }); });
+  }
+
   // El link activo del menú sigue la sección visible
-  var enlaces = { top: document.querySelector('a.navlink[href="#top"]'), proyectos: document.querySelector('a.navlink[href="#proyectos"]'), contacto: document.querySelector('a.navlink[href="#contacto"]') };
+  var enlaces = { top: document.querySelector('a.navlink[href="#top"]'), proyectos: document.querySelector('.sub-btn'), contacto: document.querySelector('a.navlink[href="#contacto"]') };
   var marcar = function(k){ Object.keys(enlaces).forEach(function(x){ enlaces[x] && enlaces[x].classList.toggle('active', x === k); }); };
   var secciones = [['top', '#servicios-preview'], ['proyectos', '#proyectos'], ['proyectos', '#nosotros'], ['proyectos', '#incendios'], ['proyectos', '#anatomia'], ['proyectos', '#efluentes'], ['contacto', '#contacto']];
   if ('IntersectionObserver' in window) {
