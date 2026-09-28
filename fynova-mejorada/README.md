@@ -15,11 +15,8 @@ Parte del `index.html` original de Fynova y lo mejora **sin cambiar su estructur
 - Videos que se reproducen solo cuando se ven.
 - Nueva sección entre Incendios y Efluentes: cómo actúa una red contra incendio, con fotos reales y el video del rociador que avanza con el scroll. El paso de detección usa la foto real del detector de humo y el cierre, una foto del rociador en alta resolución.
 - Nuevo bloque "Sistemas de detección y alarma" dentro de Incendios (después de Extinción y Detección): plano interactivo convencional vs. inteligente con simulación de alarma, funcionamiento, fotos reales y componentes.
-
-## Pendiente de confirmar
-
-- El botón "Contáctenos" del panel de agua apunta a `https://www.hidrareco.com.ar`. No se cambió.
+- Página nueva `aguas-y-saneamiento.html` con el contenido de "Soluciones integrales en agua y saneamiento" (sale de la página principal). El menú "Servicios" despliega "Redes de incendio" (baja a la sección en la misma página) y "Aguas y saneamiento". El "Contáctenos" del panel de agua (antes iba a hidrareco.com.ar) lleva al formulario de esa página, con el servicio ya elegido.
 
 ## Subir al hosting
 
-Subí `index.html` y las carpetas `img/` y `js/`. `contacto.php` y los favicons no cambian. Las fotos `.jpg` y los `.png` originales ya no se usan.
+Subí `index.html`, `aguas-y-saneamiento.html` y las carpetas `img/` y `js/`. `contacto.php` y los favicons no cambian. Las fotos `.jpg` y los `.png` originales ya no se usan.

@@ -10,10 +10,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fynova — Servicios de ingeniería industrial: incendio y efluentes</title>
-<meta name="description" content="Fynova resuelve proyectos de ingeniería industrial para tu empresa: redes contra incendio, detección y tratamiento de efluentes industriales.">
-<meta property="og:title" content="Fynova — Servicios de ingeniería industrial">
-<meta property="og:description" content="Redes contra incendio, detección y tratamiento de efluentes industriales. Proyectos llave en mano con presupuesto cerrado.">
+<title>Aguas y saneamiento — Fynova</title>
+<meta name="description" content="Soluciones integrales en agua y saneamiento: diagnóstico, diseño y gestión del tratamiento de efluentes industriales para tu empresa.">
+<meta property="og:title" content="Fynova — Aguas y saneamiento">
+<meta property="og:description" content="Diagnóstico, diseño y gestión del tratamiento de efluentes industriales.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_AR">
 <meta name="theme-color" content="#1B2229">
@@ -530,17 +530,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header>
   <nav class="nav">
-    <a href="#top" class="logo" style="display:flex;align-items:center;">
+    <a href="index.html" class="logo" style="display:flex;align-items:center;">
       <img src="img/logo-fynova-horizontal-hd.webp" alt="Fynova" width="385" height="300" style="height:104px;width:auto;display:block;">
     </a>
     <div class="nav-links">
       <button class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal"><span></span></button>
       <ul id="menu-principal">
-        <li><a href="#top" class="navlink active">Inicio</a></li>
-        <li class="tiene-sub"><a href="#proyectos" class="navlink" aria-haspopup="true">Servicios</a>
+        <li><a href="index.html" class="navlink">Inicio</a></li>
+        <li class="tiene-sub"><a href="#efluentes" class="navlink active" aria-haspopup="true">Servicios</a>
           <ul class="submenu" aria-label="Servicios">
-            <li><a href="#incendios">Redes de incendio</a></li>
-            <li><a href="aguas-y-saneamiento.html">Aguas y saneamiento</a></li>
+            <li><a href="index.html#incendios">Redes de incendio</a></li>
+            <li><a href="aguas-y-saneamiento.html" aria-current="page">Aguas y saneamiento</a></li>
           </ul>
         </li>
         <li><a href="#contacto" class="navlink">Contacto</a></li>
@@ -550,327 +550,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 
 <main id="top">
-  <h1 class="sr-only">Fynova — Servicios de ingeniería industrial: redes contra incendio, detección y tratamiento de efluentes</h1>
+  <h1 class="sr-only">Fynova — Aguas y saneamiento: tratamiento de efluentes industriales</h1>
 
-  <!-- SERVICIOS — los dos paneles, ahora al principio -->
-  <div id="servicios-preview" class="split-hero">
-    <div class="split-panel p-fire">
-      <video class="split-panel-video" autoplay muted loop playsinline aria-hidden="true">
-        <source src="img/redes-incendio.webm" type="video/webm">
-        <source src="img/redes-incendio.mp4" type="video/mp4">
-      </video>
-      <div class="split-panel-content">
-        <span class="eyebrow" style="color:var(--gauge-amber)"></span>
-        <h2>Redes y Detección de Incendios</h2>
-        <p class="sub">Proyecto e instalaciones llave en mano.</p>
-        <a href="#contacto" class="btn" data-servicio="Redes y Detección de Incendios">Contáctenos</a>
-      </div>
-    </div>
+  <!-- PORTADA DEL SERVICIO -->
+  <div class="split-hero una">
     <div class="split-panel p-efluentes">
       <video class="split-panel-video" autoplay muted loop playsinline aria-hidden="true">
         <source src="img/efluentes-video.webm" type="video/webm">
         <source src="img/efluentes-video.mp4" type="video/mp4">
       </video>
       <div class="split-panel-content">
-        <span class="eyebrow teal"></span>
-        <h2>Soluciones integrales en agua y saneamiento</h2>
+        <span class="eyebrow teal" style="color:#8FD3B6">Servicios</span>
+        <h2>Aguas y saneamiento</h2>
         <p class="sub">Diagnóstico, diseño y gestión ambiental junto a especialistas del sector.</p>
-        <a href="aguas-y-saneamiento.html#contacto" class="btn" style="background:var(--teal)">Contáctenos</a>
+        <a href="#contacto" class="btn" style="background:var(--teal)" data-servicio="Soluciones integrales en agua y saneamiento">Contáctenos</a>
       </div>
     </div>
   </div>
 
-  <!-- PROYECTOS — carrusel de fotos -->
-  <section id="proyectos" class="proyectos">
-    <div class="wrap proyectos-head revelar">
-      <span class="eyebrow">Trabajos realizados</span>
-      <h2>Redes de incendio</h2>
-    </div>
-
-    <div class="carousel">
-      <ul class="carousel-track" id="carouselTrack" tabindex="0" aria-roledescription="carrusel" aria-label="Fotos de instalaciones realizadas">
-        <li class="carousel-slide">
-          <img src="img/sprinkler.webp" alt="Rociador de sprinkler contra incendio" loading="lazy">
-          <span class="carousel-caption">Rociadores contra incendio</span>
-        </li>
-        <li class="carousel-slide">
-          <img src="img/canieria-roja.webp" alt="Red de cañerías contra incendio en cielorraso" loading="lazy">
-          <span class="carousel-caption">Redes de cañerías industriales</span>
-        </li>
-        <li class="carousel-slide">
-          <img src="img/sala-bombas.webp" alt="Sala de bombas contra incendio" loading="lazy">
-          <span class="carousel-caption">Salas de bombas</span>
-        </li>
-        <li class="carousel-slide">
-          <img src="img/cartel-fuego.webp" alt="Detector de incendio instalado en pared" loading="lazy">
-          <span class="carousel-caption">Sistemas de detección</span>
-        </li>
-        <li class="carousel-slide">
-          <img src="img/wellpoint.webp" alt="Equipo WellPoint amarillo para depresión de napas freáticas" loading="lazy">
-          <span class="carousel-caption">Equipos WellPoint</span>
-        </li>
-      </ul>
-
-      <button class="carousel-arrow prev" id="carouselPrev" aria-label="Foto anterior" type="button">‹</button>
-      <button class="carousel-arrow next" id="carouselNext" aria-label="Foto siguiente" type="button">›</button>
-
-      <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Seleccionar foto"></div>
-    </div>
-  </section>
-
-  <!-- ACERCA DE NOSOTROS -->
-  <section id="nosotros" class="acerca">
-    <div class="wrap">
-      <div class="acerca-head">
-        <h2>Quiénes somos</h2>
-      </div>
-
-      <div class="acerca-grid revelar">
-        <div>
-          <p class="intro">Ingeniería industrial para tu empresa: redes contra incendio, tratamiento de efluentes y mantenimiento industrial.</p>
-          <div class="mision">
-            <h3>Nuestra misión</h3>
-            <p>Que cada proyecto técnico se resuelva bien, a tiempo y sin sorpresas.</p>
-          </div>
-        </div>
-
-        <div class="porque">
-          <h3>¿Por qué elegirnos?</h3>
-          <ul>
-            <li>Cumplimiento estricto de normativa vigente</li>
-            <li>Presupuesto cerrado, sin sorpresas en la ejecución</li>
-            <li>Especialistas matriculados en cada rubro técnico</li>
-            <li>Seguimiento del proyecto de punta a punta</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICIO 1: INCENDIOS -->
-  <section id="incendios" class="svc alt">
+  <!-- SERVICIO 2: EFLUENTES -->
+  <section id="efluentes" class="svc">
     <div class="wrap">
       <div class="svc-grid">
         <div>
-          <h2>Redes y Detección de Incendios</h2>
-          <p class="desc">Nuestro equipo técnico tiene más de 40 años de trayectoria en instalaciones industriales.</p>
+          <h2>Soluciones integrales en agua y saneamiento</h2>
+          <p class="desc">Diagnóstico, diseño y gestión del tratamiento de efluentes industriales para tu empresa.</p>
         </div>
         <div>
-          <ul class="svc-list">
-            <li>Piping industrial y redes de tuberías</li>
-            <li>Redes fijas contra incendio</li>
-            <li>Sistemas de detección de humo y calor</li>
-            <li>Instalaciones llave en mano</li>
-            <li>Montaje y mantenimiento industrial</li>
+          <ul class="svc-list teal">
+            <li>Diagnóstico de efluentes industriales</li>
+            <li>Diseño de sistemas de tratamiento</li>
+            <li>Cumplimiento de normativa ambiental</li>
+            <li>Seguimiento técnico del proyecto</li>
           </ul>
         </div>
       </div>
 
-      <!-- Extinción y Detección -->
       <div class="svc-sub">
-        <h3 class="svc-sub-title">Extinción y Detección</h3>
-        <div class="ext-det-grid revelar">
-          <div class="ext-det-lists">
-            <ul class="svc-list">
-              <li>Sistemas a base de agua y espuma</li>
-              <li>Hidrantes / bocas de incendio</li>
-              <li>Redes de sprinklers</li>
-              <li>Salas de bombas</li>
-              <li>Monitores</li>
-              <li>Cámaras de espuma</li>
-              <li>Riesgos especiales</li>
-            </ul>
-            <ul class="svc-list">
-              <li>Actualización y adecuación de instalaciones existentes</li>
-              <li>Normas NFPA, COVENIN, IRAM</li>
-              <li>Defensa pasiva y activa</li>
-            </ul>
-          </div>
-          <div class="ext-photos">
-            <div class="ext-photo-row">
-              <img src="img/sprinkler.webp" alt="Rociador de sprinkler contra incendio" loading="lazy">
-              <img src="img/canieria-roja.webp" alt="Red de cañerías contra incendio en cielorraso" loading="lazy">
-            </div>
-            <div class="ext-photo-row">
-              <img src="img/sala-bombas.webp" alt="Sala de bombas contra incendio" loading="lazy">
-              <img src="img/cartel-fuego.webp" alt="Detector de incendio instalado en pared" loading="lazy">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sistemas de detección y alarma -->
-      <div class="svc-sub" id="deteccion">
-        <h3 class="svc-sub-title">Sistemas de detección y alarma</h3>
-        <p class="det-intro revelar">Los sistemas de detección electrónica se dividen en <strong>convencionales</strong> e <strong>inteligentes o direccionables</strong>. La diferencia está en qué tan rápido la central te dice dónde está el fuego.</p>
-
-        <div class="det-comparar revelar">
-          <div class="det-texto">
-            <div class="det-tabs" role="tablist" aria-label="Tipo de sistema">
-              <button type="button" role="tab" id="tab-conv" aria-selected="true" aria-controls="det-desc" data-modo="conv">Convencional</button>
-              <button type="button" role="tab" id="tab-int" aria-selected="false" aria-controls="det-desc" data-modo="int">Inteligente</button>
-            </div>
-            <div id="det-desc" role="tabpanel" aria-live="polite">
-              <div class="det-modo" data-modo="conv">
-                <p>Los detectores y pulsadores de alarma se agrupan por <strong>zonas</strong>. Cuando alguno se activa, la central indica de qué zona proviene el evento, sin especificar el lugar exacto.</p>
-                <p>Los detectores se distribuyen cubriendo todos los sectores, agrupados en 2, 4, 8, 12 o más zonas.</p>
-              </div>
-              <div class="det-modo" data-modo="int" hidden>
-                <p>Cada dispositivo tiene una <strong>dirección electrónica</strong> que interpreta la central: al activarse, indica cuál de todos es y el lugar exacto donde está dando alarma.</p>
-                <p>Permite identificar el foco de incendio más rápido. Se usa especialmente en lugares muy grandes, con gran cantidad de dispositivos instalados.</p>
-              </div>
-            </div>
-            <button type="button" class="btn det-simular" aria-pressed="false">Simular alarma</button>
-          </div>
-          <div class="det-demo" data-modo="conv">
-            <div class="det-lcd" aria-live="polite"><b class="det-lcd-1">SISTEMA NORMAL</b><span class="det-lcd-2">4 zonas · 16 dispositivos</span></div>
-              <svg class="det-plano" viewBox="0 0 640 380" role="img" aria-labelledby="det-plano-t"><title id="det-plano-t">Plano de una planta con 4 zonas, 12 detectores, 4 avisadores manuales y 4 sirenas conectados a la central</title>
-              <rect class="det-zona" data-zona="1" x="20" y="20" width="285" height="140" rx="8"/>
-              <text class="det-zona-txt" x="32" y="46">Zona 1 · Oficinas</text>
-              <path class="det-sirena" d="M270 34h22l-4 14h-14z"/>
-              <rect class="det-zona" data-zona="2" x="335" y="20" width="285" height="140" rx="8"/>
-              <text class="det-zona-txt" x="347" y="46">Zona 2 · Producción</text>
-              <path class="det-sirena" d="M585 34h22l-4 14h-14z"/>
-              <rect class="det-zona" data-zona="3" x="20" y="220" width="285" height="140" rx="8"/>
-              <text class="det-zona-txt" x="32" y="246">Zona 3 · Depósito</text>
-              <path class="det-sirena" d="M270 234h22l-4 14h-14z"/>
-              <rect class="det-zona" data-zona="4" x="335" y="220" width="285" height="140" rx="8"/>
-              <text class="det-zona-txt" x="347" y="246">Zona 4 · Expedición</text>
-              <path class="det-sirena" d="M585 234h22l-4 14h-14z"/>
-              <polyline class="lazo lazo-conv" points="90,172 110,172 110,100 275,100"/>
-              <polyline class="lazo lazo-conv" points="90,182 385,182 385,100 570,100"/>
-              <polyline class="lazo lazo-conv" points="90,208 110,208 110,300 275,300"/>
-              <polyline class="lazo lazo-conv" points="90,198 385,198 385,300 570,300"/>
-              <polyline class="lazo lazo-int" points="60,174 60,100 605,100 605,300 60,300 60,206"/>
-              <circle class="det-disp" data-zona="1" data-id="1-01" cx="110" cy="100" r="9"/>
-              <circle class="det-disp" data-zona="1" data-id="1-02" cx="170" cy="100" r="9"/>
-              <circle class="det-disp" data-zona="1" data-id="1-03" cx="230" cy="100" r="9"/>
-              <rect class="det-disp det-pulsador" data-zona="1" x="267" y="92" width="16" height="16" rx="3"/>
-              <circle class="det-disp" data-zona="2" data-id="2-01" cx="385" cy="100" r="9"/>
-              <circle class="det-disp" data-zona="2" data-id="2-02" cx="445" cy="100" r="9"/>
-              <circle class="det-disp" data-zona="2" data-id="2-03" cx="505" cy="100" r="9"/>
-              <rect class="det-disp det-pulsador" data-zona="2" x="562" y="92" width="16" height="16" rx="3"/>
-              <circle class="det-disp" data-zona="3" data-id="3-01" cx="110" cy="300" r="9"/>
-              <circle class="det-disp" data-zona="3" data-id="3-02" cx="170" cy="300" r="9"/>
-              <circle class="det-disp" data-zona="3" data-id="3-03" cx="230" cy="300" r="9"/>
-              <rect class="det-disp det-pulsador" data-zona="3" x="267" y="292" width="16" height="16" rx="3"/>
-              <circle class="det-disp" data-zona="4" data-id="4-01" cx="385" cy="300" r="9"/>
-              <circle class="det-disp" data-zona="4" data-id="4-02" cx="445" cy="300" r="9"/>
-              <circle class="det-disp" data-zona="4" data-id="4-03" cx="505" cy="300" r="9"/>
-              <rect class="det-disp det-pulsador" data-zona="4" x="562" y="292" width="16" height="16" rx="3"/>
-              <rect class="det-central" x="28" y="174" width="64" height="32" rx="5"/><text class="det-central-txt" x="60" y="194">CENTRAL</text>
-              <g class="det-etiqueta" transform="translate(170 300)"><rect x="-105" y="-50" width="210" height="32" rx="4"/><text x="0" y="-29" text-anchor="middle" class="det-etq-txt">DET 3-02 · DEPÓSITO</text></g>
-              </svg>
-            <ul class="det-ref" aria-hidden="true"><li><i class="r-det"></i>Detector</li><li><i class="r-pul"></i>Avisador manual</li><li><i class="r-sir"></i>Sirena con estrobo</li></ul>
-          </div>
-        </div>
-
-        <h4 class="det-sub">Funcionamiento</h4>
-        <p class="det-func revelar">Ante la presencia de humo, un aumento de temperatura u otras variables (gas, CO) en uno de los sensores —o cuando una persona oprime un avisador manual— se envía una señal de alarma al panel de detección y alarma de incendio. El panel activa una o más sirenas con estrobo, que emiten una señal audible y una luz intermitente (flash) para alertar a las personas, aun a quienes tienen problemas auditivos, y que procedan a evacuar la zona.</p>
-        <div class="modelo-row det-flujo revelar">
-          <div class="modelo-node">Sensor o avisador manual</div>
-          <div class="modelo-arrow" aria-hidden="true">→</div>
-          <div class="modelo-node mid">Panel de detección</div>
-          <div class="modelo-arrow" aria-hidden="true">→</div>
-          <div class="modelo-node">Sirenas con estrobo</div>
-          <div class="modelo-arrow" aria-hidden="true">→</div>
-          <div class="modelo-node">Evacuación</div>
-        </div>
-
-        <div class="det-fotos revelar">
-          <figure><img src="img/central-deteccion.webp" alt="Central de detección de incendio y pulsador manual de alarma instalados en pared" loading="lazy" width="781" height="1400"><figcaption>Central de detección y avisador manual</figcaption></figure>
-          <figure><img src="img/detector-humo.webp" alt="Detector de humo instalado en el cielorraso, conectado por cañería eléctrica" loading="lazy" width="1400" height="1044" style="object-position:56% 29%"><figcaption>Detector de humo en cielorraso</figcaption></figure>
-          <figure><img src="img/panel-direccionable.webp" alt="Panel de detección direccionable con sirena, detector y avisador manual" loading="lazy" width="1044" height="1400"><figcaption>Panel direccionable con sirena, detector y avisador</figcaption></figure>
-        </div>
-
-        <h4 class="det-sub">Componentes</h4>
-        <div class="svc-sub-cols">
-          <ul class="svc-list">
-            <li>Panel electrónico de detección y alarma</li>
-            <li>Sensores direccionables de humo, temperatura y combinados de humo y temperatura</li>
-            <li>Sensores de gas natural y monóxido de carbono (CO)</li>
-          </ul>
-          <ul class="svc-list">
-            <li>Barreras detectoras de humo</li>
-            <li>Avisadores manuales para interior o exterior</li>
-            <li>Sirenas con y sin estrobo, para interior o exterior</li>
-            <li>Módulos de monitoreo para el control de equipos</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Instalaciones Industriales -->
-      <div class="svc-sub">
-        <span class="svc-badge">Instalaciones Industriales</span>
-
-        <div class="featured-block revelar">
-          <div>
-            <h4>División de Aguas</h4>
-            <ul class="svc-list">
-              <li>Fabricantes e instaladores de equipos WellPoint para depresión de napas freáticas en obras civiles</li>
-              <li>Plantas de tratamiento</li>
-              <li>Trabajos llave en mano</li>
-            </ul>
-          </div>
-          <img src="img/wellpoint.webp" alt="Equipo WellPoint amarillo para depresión de napas freáticas" loading="lazy">
-        </div>
-
-        <div class="svc-block-grid revelar" style="grid-template-columns:repeat(3,1fr);">
-          <div class="col-block">
-            <h4>Mantenimiento</h4>
-            <ul class="svc-list">
-              <li>Mantenimiento preventivo y predictivo de equipos y maquinaria industrial</li>
-              <li>Bombas de vacío</li>
-              <li>Bombas centrífugas</li>
-              <li>Equipos industriales en general</li>
-            </ul>
-          </div>
-          <div class="col-block">
-            <h4>Piping</h4>
-            <ul class="svc-list">
-              <li>Intercambiadores de calor</li>
-              <li>Instalación de calderas</li>
-              <li>Centrales de vacío</li>
-              <li>Instalaciones termomecánicas en general</li>
-            </ul>
-          </div>
-          <div class="col-block">
-            <h4>Gas Natural</h4>
-            <ul class="svc-list">
-              <li>Conversión a gas natural de calderas y hornos</li>
-              <li>Estaciones de regulación y medición</li>
-              <li>Proyecto y montaje de estaciones de GNC</li>
-            </ul>
-          </div>
+        <h3 class="svc-sub-title">Monitoreo y ejecución en planta</h3>
+        <div class="efluentes-photos revelar">
+          <img src="img/laboratorio-calidad-agua.webp" alt="Control de calidad del efluente tratado en laboratorio, panel de monitoreo de cumplimiento normativo" loading="lazy">
+          <img src="img/planta-tratamiento-aerea.webp" alt="Vista aérea de planta de tratamiento de efluentes industriales con clarificadores circulares" loading="lazy">
         </div>
       </div>
     </div>
   </section>
-
-  <!-- ANATOMÍA: cómo actúa una red contra incendio (fotos reales y video del rociador que avanza con el scroll) -->
-  <section id="anatomia" class="anatomia" aria-label="Cómo actúa una red contra incendio">
-    <div class="anat-pin">
-      <div class="anat-lienzo" id="anat-lienzo" role="img" aria-label="Recorrido con fotos reales: red de cañerías, detector de humo, sala de bombas, rociador descargando agua y detalle del rociador">
-        <div class="capa primera"><img src="img/canieria-roja.webp" alt="" data-foco="0.5,0.4"></div>
-        <div class="capa"><img src="img/detector-humo.webp" alt="" data-foco="0.557,0.29"></div>
-        <div class="capa"><img src="img/sala-bombas.webp" alt="" data-foco="0.87,0.42"></div>
-        <div class="capa"><canvas id="cuadros-rociador" width="960" height="540"></canvas></div>
-        <div class="capa final-estatico"><img src="img/rociador-final.webp" alt="" data-foco="0.84,0.5"></div>
-      </div>
-      <div class="marca-real" data-capa="1"><span>Detector de humo</span></div>
-      <div class="marca-real" data-capa="2"><span>Tablero de control de bombas</span></div>
-      <div class="marca-real" data-capa="3"><span>Rociador activado</span></div>
-      <div class="progreso-anat" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
-      <div class="anat-textos">
-        <div class="paso-a activo"><span class="eyebrow">Cómo actúa</span><h2>Una red contra incendio, paso a paso</h2><p>Seguí bajando.</p></div>
-        <div class="paso-a"><span class="eyebrow">01 · Detección</span><h3>Segundos cuentan</h3><p>Detectores y pulsadores disparan la alarma apenas aparece el fuego.</p></div>
-        <div class="paso-a"><span class="eyebrow">02 · Bombeo</span><h3>La red se presuriza</h3><p>La sala de bombas arranca y mantiene la presión en toda la red.</p></div>
-        <div class="paso-a"><span class="eyebrow">03 · Extinción</span><h3>Solo donde hay fuego</h3><p>Los rociadores cercanos al foco se activan por temperatura y descargan agua.</p></div>
-        <div class="paso-a"><span class="eyebrow">04 · Fynova</span><h3>Diseñada para funcionar el día que la necesitás</h3><p>Cálculo hidráulico, montaje y mantenimiento bajo normas NFPA, COVENIN e IRAM.</p></div>
-      </div>
-    </div>
-  </section>
-
 
   <!-- CONTACTO -->
   <section id="contacto" class="contact">
@@ -899,7 +623,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <label for="servicio">¿Qué servicio te interesa?</label>
           <select id="servicio" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:2px;font-family:'IBM Plex Sans',sans-serif;">
             <option value="Redes y Detección de Incendios" style="color:#000">Redes y Detección de Incendios</option>
-            <option value="Soluciones integrales en agua y saneamiento" style="color:#000">Soluciones integrales en agua y saneamiento</option>
+            <option value="Soluciones integrales en agua y saneamiento" style="color:#000" selected>Soluciones integrales en agua y saneamiento</option>
             <option value="No estoy seguro" style="color:#000">No estoy seguro</option>
           </select>
         </div>
