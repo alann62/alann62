@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fynova</title>
+<meta name="description" content="Fynova: ingeniería industrial en redes contra incendio, tratamiento de efluentes, mantenimiento industrial y gas natural. Proyectos llave en mano con presupuesto cerrado.">
+<meta property="og:title" content="Fynova · Ingeniería industrial">
+<meta property="og:description" content="Redes contra incendio, tratamiento de efluentes y mantenimiento industrial. Llave en mano, bajo norma.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta name="theme-color" content="#1b2229">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fondo: #ffffff;
+    --gris-fondo: #f5f5f7;
+    --texto: #1d1d1f;
+    --secundario: #6e6e73;
+    --terciario: #86868b;
+    --linea: #d2d2d7;
+    --carbon: #1b2229;          /* gris de la marca */
+    --carbon-2: #232c35;
+    --ambar: #f2a93b;           /* ícono de la marca */
+    --ambar-hover: #e39a2a;
+    --ambar-texto: #a8650a;     /* ámbar oscuro para texto sobre blanco */
+    --azul: #3245a4;            /* logotipo */
+    --incendio: #d6452e;
+    --agua: #2e8bc0;
+    --sf: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --curva: cubic-bezier(.25, .1, .25, 1);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: var(--sf); font-size: 17px; line-height: 1.47; letter-spacing: -.022em; color: var(--texto); background: var(--fondo); -webkit-font-smoothing: antialiased; }
+  img, svg, video { max-width: 100%; display: block; }
+  a { color: var(--ambar-texto); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font-family: inherit; letter-spacing: inherit; }
+  h1, h2, h3, h4 { margin: 0; font-weight: 600; text-wrap: balance; }
+  :focus-visible { outline: 3px solid rgba(242,169,59,.7); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: 100%; max-width: 1024px; margin: 0 auto; padding-inline: 22px; }
+  .ancho { max-width: 1260px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .centro { text-align: center; }
+
+  /* ---------- Navegación ---------- */
+  .nav-global { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 90; height: 48px; background: rgba(27,34,41,.78); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); color: #f5f5f7; }
+  .nav-global .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 9px; color: #fff; }
+  .logo:hover { text-decoration: none; }
+  .logo .icono { width: 26px; height: auto; }
+  .logo .palabra { height: 13px; width: auto; filter: brightness(0) invert(1); }
+  .nav-global nav { display: none; gap: 28px; font-size: 12px; }
+  .nav-global nav a { color: rgba(245,245,247,.8); }
+  .nav-global nav a:hover { color: #fff; text-decoration: none; }
+  @media (min-width: 900px) { .nav-global nav { display: flex; } }
+  .nav-local { position: sticky; top: calc(48px + env(safe-area-inset-top, 0px)); z-index: 80; height: 52px; background: rgba(255,255,255,.78); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,.08); }
+  .nav-local .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .nav-local .titulo { font-size: 21px; font-weight: 600; }
+  .nav-local .der { display: flex; align-items: center; gap: 22px; font-size: 12px; }
+  .nav-local .der a:not(.pill) { color: var(--texto); display: none; }
+  @media (min-width: 834px) { .nav-local .der a:not(.pill) { display: inline; } }
+
+  /* ---------- Botones ---------- */
+  .pill { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; background: var(--ambar); color: var(--carbon); border: 0; border-radius: 980px; font-size: 17px; font-weight: 500; padding: 11px 22px; cursor: pointer; transition: background .2s var(--curva); line-height: 1.18; }
+  .pill:hover { background: var(--ambar-hover); text-decoration: none; }
+  .pill.chica { font-size: 13px; padding: 6px 14px; min-height: 32px; }
+  .pill.clara { background: rgba(255,255,255,.14); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+  .pill.clara:hover { background: rgba(255,255,255,.24); }
+  .pill.oscura { background: var(--carbon); color: #fff; }
+  .pill.oscura:hover { background: #000; }
+  .mas::after { content: " ›"; }
+  .pill svg { width: 18px; height: 18px; }
+
+  /* ---------- Secciones ---------- */
+  section { padding-block: 100px; scroll-margin-top: 100px; }
+  .gris { background: var(--gris-fondo); }
+  .oscura { background: var(--carbon); color: #f5f5f7; }
+  .negra { background: #0d1116; color: #f5f5f7; }
+  .eyebrow { display: block; font-size: 17px; font-weight: 600; color: var(--ambar-texto); margin-bottom: 10px; letter-spacing: -.01em; }
+  .oscura .eyebrow, .negra .eyebrow { color: var(--ambar); }
+  .h-sec { font-size: clamp(38px, 6vw, 64px); line-height: 1.06; letter-spacing: -.015em; }
+  .sub { font-size: clamp(19px, 2.2vw, 24px); line-height: 1.33; color: var(--secundario); font-weight: 400; max-width: 720px; margin: 18px auto 0; letter-spacing: .005em; }
+  .oscura .sub, .negra .sub { color: #a1a1a6; }
+  .cabeza { margin-bottom: 56px; }
+
+  /* ---------- Hero con video ---------- */
+  .hero { position: relative; padding: 0; min-height: min(760px, 92vh); display: flex; align-items: flex-end; overflow: hidden; background: #0d1116; color: #fff; }
+  .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,17,22,.35) 0%, rgba(13,17,22,.15) 35%, rgba(13,17,22,.85) 100%); }
+  .hero .wrap { position: relative; z-index: 1; padding-block: 120px 64px; }
+  .hero .eyebrow { color: var(--ambar); }
+  .hero h1 { font-size: clamp(46px, 8.5vw, 92px); line-height: 1.02; letter-spacing: -.03em; max-width: 12ch; }
+  .hero .sub { color: rgba(255,255,255,.85); margin: 18px 0 0; max-width: 34em; }
+  .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 30px; }
+  .hero .normas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 34px; }
+  .chip { font-size: 12px; font-weight: 500; padding: 5px 11px; border-radius: 99px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.9); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+
+  /* ---------- Calculadora ---------- */
+  .segmento { display: inline-flex; background: #e8e8ed; border-radius: 10px; padding: 3px; gap: 2px; flex-wrap: wrap; justify-content: center; }
+  .segmento button { border: 0; background: transparent; color: var(--texto); font-size: 14px; padding: 8px 16px; min-height: 40px; border-radius: 8px; cursor: pointer; transition: background .2s var(--curva), box-shadow .2s var(--curva); }
+  .segmento button[aria-pressed="true"] { background: #fff; box-shadow: 0 3px 8px rgba(0,0,0,.12), 0 1px 1px rgba(0,0,0,.04); font-weight: 500; }
+  .calc { display: grid; gap: 20px; margin-top: 40px; }
+  .calc[hidden] { display: none; }
+  @media (min-width: 960px) { .calc { grid-template-columns: 420px 1fr; align-items: start; } }
+  .panel { background: #fff; border-radius: 24px; padding: 28px; box-shadow: 0 0 0 1px rgba(0,0,0,.04); }
+  .campo { margin-bottom: 26px; }
+  .campo:last-child { margin-bottom: 0; }
+  .campo > .lbl { display: block; font-weight: 600; font-size: 15px; margin-bottom: 10px; }
+  .campo .ayuda { font-size: 13px; color: var(--secundario); margin: 8px 0 0; min-height: 1.4em; }
+  .numero-grande { display: flex; align-items: baseline; gap: 8px; }
+  .numero-grande input { width: 6.2ch; font: 600 52px var(--sf); letter-spacing: -.04em; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--texto); padding: 0; -moz-appearance: textfield; }
+  .numero-grande input::-webkit-outer-spin-button, .numero-grande input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .numero-grande input:focus { outline: none; border-bottom-color: var(--ambar); }
+  .numero-grande span { font-size: 22px; font-weight: 600; color: var(--secundario); }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px; background: var(--linea); margin-top: 16px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); cursor: pointer; }
+  input[type=range]::-moz-range-thumb { width: 28px; height: 28px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25); cursor: pointer; }
+  .panel .segmento { display: flex; justify-content: stretch; }
+  .panel .segmento button { flex: 1; padding: 8px 6px; font-size: 13px; }
+  .resultado { display: grid; gap: 14px; }
+  .tarjetas-res { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 700px) { .tarjetas-res { grid-template-columns: repeat(4, 1fr); } }
+  .kpi { background: #fff; border-radius: 22px; padding: 22px 20px; box-shadow: 0 0 0 1px rgba(0,0,0,.04); }
+  .kpi small { display: block; font-size: 13px; color: var(--secundario); }
+  .kpi b { display: block; font-size: clamp(30px, 3.6vw, 40px); font-weight: 600; letter-spacing: -.03em; line-height: 1.1; margin-top: 6px; }
+  .kpi span { display: block; font-size: 13px; color: var(--secundario); margin-top: 4px; }
+  .plano { background: var(--carbon); border-radius: 22px; padding: 22px; color: #f5f5f7; display: grid; gap: 14px; }
+  @media (min-width: 700px) { .plano { grid-template-columns: 1fr 260px; align-items: center; } }
+  .plano svg { width: 100%; height: auto; max-height: 280px; }
+  .plano p { margin: 0; color: #a1a1a6; font-size: 14px; }
+  .plano h4 { font-size: 22px; letter-spacing: -.02em; margin-bottom: 6px; color: #fff; }
+  .etapas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .etapa { font-size: 13px; padding: 7px 12px; border-radius: 99px; background: rgba(46,139,192,.18); color: #cfe9f7; }
+  .etapa.extra { background: rgba(242,169,59,.18); color: #ffe3b8; }
+  .accion-res { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+  .nota { font-size: 13px; color: var(--secundario); margin: 0; }
+  .calc > *, .carrusel-cab > *, .contacto-grid > * { min-width: 0; }
+  form.contacto input, form.contacto select, form.contacto textarea { width: 100%; min-width: 0; }
+  @media (max-width: 600px) {
+    .panel { padding: 22px; }
+    .numero-grande input { font-size: 44px; }
+    #riesgo, #industria { display: grid; grid-template-columns: 1fr 1fr; }
+    .kpi { padding: 18px 16px; }
+    .kpi b { font-size: 26px; }
+  }
+
+  /* ---------- Cifras ---------- */
+  .cifras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 44px 20px; }
+  @media (min-width: 834px) { .cifras { grid-template-columns: repeat(4, 1fr); } }
+  .cifra b { display: block; font-size: clamp(42px, 6vw, 60px); font-weight: 600; letter-spacing: -.03em; line-height: 1; background: linear-gradient(135deg, var(--ambar) 0%, #1d1d1f 85%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cifra span { display: block; margin-top: 10px; color: var(--secundario); font-size: 15px; max-width: 220px; }
+
+  /* ---------- Anatomía 3D ---------- */
+  .anatomia { padding: 0; background: #11171d; color: #f5f5f7; }
+  .anat-pin { position: relative; height: 100vh; min-height: 580px; overflow: hidden; }
+  .anat-lienzo { position: absolute; inset: 0; }
+  /* Capas reales: fotos y cuadros de video que avanzan con el scroll */
+  .capa { position: absolute; inset: 0; overflow: hidden; opacity: 0; will-change: opacity; }
+  .capa.primera { opacity: 1; }
+  .capa img, .capa canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+  .capa canvas { object-fit: initial; }
+  .marca-real { position: absolute; z-index: 2; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; border: 2px solid var(--ambar); box-shadow: 0 0 0 0 rgba(242,169,59,.6); animation: onda 1.8s infinite; opacity: 0; transition: opacity .4s; pointer-events: none; }
+  .marca-real span { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 500; color: #fff; background: rgba(27,34,41,.82); backdrop-filter: blur(10px); padding: 5px 10px; border-radius: 99px; white-space: nowrap; }
+  .marca-real.izq span { left: auto; right: 24px; }
+  @keyframes onda { 70% { box-shadow: 0 0 0 16px rgba(242,169,59,0); } 100% { box-shadow: 0 0 0 0 rgba(242,169,59,0); } }
+  .progreso-anat { position: absolute; z-index: 2; right: 22px; top: 50%; transform: translateY(-50%); display: grid; gap: 10px; }
+  .progreso-anat i { width: 4px; height: 26px; border-radius: 4px; background: rgba(255,255,255,.2); overflow: hidden; position: relative; }
+  .progreso-anat i b { position: absolute; left: 0; right: 0; top: 0; height: 0; background: var(--ambar); }
+  @media (max-width: 760px) { .progreso-anat { display: none; } }
+  .anat-lienzo canvas { display: block; width: 100% !important; height: 100% !important; }
+  .anatomia .respaldo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; transition: opacity .6s var(--curva); }
+  .anatomia.listo .respaldo { opacity: 0; }
+  .anat-pin::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(17,23,29,.95) 0%, rgba(17,23,29,.72) 34%, rgba(17,23,29,0) 58%); }
+  .anat-textos { position: absolute; z-index: 2; left: max(22px, calc((100vw - 1024px) / 2)); top: 50%; width: min(420px, 40vw); pointer-events: none; }
+  @media (max-width: 760px) { .anat-pin::before { background: linear-gradient(0deg, rgba(17,23,29,.9) 0%, rgba(17,23,29,0) 45%); } }
+  .paso-a { position: absolute; left: 0; right: 0; top: 0; transform: translateY(-40%); opacity: 0; transition: opacity .6s var(--curva), transform .6s var(--curva); }
+  .paso-a.activo { opacity: 1; transform: translateY(-50%); }
+  .paso-a .eyebrow { color: var(--ambar); }
+  .paso-a h3 { font-size: clamp(32px, 4.4vw, 52px); letter-spacing: -.025em; line-height: 1.05; }
+  .paso-a p { font-size: 19px; color: #a1a1a6; margin: 14px 0 0; }
+  .punto { position: absolute; left: 0; top: 0; z-index: 2; display: flex; align-items: center; gap: 8px; pointer-events: none; visibility: hidden; }
+  .punto i { width: 14px; height: 14px; border-radius: 50%; background: var(--ambar); box-shadow: 0 0 0 4px rgba(242,169,59,.28); animation: latido 2.4s infinite; flex: none; }
+  .punto span { font-size: 12px; font-weight: 500; color: #fff; background: rgba(27,34,41,.8); backdrop-filter: blur(10px); padding: 5px 10px; border-radius: 99px; white-space: nowrap; }
+  @keyframes latido { 50% { box-shadow: 0 0 0 9px rgba(242,169,59,0); } }
+  @media (max-width: 760px) {
+    .anat-textos { left: 16px; right: 16px; width: auto; top: auto; bottom: 5%; }
+    .paso-a { top: auto; bottom: 0; transform: translateY(10px); background: rgba(17,23,29,.86); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 16px 18px; border-radius: 20px; }
+    .paso-a.activo { transform: none; }
+    .paso-a h3 { font-size: 26px; } .paso-a .h-sec { font-size: 30px; } .paso-a p { font-size: 15px; margin-top: 6px; }
+  }
+  .anatomia.estatico .anat-pin { height: auto; min-height: 0; display: grid; }
+  .anatomia.estatico .anat-lienzo { position: relative; height: 520px; }
+  .anatomia.estatico .capa { opacity: 0; } .anatomia.estatico .capa.final-estatico { opacity: 1; }
+  .anatomia.estatico .anat-textos { position: relative; left: auto; top: auto; bottom: auto; width: auto; max-width: 1024px; margin: 0 auto; padding: 60px 22px; display: grid; gap: 28px; }
+  .anatomia.estatico .paso-a { position: relative; opacity: 1; transform: none; background: none; padding: 0; }
+
+  /* ---------- Divisiones con video ---------- */
+  .divisiones { display: grid; gap: 12px; }
+  @media (min-width: 900px) { .divisiones { grid-template-columns: 1fr 1fr; } }
+  .division { position: relative; border-radius: 28px; overflow: hidden; min-height: 600px; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; padding: 36px 32px; isolation: isolate; }
+  .division video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .division::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(13,17,22,.1) 20%, rgba(13,17,22,.9) 78%); }
+  .division .eyebrow { margin: 0 0 6px; }
+  .division.incendio .eyebrow { color: #ff8a73; }
+  .division.agua .eyebrow { color: #8fd3ff; }
+  .division h3 { font-size: clamp(32px, 4vw, 44px); letter-spacing: -.02em; line-height: 1.06; }
+  .division p { color: rgba(255,255,255,.8); margin: 10px 0 0; max-width: 32em; }
+  .division ul { list-style: none; padding: 0; margin: 18px 0 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .division li { font-size: 13px; padding: 6px 12px; border-radius: 99px; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+
+  /* ---------- Bento de servicios ---------- */
+  .bento { display: grid; gap: 12px; }
+  @media (min-width: 834px) { .bento { grid-template-columns: repeat(6, 1fr); } .t2 { grid-column: span 2; } .t3 { grid-column: span 3; } .t4 { grid-column: span 4; } .t6 { grid-column: span 6; } }
+  .tile { position: relative; isolation: isolate; border-radius: 28px; overflow: hidden; background: #fff; min-height: 420px; padding: 34px 30px; display: flex; flex-direction: column; }
+  .tile h3 { font-size: clamp(26px, 3vw, 34px); letter-spacing: -.02em; line-height: 1.08; }
+  .tile p { margin: 8px 0 0; color: var(--secundario); }
+  .tile ul { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tile li { font-size: 13px; padding: 5px 11px; border-radius: 99px; background: var(--gris-fondo); color: var(--texto); }
+  .tile.foto { color: #fff; justify-content: flex-start; }
+  .tile.foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1.2s var(--curva); }
+  .tile.foto:hover img { transform: scale(1.04); }
+  .tile.foto::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(13,17,22,.78) 0%, rgba(13,17,22,.25) 45%, rgba(13,17,22,0) 70%); }
+  .tile.foto p { color: rgba(255,255,255,.85); }
+  .tile.foto li { background: rgba(255,255,255,.16); color: #fff; }
+  .tile.blanca-foto img { margin-top: auto; align-self: center; max-height: 230px; width: auto; object-fit: contain; }
+  .tile.oscura-t { background: var(--carbon); color: #f5f5f7; }
+  .tile.oscura-t p { color: #a1a1a6; }
+  .tile.oscura-t li { background: rgba(255,255,255,.1); color: #f5f5f7; }
+  .tile.ambar-t { background: linear-gradient(160deg, #ffd89a 0%, var(--ambar) 100%); color: var(--carbon); }
+  .tile.ambar-t p { color: rgba(27,34,41,.75); }
+  .tile.ambar-t li { background: rgba(255,255,255,.45); }
+  .tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s var(--curva); background: radial-gradient(480px circle at var(--mx, 50%) var(--my, 50%), rgba(242,169,59,.16), transparent 60%); }
+  .tile:hover::after { opacity: 1; }
+
+  /* ---------- Por qué Fynova ---------- */
+  .ventajas { display: grid; gap: 44px 32px; }
+  @media (min-width: 834px) { .ventajas { grid-template-columns: repeat(4, 1fr); } }
+  .ventaja b { display: block; font-size: 34px; font-weight: 600; letter-spacing: -.03em; color: #fff; line-height: 1.08; }
+  .ventaja b em { font-style: normal; color: var(--ambar); }
+  .ventaja span { display: block; margin-top: 10px; color: #a1a1a6; }
+  .normas-g { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 64px; }
+  .normas-g span { font-size: 15px; font-weight: 600; padding: 10px 18px; border-radius: 99px; background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); color: #f5f5f7; }
+
+  /* ---------- Trabajos ---------- */
+  .carrusel-cab { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 32px; flex-wrap: wrap; }
+  .flechas { display: flex; gap: 10px; }
+  .flecha { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #e8e8ed; color: var(--texto); font-size: 20px; cursor: pointer; }
+  .flecha:hover { background: #dcdce1; }
+  .carrusel { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: max(22px, calc((100vw - 1260px) / 2 + 22px)); padding: 4px max(22px, calc((100vw - 1260px) / 2 + 22px)) 24px; scrollbar-width: none; }
+  .carrusel::-webkit-scrollbar { display: none; }
+  .obra { flex: none; width: min(380px, 82vw); scroll-snap-align: start; border-radius: 24px; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.05); }
+  .obra img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .obra div { padding: 18px 20px 22px; }
+  .obra small { color: var(--ambar-texto); font-weight: 600; font-size: 13px; }
+  .obra h4 { font-size: 19px; margin-top: 4px; letter-spacing: -.015em; }
+
+  /* ---------- Cómo trabajamos ---------- */
+  .pasos { display: grid; gap: 16px; }
+  @media (min-width: 834px) { .pasos { grid-template-columns: repeat(4, 1fr); } }
+  .paso { background: var(--gris-fondo); border-radius: 22px; padding: 26px 24px; }
+  .paso .n { font-size: 13px; font-weight: 600; color: var(--ambar-texto); }
+  .paso h3 { font-size: 22px; letter-spacing: -.015em; margin: 8px 0 6px; }
+  .paso p { margin: 0; color: var(--secundario); font-size: 15px; }
+
+  /* ---------- Contacto ---------- */
+  .contacto-grid { display: grid; gap: 32px; }
+  @media (min-width: 900px) { .contacto-grid { grid-template-columns: .9fr 1.1fr; align-items: start; } }
+  .canales { display: grid; gap: 14px; margin-top: 28px; }
+  .canal { display: flex; flex-direction: column; gap: 2px; padding: 18px 20px; background: rgba(255,255,255,.06); border-radius: 18px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); color: #f5f5f7; }
+  .canal:hover { text-decoration: none; background: rgba(255,255,255,.1); }
+  .canal small { color: var(--ambar); font-weight: 600; font-size: 13px; }
+  .canal b { font-size: 19px; font-weight: 600; }
+  form.contacto { background: #fff; color: var(--texto); border-radius: 24px; padding: 28px; display: grid; gap: 16px; }
+  form.contacto label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+  form.contacto input, form.contacto select, form.contacto textarea { font: 400 16px var(--sf); letter-spacing: -.01em; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--linea); background: #fff; color: var(--texto); }
+  form.contacto textarea { min-height: 120px; resize: vertical; }
+  form.contacto input:focus, form.contacto select:focus, form.contacto textarea:focus { outline: none; border-color: var(--ambar); box-shadow: 0 0 0 4px rgba(242,169,59,.2); }
+  .trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .estado-form { margin: 0; font-size: 14px; min-height: 1.4em; }
+  .estado-form.ok { color: #1f7a3a; } .estado-form.error { color: #b3261e; }
+
+  footer { background: var(--carbon); color: #8f9ba0; font-size: 12px; padding-block: 28px 40px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+  footer a { color: #c9d1d4; }
+
+  .wa { position: fixed; right: 18px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 70; width: 54px; height: 54px; border-radius: 50%; background: #25d366; color: #fff; display: grid; place-items: center; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+  .wa svg { width: 28px; height: 28px; }
+  @media (max-width: 600px) { .wa { width: 48px; height: 48px; right: 14px; } .wa svg { width: 24px; height: 24px; } }
+
+  /* ---------- Animación ---------- */
+  .palabra { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }
+  .palabra > span { display: inline-block; }
+  .io .revelar { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--curva), transform .9s var(--curva); }
+  .io .revelar.visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .io .revelar { opacity: 1; transform: none; transition: none; }
+    .punto i { animation: none; }
+    .tile.foto img { transition: none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.93.95-3.48-.22-.36a9.43 9.43 0 0 1-1.44-5.02c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.9.99 6.68 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.21-4.24 9.44-9.46 9.44zm8.04-17.48A11.3 11.3 0 0 0 12.04.7C5.78.7.67 5.8.67 12.07c0 2 .52 3.96 1.52 5.69L.57 23.7l6.08-1.6a11.33 11.33 0 0 0 5.4 1.38h.01c6.27 0 11.37-5.1 11.37-11.37 0-3.04-1.18-5.9-3.34-8.05z"/></symbol>
+</svg>
+
+<header class="nav-global">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="Fynova, inicio">
+      <img class="icono" src="img/fynova-icono.webp" alt="" width="160" height="149">
+      <img class="palabra" src="img/fynova-wordmark.webp" alt="Fynova" width="520" height="64">
+    </a>
+    <nav aria-label="Principal">
+      <a href="#calculadora">Calculadora</a>
+      <a href="#incendio">Incendio</a>
+      <a href="#agua">Agua y saneamiento</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#trabajos">Trabajos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="pill chica" href="#contacto">Pedir visita</a>
+  </div>
+</header>
+<div class="nav-local">
+  <div class="wrap">
+    <span class="titulo">Ingeniería industrial</span>
+    <div class="der">
+      <a href="#anatomia">Cómo actúa una red</a>
+      <a href="#servicios">Servicios</a>
+      <a class="pill chica oscura" href="#calculadora">Calcular mi red</a>
+    </div>
+  </div>
+</div>
+
+<main id="inicio">
+
+<!-- HERO -->
+<section class="hero">
+  <video id="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" poster="img/canieria-roja.webp"><source src="img/redes-incendio.mp4" type="video/mp4"></video>
+  <div class="wrap">
+    <span class="eyebrow">Redes contra incendio · Efluentes · Mantenimiento</span>
+    <h1>Protegé lo que construiste.</h1>
+    <p class="sub">Proyecto, instalación y mantenimiento de redes contra incendio y plantas de tratamiento de efluentes. Llave en mano, bajo norma y con presupuesto cerrado.</p>
+    <div class="ctas">
+      <a class="pill brillo iman" href="#contacto">Pedir visita técnica</a>
+      <a class="pill clara" href="#calculadora">Calcular mi red</a>
+    </div>
+    <div class="normas"><span class="chip">NFPA</span><span class="chip">IRAM</span><span class="chip">COVENIN</span><span class="chip">Especialistas matriculados</span></div>
+  </div>
+</section>
+
+<!-- CALCULADORA -->
+<section class="gris" id="calculadora">
+  <div class="wrap ancho">
+    <div class="cabeza centro" style="margin-bottom:28px">
+      <span class="eyebrow">Calculadora</span>
+      <h2 class="h-sec">¿Cuánto necesita tu planta?</h2>
+      <p class="sub">Cargá la superficie y el tipo de riesgo. Te mostramos una estimación de la red al instante.</p>
+    </div>
+    <div class="centro"><div class="segmento" role="group" aria-label="Tipo de cálculo" id="modo"></div></div>
+
+    <div class="calc" id="calc-incendio">
+      <div class="panel">
+        <div class="campo">
+          <label class="lbl" for="superficie">Superficie a proteger</label>
+          <div class="numero-grande"><input id="superficie" type="number" inputmode="numeric" min="50" max="50000" step="50" value="2500" class="num"><span>m²</span></div>
+          <input type="range" id="superficie-rango" min="0" max="100" value="50" aria-label="Superficie aproximada">
+        </div>
+        <div class="campo">
+          <span class="lbl" id="lbl-riesgo">Tipo de riesgo</span>
+          <div class="segmento" role="group" aria-labelledby="lbl-riesgo" id="riesgo"></div>
+          <p class="ayuda" id="riesgo-ayuda"></p>
+        </div>
+        <div class="campo">
+          <span class="lbl" id="lbl-obra">La instalación es</span>
+          <div class="segmento" role="group" aria-labelledby="lbl-obra" id="obra"></div>
+        </div>
+      </div>
+      <div class="resultado">
+        <div class="tarjetas-res">
+          <div class="kpi"><small>Rociadores</small><b class="num" id="k-rociadores">—</b><span id="k-cobertura"></span></div>
+          <div class="kpi"><small>Caudal de bomba</small><b class="num" id="k-caudal">—</b><span id="k-caudal-lpm"></span></div>
+          <div class="kpi"><small>Reserva de agua</small><b class="num" id="k-reserva">—</b><span id="k-duracion"></span></div>
+          <div class="kpi"><small>Tanques de 15.000 L</small><b class="num" id="k-tanques">—</b><span>para la reserva</span></div>
+        </div>
+        <div class="plano">
+          <svg id="plano-svg" viewBox="0 0 400 260" role="img" aria-label="Plano esquemático de la planta con la distribución de rociadores"></svg>
+          <div>
+            <h4 id="plano-titulo">Distribución estimada</h4>
+            <p id="plano-texto"></p>
+          </div>
+        </div>
+        <div class="accion-res">
+          <a class="pill" id="pedir-calculo" href="#contacto">Pedir visita con este cálculo</a>
+          <p class="nota">Estimación orientativa según NFPA 13 para rociadores estándar. El cálculo hidráulico final lo hace nuestro equipo en la visita técnica.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc" id="calc-efluentes" hidden>
+      <div class="panel">
+        <div class="campo">
+          <label class="lbl" for="caudal-ef">Caudal de efluente</label>
+          <div class="numero-grande"><input id="caudal-ef" type="number" inputmode="numeric" min="1" max="5000" step="1" value="80" class="num"><span>m³/día</span></div>
+          <input type="range" id="caudal-ef-rango" min="0" max="100" value="45" aria-label="Caudal aproximado">
+        </div>
+        <div class="campo">
+          <span class="lbl" id="lbl-industria">Industria</span>
+          <div class="segmento" role="group" aria-labelledby="lbl-industria" id="industria" style="flex-wrap:wrap"></div>
+        </div>
+      </div>
+      <div class="resultado">
+        <div class="tarjetas-res">
+          <div class="kpi"><small>Escala de planta</small><b id="e-escala">—</b><span id="e-escala-txt"></span></div>
+          <div class="kpi"><small>Caudal medio</small><b class="num" id="e-caudal">—</b><span>m³/h en 24 h</span></div>
+          <div class="kpi"><small>Etapas típicas</small><b class="num" id="e-etapas">—</b><span>de tratamiento</span></div>
+          <div class="kpi"><small>Primer paso</small><b>Diagnóstico</b><span>muestreo y análisis</span></div>
+        </div>
+        <div class="plano">
+          <div>
+            <h4 id="e-titulo">Proceso sugerido</h4>
+            <p id="e-texto"></p>
+            <div class="etapas" id="e-lista"></div>
+          </div>
+          <img src="img/planta-tratamiento-aerea.webp" alt="Planta de tratamiento de efluentes con clarificadores circulares" loading="lazy" style="border-radius:16px;aspect-ratio:1;object-fit:cover">
+        </div>
+        <div class="accion-res">
+          <a class="pill" id="pedir-diagnostico" href="#contacto">Pedir diagnóstico de efluentes</a>
+          <p class="nota">Proceso orientativo. El diseño final depende del análisis del efluente y de la normativa de vuelco de tu jurisdicción.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIFRAS -->
+<section style="padding-block:80px">
+  <div class="wrap">
+    <div class="cifras">
+      <div class="cifra revelar"><b class="num" data-contar="40" data-prefijo="+">+40</b><span>años de trayectoria de nuestro equipo técnico.</span></div>
+      <div class="cifra revelar"><b>Llave</b><span>en mano: proyecto, montaje y puesta en marcha.</span></div>
+      <div class="cifra revelar"><b class="num" data-contar="3">3</b><span>normas de referencia: NFPA, IRAM y COVENIN.</span></div>
+      <div class="cifra revelar"><b class="num" data-contar="100" data-sufijo="%">100%</b><span>presupuesto cerrado, sin sorpresas en la obra.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANATOMÍA (imágenes reales) -->
+<section id="anatomia" class="anatomia">
+  <div class="anat-pin">
+    <div class="anat-lienzo" id="anat-lienzo" role="img" aria-label="Recorrido con fotos reales: red de cañerías, pulsador de alarma, sala de bombas, rociador descargando agua y detalle del rociador">
+      <div class="capa primera" data-capa="0"><img src="img/canieria-roja.webp" alt="" data-foco="0.5,0.4"></div>
+      <div class="capa" data-capa="1"><img src="img/cartel-fuego.webp" alt="" data-foco="0.8,0.78"></div>
+      <div class="capa" data-capa="2"><img src="img/sala-bombas.webp" alt="" data-foco="0.87,0.42"></div>
+      <div class="capa" data-capa="3"><canvas id="cuadros-rociador" width="960" height="540"></canvas></div>
+      <div class="capa final-estatico" data-capa="4"><img src="img/sprinkler.webp" alt="" data-foco="0.5,0.45"></div>
+    </div>
+    <div class="marca-real" data-capa="1"><span>Pulsador manual de alarma</span></div>
+    <div class="marca-real" data-capa="2"><span>Tablero de control de bombas</span></div>
+    <div class="marca-real" data-capa="3"><span>Rociador activado</span></div>
+    <div class="progreso-anat" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    <div class="anat-textos">
+      <div class="paso-a activo"><span class="eyebrow">Anatomía</span><h2 class="h-sec">Cómo actúa una red contra incendio.</h2><p>Seguí bajando.</p></div>
+      <div class="paso-a"><span class="eyebrow">01 · Detección</span><h3>Segundos cuentan.</h3><p>Detectores y pulsadores disparan la alarma apenas aparece el fuego.</p></div>
+      <div class="paso-a"><span class="eyebrow">02 · Bombeo</span><h3>La red se presuriza.</h3><p>La sala de bombas arranca y mantiene la presión en toda la red.</p></div>
+      <div class="paso-a"><span class="eyebrow">03 · Extinción</span><h3>Solo donde hay fuego.</h3><p>Los rociadores cercanos al foco se activan por temperatura y descargan agua.</p></div>
+      <div class="paso-a"><span class="eyebrow">04 · Fynova</span><h3>Diseñada para funcionar el día que la necesitás.</h3><p>Cálculo hidráulico, montaje y mantenimiento bajo norma NFPA.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVISIONES -->
+<section id="divisiones">
+  <div class="wrap ancho">
+    <div class="cabeza centro">
+      <h2 class="h-sec">Dos divisiones. Un solo equipo.</h2>
+    </div>
+    <div class="divisiones">
+      <article class="division incendio revelar" id="incendio">
+        <video autoplay muted loop playsinline preload="none" aria-hidden="true" data-mismo-video="hero-video"></video>
+        <span class="eyebrow">Incendio</span>
+        <h3>Redes y detección de incendios.</h3>
+        <p>Proyecto e instalación llave en mano, desde la sala de bombas hasta el último rociador.</p>
+        <ul><li>Redes de sprinklers</li><li>Hidrantes y bocas de incendio</li><li>Salas de bombas</li><li>Detección de humo y calor</li><li>Agua y espuma</li><li>Riesgos especiales</li></ul>
+        <div><a class="pill" href="#contacto" data-servicio="Redes y Detección de Incendios">Consultar por incendio</a></div>
+      </article>
+      <article class="division agua revelar" id="agua">
+        <video autoplay muted loop playsinline preload="none" aria-hidden="true" poster="img/planta-tratamiento-aerea.webp"><source src="img/efluentes-video.mp4" type="video/mp4"></video>
+        <span class="eyebrow">Agua y saneamiento</span>
+        <h3>Tratamiento de efluentes industriales.</h3>
+        <p>Diagnóstico, diseño y gestión ambiental junto a especialistas del sector.</p>
+        <ul><li>Diagnóstico de efluentes</li><li>Diseño de sistemas</li><li>Normativa ambiental</li><li>Monitoreo en planta</li><li>Equipos WellPoint</li></ul>
+        <div><a class="pill" href="#contacto" data-servicio="Soluciones integrales en agua y saneamiento">Consultar por efluentes</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="gris" id="servicios">
+  <div class="wrap ancho">
+    <div class="cabeza centro">
+      <h2 class="h-sec">Todo lo que hacemos.</h2>
+      <p class="sub">De la ingeniería al mantenimiento, con especialistas matriculados en cada rubro.</p>
+    </div>
+    <div class="bento">
+      <article class="tile foto t4 revelar" style="min-height:520px">
+        <img src="img/canieria-roja.webp" alt="Red de cañerías contra incendio en cielorraso" loading="lazy">
+        <h3>Piping y redes contra incendio.</h3>
+        <p>Redes fijas, piping industrial y montaje llave en mano.</p>
+        <ul><li>Redes fijas</li><li>Piping industrial</li><li>Montaje</li></ul>
+      </article>
+      <article class="tile blanca-foto t2 revelar" style="min-height:520px">
+        <h3>Rociadores.</h3>
+        <p>Sistemas de sprinklers diseñados según el riesgo de cada sector.</p>
+        <img src="img/sprinkler.webp" alt="Rociador de sprinkler contra incendio" loading="lazy">
+      </article>
+      <article class="tile foto t3 revelar">
+        <img src="img/sala-bombas.webp" alt="Sala de bombas contra incendio" loading="lazy">
+        <h3>Salas de bombas.</h3>
+        <p>Equipos, tableros y puesta en marcha.</p>
+      </article>
+      <article class="tile foto t3 revelar">
+        <img src="img/cartel-fuego.webp" alt="Pulsador de incendio instalado en pared" loading="lazy">
+        <h3>Detección y alarma.</h3>
+        <p>Humo, calor y avisadores manuales. Defensa activa y pasiva.</p>
+      </article>
+      <article class="tile foto t2 revelar">
+        <img src="img/planta-tratamiento-aerea.webp" alt="Vista aérea de planta de tratamiento de efluentes" loading="lazy">
+        <h3>Plantas de tratamiento.</h3>
+        <p>Trabajos llave en mano.</p>
+      </article>
+      <article class="tile foto t2 revelar">
+        <img src="img/laboratorio-calidad-agua.webp" alt="Control de calidad del efluente tratado en laboratorio" loading="lazy">
+        <h3>Monitoreo.</h3>
+        <p>Control de calidad y cumplimiento normativo.</p>
+      </article>
+      <article class="tile blanca-foto t2 revelar">
+        <h3>Equipos WellPoint.</h3>
+        <p>Fabricación e instalación para depresión de napas en obras civiles.</p>
+        <img src="img/wellpoint.webp" alt="Equipo WellPoint amarillo para depresión de napas freáticas" loading="lazy">
+      </article>
+      <article class="tile oscura-t t3 revelar">
+        <span class="eyebrow" style="color:var(--ambar)">Mantenimiento</span>
+        <h3>Preventivo y predictivo.</h3>
+        <p>Para que tus equipos no fallen el día que más los necesitás.</p>
+        <ul><li>Bombas de vacío</li><li>Bombas centrífugas</li><li>Intercambiadores de calor</li><li>Calderas</li><li>Centrales de vacío</li><li>Instalaciones termomecánicas</li></ul>
+      </article>
+      <article class="tile ambar-t t3 revelar">
+        <span class="eyebrow" style="color:var(--carbon)">Gas natural</span>
+        <h3>Conversión y estaciones.</h3>
+        <p>Proyecto y montaje de instalaciones de gas para la industria.</p>
+        <ul><li>Conversión de calderas y hornos</li><li>Estaciones de regulación y medición</li><li>Estaciones de GNC</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ -->
+<section class="negra">
+  <div class="wrap">
+    <div class="cabeza centro">
+      <span class="eyebrow">Por qué Fynova</span>
+      <h2 class="h-sec">Bien, a tiempo<br>y sin sorpresas.</h2>
+      <p class="sub">Nuestra misión: que cada proyecto técnico se resuelva de punta a punta.</p>
+    </div>
+    <div class="ventajas">
+      <div class="ventaja revelar"><b>Norma <em>vigente</em>.</b><span>Cumplimiento estricto en cada proyecto.</span></div>
+      <div class="ventaja revelar"><b>Precio <em>cerrado</em>.</b><span>Presupuesto sin sorpresas en la ejecución.</span></div>
+      <div class="ventaja revelar"><b><em>Matriculados</em>.</b><span>Especialistas en cada rubro técnico.</span></div>
+      <div class="ventaja revelar"><b>De punta <em>a punta</em>.</b><span>Seguimiento del proyecto hasta la puesta en marcha.</span></div>
+    </div>
+    <div class="normas-g"><span>NFPA</span><span>IRAM</span><span>COVENIN</span><span>Defensa activa y pasiva</span></div>
+  </div>
+</section>
+
+<!-- TRABAJOS -->
+<section id="trabajos" style="padding-bottom:76px">
+  <div class="wrap ancho carrusel-cab">
+    <div><span class="eyebrow">Trabajos realizados</span><h2 class="h-sec">Obras que hablan.</h2></div>
+    <div class="flechas"><button class="flecha" type="button" id="atras" aria-label="Anterior">‹</button><button class="flecha" type="button" id="adelante" aria-label="Siguiente">›</button></div>
+  </div>
+  <div class="carrusel" id="carrusel">
+    <article class="obra"><img src="img/canieria-roja.webp" alt="Red de cañerías contra incendio en cielorraso" loading="lazy"><div><small>Incendio</small><h4>Redes de incendio</h4></div></article>
+    <article class="obra"><img src="img/sprinkler.webp" alt="Rociador contra incendio" loading="lazy"><div><small>Incendio</small><h4>Rociadores contra incendio</h4></div></article>
+    <article class="obra"><img src="img/sala-bombas.webp" alt="Sala de bombas" loading="lazy"><div><small>Incendio</small><h4>Salas de bombas</h4></div></article>
+    <article class="obra"><img src="img/cartel-fuego.webp" alt="Sistema de detección y pulsador" loading="lazy"><div><small>Incendio</small><h4>Sistemas de detección</h4></div></article>
+    <article class="obra"><img src="img/wellpoint.webp" alt="Equipo WellPoint" loading="lazy"><div><small>Agua</small><h4>Equipos WellPoint</h4></div></article>
+    <article class="obra"><img src="img/planta-tratamiento-aerea.webp" alt="Planta de tratamiento" loading="lazy"><div><small>Agua</small><h4>Plantas de tratamiento</h4></div></article>
+    <article class="obra"><img src="img/laboratorio-calidad-agua.webp" alt="Laboratorio de calidad de agua" loading="lazy"><div><small>Agua</small><h4>Monitoreo y laboratorio</h4></div></article>
+  </div>
+</section>
+
+<!-- CÓMO TRABAJAMOS -->
+<section style="padding-top:40px">
+  <div class="wrap ancho">
+    <div class="cabeza centro"><h2 class="h-sec">Cómo trabajamos.</h2></div>
+    <div class="pasos">
+      <div class="paso revelar"><span class="n">Paso 1</span><h3>Visita técnica</h3><p>Relevamos la planta, el riesgo y lo que ya está instalado.</p></div>
+      <div class="paso revelar"><span class="n">Paso 2</span><h3>Proyecto</h3><p>Ingeniería, cálculo y presupuesto cerrado, bajo norma.</p></div>
+      <div class="paso revelar"><span class="n">Paso 3</span><h3>Instalación</h3><p>Montaje llave en mano y puesta en marcha.</p></div>
+      <div class="paso revelar"><span class="n">Paso 4</span><h3>Mantenimiento</h3><p>Preventivo y predictivo para que la red siempre responda.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="oscura" id="contacto">
+  <div class="wrap ancho contacto-grid">
+    <div>
+      <span class="eyebrow">Contacto</span>
+      <h2 class="h-sec">Hablemos de tu proyecto.</h2>
+      <p class="sub" style="margin-left:0">Contanos qué necesitás y te ponemos en contacto con el especialista adecuado.</p>
+      <div class="canales">
+        <a class="canal" id="wa-canal" href="#"><small>WhatsApp</small><b class="num">+54 11 2670-4249</b></a>
+        <a class="canal" href="mailto:comercial@fynova.com.ar"><small>Email</small><b>comercial@fynova.com.ar</b></a>
+      </div>
+    </div>
+    <form class="contacto" id="form-contacto" action="contacto.php" method="post" novalidate>
+      <label>Nombre y empresa<input name="nombre" id="f-nombre" autocomplete="organization" required maxlength="120"></label>
+      <label>Email<input name="email" id="f-email" type="email" autocomplete="email" required maxlength="160"></label>
+      <label>¿Qué servicio te interesa?
+        <select name="servicio" id="f-servicio">
+          <option>Redes y Detección de Incendios</option>
+          <option>Soluciones integrales en agua y saneamiento</option>
+          <option>Mantenimiento industrial</option>
+          <option>Gas natural</option>
+          <option>No estoy seguro</option>
+        </select>
+      </label>
+      <label>Contanos tu proyecto<textarea name="mensaje" id="f-mensaje" maxlength="3000"></textarea></label>
+      <div class="trampa" aria-hidden="true"><label>No completar este campo<input name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
+      <button class="pill" type="submit" id="f-enviar">Enviar consulta</button>
+      <p class="estado-form" id="f-estado" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="anio">2026</span> Fynova · Servicios de ingeniería industrial</span>
+    <span><a href="#calculadora">Calculadora</a> · <a href="#servicios">Servicios</a> · <a href="#contacto">Contacto</a></span>
+  </div>
+</footer>
+
+<a class="wa" id="wa-flotante" href="#" aria-label="Escribinos por WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
+
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/motion.js"></script>
+<script>
+"use strict";
+const WHATSAPP = "541126704249";
+const $ = s => document.querySelector(s);
+const miles = n => Math.round(n).toLocaleString("es-AR");
+const wa = msg => "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
+function h(tag, props, ...hijos) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) { if (v == null) continue; if (k === "class") el.className = v; else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v); }
+  for (const c of hijos.flat()) if (c != null) el.append(c.nodeType ? c : String(c));
+  return el;
+}
+const SVGNS = "http://www.w3.org/2000/svg";
+const s = (tag, attrs) => { const e = document.createElementNS(SVGNS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); return e; };
+function segmento(cont, opciones, inicial, alElegir) {
+  cont.replaceChildren(...opciones.map(([valor, etiqueta]) => h("button", { type: "button", "aria-pressed": String(valor === inicial), "data-valor": valor,
+    onclick: () => { cont.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.valor === valor))); alElegir(valor); } }, etiqueta)));
+}
+// Control deslizante logarítmico
+const logA = (v, a, b) => Math.exp(Math.log(a) + (Math.log(b) - Math.log(a)) * v / 100);
+const logDe = (x, a, b) => Math.round((Math.log(Math.min(Math.max(x, a), b)) - Math.log(a)) / (Math.log(b) - Math.log(a)) * 100);
+
+// ================= Calculadora de incendio (NFPA 13, orientativa) =================
+// cobertura máx. por rociador (m²), densidad (mm/min), área de diseño (m²), mangueras (L/min), duración (min)
+const RIESGOS = {
+  leve:  { nombre: "Leve", ej: "Oficinas, escuelas, hoteles, hospitales.", cob: 20.9, dens: 4.1, area: 139, mang: 379, dur: 30 },
+  ord1:  { nombre: "Ordinario 1", ej: "Estacionamientos, panaderías, lavaderos, industria liviana.", cob: 12.1, dens: 6.1, area: 139, mang: 946, dur: 60 },
+  ord2:  { nombre: "Ordinario 2", ej: "Depósitos, textiles, metalúrgicas, imprentas, plásticos.", cob: 12.1, dens: 8.1, area: 139, mang: 946, dur: 90 },
+  extra: { nombre: "Extra", ej: "Líquidos inflamables, químicos, aserraderos, espumas.", cob: 9.3, dens: 12.2, area: 232, mang: 1893, dur: 120 }
+};
+const est = { modo: "incendio", sup: 2500, riesgo: "ord1", obra: "nueva", caudal: 80, industria: "alimenticia" };
+
+function dibujarPlano(sup, cob, n) {
+  const svg = $("#plano-svg"); svg.replaceChildren();
+  // Planta rectangular 1,6 : 1
+  const W = 380, H = 240, x0 = 10, y0 = 10;
+  svg.append(s("rect", { x: x0, y: y0, width: W, height: H, rx: 10, fill: "#232c35", stroke: "#4a5461", "stroke-width": 1.5 }));
+  const lado = Math.sqrt(cob);                                  // distancia entre rociadores (m)
+  const largo = Math.sqrt(sup * 1.6), ancho = sup / largo;
+  let cols = Math.max(1, Math.round(largo / lado)), filas = Math.max(1, Math.round(ancho / lado));
+  let paso = 1;
+  while (cols * filas / (paso * paso) > 420) paso++;            // si son muchos, cada punto representa varios
+  cols = Math.ceil(cols / paso); filas = Math.ceil(filas / paso);
+  const dx = W / cols, dy = H / filas;
+  // Ramales
+  for (let j = 0; j < filas; j++) svg.append(s("line", { x1: x0 + 6, x2: x0 + W - 6, y1: y0 + dy * (j + .5), y2: y0 + dy * (j + .5), stroke: "#c8352a", "stroke-width": 1.2, opacity: .55 }));
+  svg.append(s("line", { x1: x0 + 6, x2: x0 + 6, y1: y0 + 6, y2: y0 + H - 6, stroke: "#c8352a", "stroke-width": 3 }));
+  const r = Math.max(1.6, Math.min(5, Math.min(dx, dy) * .22));
+  const puntos = [];
+  for (let j = 0; j < filas; j++) for (let i = 0; i < cols; i++) {
+    const c = s("circle", { cx: x0 + dx * (i + .5), cy: y0 + dy * (j + .5), r, fill: "#f2a93b" });
+    svg.append(c); puntos.push(c);
+  }
+  svg.append(s("rect", { x: x0 + 14, y: y0 + H - 44, width: 46, height: 30, rx: 4, fill: "#c8352a" }));
+  const t = s("text", { x: x0 + 37, y: y0 + H - 25, "text-anchor": "middle", "font-size": 10, fill: "#fff", "font-family": "var(--sf)" }); t.textContent = "Bombas"; svg.append(t);
+  if (window.Motion && !REDUCIR) window.Motion.animate(puntos, { opacity: [0, 1], scale: [.2, 1] }, { delay: window.Motion.stagger(Math.min(.012, .6 / puntos.length)), type: "spring", stiffness: 300, damping: 18 });
+  return paso;
+}
+
+function calcularIncendio() {
+  const R = RIESGOS[est.riesgo], sup = est.sup;
+  const rociadores = Math.ceil(sup / R.cob);
+  const areaDiseno = Math.min(sup, R.area);
+  const caudalLpm = R.dens * areaDiseno * 1.15 + R.mang;        // +15% por pérdidas del cálculo hidráulico
+  const caudalM3h = caudalLpm * 60 / 1000;
+  const reserva = caudalLpm * R.dur / 1000;                      // m³
+  const tanques = Math.ceil(reserva * 1000 / 15000);
+  $("#k-rociadores").textContent = "≈ " + miles(rociadores);
+  $("#k-cobertura").textContent = "hasta " + R.cob.toLocaleString("es-AR") + " m² c/u";
+  $("#k-caudal").textContent = "≈ " + miles(caudalM3h) + " m³/h";
+  $("#k-caudal-lpm").textContent = miles(caudalLpm) + " L/min con mangueras";
+  $("#k-reserva").textContent = "≈ " + miles(reserva) + " m³";
+  $("#k-duracion").textContent = R.dur + " minutos de autonomía";
+  $("#k-tanques").textContent = miles(tanques);
+  $("#riesgo-ayuda").textContent = R.ej;
+  const paso = dibujarPlano(sup, R.cob, rociadores);
+  $("#plano-titulo").textContent = miles(sup) + " m² · riesgo " + R.nombre.toLowerCase();
+  $("#plano-texto").textContent = "Cada punto " + (paso > 1 ? "representa unos " + paso * paso + " rociadores" : "es un rociador") +
+    ", separados cada " + Math.sqrt(R.cob).toFixed(1).replace(".", ",") + " m como máximo. " +
+    (est.obra === "adecuacion" ? "Para una adecuación, relevamos la red existente y proyectamos lo que falta." : "La sala de bombas alimenta los ramales desde el colector principal.");
+  const resumen = `Hola Fynova! Quiero pedir una visita técnica.\n• Superficie: ${miles(sup)} m²\n• Riesgo: ${R.nombre}\n• Instalación: ${est.obra === "nueva" ? "nueva" : "adecuación de existente"}\n• Estimación web: ≈${miles(rociadores)} rociadores, ≈${miles(caudalM3h)} m³/h, reserva ≈${miles(reserva)} m³`;
+  $("#pedir-calculo").dataset.resumen = resumen;
+  $("#pedir-calculo").dataset.servicio = "Redes y Detección de Incendios";
+}
+
+// ================= Efluentes (orientativo) =================
+const INDUSTRIAS = {
+  alimenticia: { nombre: "Alimenticia", grasas: true, carga: "media" },
+  lactea:      { nombre: "Láctea", grasas: true, carga: "alta" },
+  frigorifico: { nombre: "Frigorífico", grasas: true, carga: "alta" },
+  bebidas:     { nombre: "Cervecería y bebidas", grasas: false, carga: "alta" },
+  quimica:     { nombre: "Química", grasas: false, carga: "especial" },
+  otra:        { nombre: "Otra", grasas: false, carga: "media" }
+};
+function calcularEfluentes() {
+  const q = est.caudal, I = INDUSTRIAS[est.industria];
+  const escala = q < 50 ? ["Compacta", "equipos modulares"] : q < 500 ? ["Mediana", "obra civil y equipos"] : ["Grande", "planta a medida"];
+  const etapas = [["Rejas y desbaste"], ["Ecualización"]];
+  if (I.grasas) etapas.push(["Flotación DAF para grasas", 1]);
+  if (I.carga === "especial") etapas.push(["Tratamiento físico-químico", 1], ["Neutralización de pH", 1]);
+  if (I.carga === "alta" && q >= 50) etapas.push(["Reactor anaeróbico", 1]);
+  etapas.push(["Tratamiento biológico aeróbico"], ["Clarificación"], ["Deshidratación de barros"], ["Monitoreo y laboratorio"]);
+  $("#e-escala").textContent = escala[0];
+  $("#e-escala-txt").textContent = escala[1];
+  $("#e-caudal").textContent = (q / 24).toLocaleString("es-AR", { maximumFractionDigits: 1 });
+  $("#e-etapas").textContent = etapas.length;
+  $("#e-titulo").textContent = "Industria " + I.nombre.toLowerCase() + " · " + miles(q) + " m³/día";
+  $("#e-texto").textContent = "Etapas típicas para este tipo de efluente. En ámbar, las que dependen de tu proceso.";
+  const lista = $("#e-lista");
+  lista.replaceChildren(...etapas.map(([t, x]) => h("span", { class: "etapa" + (x ? " extra" : "") }, t)));
+  if (window.Motion && !REDUCIR) window.Motion.animate(lista.children, { opacity: [0, 1], y: [10, 0] }, { delay: window.Motion.stagger(.05), type: "spring", stiffness: 300, damping: 20 });
+  $("#pedir-diagnostico").dataset.resumen = `Hola Fynova! Quiero un diagnóstico de efluentes.\n• Industria: ${I.nombre}\n• Caudal: ${miles(q)} m³/día`;
+  $("#pedir-diagnostico").dataset.servicio = "Soluciones integrales en agua y saneamiento";
+}
+
+const REDUCIR = matchMedia("(prefers-reduced-motion: reduce)").matches;
+segmento($("#modo"), [["incendio", "Red contra incendio"], ["efluentes", "Efluentes"]], "incendio", m => {
+  est.modo = m; $("#calc-incendio").hidden = m !== "incendio"; $("#calc-efluentes").hidden = m !== "efluentes";
+  m === "incendio" ? calcularIncendio() : calcularEfluentes();
+});
+segmento($("#riesgo"), Object.entries(RIESGOS).map(([k, r]) => [k, r.nombre]), est.riesgo, v => { est.riesgo = v; calcularIncendio(); });
+segmento($("#obra"), [["nueva", "Nueva"], ["adecuacion", "Adecuación"]], est.obra, v => { est.obra = v; calcularIncendio(); });
+segmento($("#industria"), Object.entries(INDUSTRIAS).map(([k, r]) => [k, r.nombre]), est.industria, v => { est.industria = v; calcularEfluentes(); });
+
+function conectar(num, rango, a, b, clave, calc) {
+  const redondear = x => x < 100 ? Math.round(x) : x < 2000 ? Math.round(x / 10) * 10 : Math.round(x / 50) * 50;
+  let pendiente = 0;
+  const programar = () => { cancelAnimationFrame(pendiente); pendiente = requestAnimationFrame(calc); };
+  num.addEventListener("input", () => { const v = parseFloat(num.value); if (!(v > 0)) return; est[clave] = Math.min(v, b); rango.value = logDe(est[clave], a, b); programar(); });
+  rango.addEventListener("input", () => { est[clave] = redondear(logA(+rango.value, a, b)); num.value = est[clave]; programar(); });
+  rango.value = logDe(est[clave], a, b);
+}
+conectar($("#superficie"), $("#superficie-rango"), 50, 50000, "sup", calcularIncendio);
+conectar($("#caudal-ef"), $("#caudal-ef-rango"), 1, 5000, "caudal", calcularEfluentes);
+calcularIncendio(); calcularEfluentes();
+
+// Los botones "pedir" llevan el cálculo al formulario
+function prepararFormulario(servicio, resumen) {
+  if (servicio) $("#f-servicio").value = servicio;
+  if (resumen) $("#f-mensaje").value = resumen.replace(/^Hola Fynova! /, "");
+  setTimeout(() => $("#f-nombre").focus({ preventScroll: true }), 700);
+}
+document.querySelectorAll("#pedir-calculo, #pedir-diagnostico, [data-servicio]").forEach(a => a.addEventListener("click", () => prepararFormulario(a.dataset.servicio, a.dataset.resumen)));
+
+// ================= Formulario: contacto.php (JSON) con respaldo por WhatsApp =================
+$("#form-contacto").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.currentTarget, estado = $("#f-estado"), boton = $("#f-enviar");
+  if (!f.nombre.value.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value.trim())) {
+    estado.className = "estado-form error"; estado.textContent = "Completá tu nombre y un email válido."; return;
+  }
+  boton.disabled = true; estado.className = "estado-form"; estado.textContent = "Enviando…";
+  try {
+    const r = await fetch(f.action, { method: "POST", body: new FormData(f), headers: { Accept: "application/json" } });
+    const datos = await r.json();
+    if (!r.ok || !datos.ok) throw new Error(datos.error || "Error");
+    estado.className = "estado-form ok"; estado.textContent = "¡Gracias! Recibimos tu consulta y te contactamos a la brevedad.";
+    f.reset();
+  } catch (err) {
+    const msg = `Hola Fynova! Soy ${f.nombre.value.trim()} (${f.email.value.trim()}).\nServicio: ${f.servicio.value}\n${f.mensaje.value.trim()}`;
+    estado.className = "estado-form error";
+    estado.replaceChildren("No pudimos enviar desde acá. ", h("a", { href: wa(msg), target: "_blank", rel: "noopener", style: "color:inherit;font-weight:600;text-decoration:underline" }, "Mandala por WhatsApp"), ".");
+  } finally { boton.disabled = false; }
+});
+["#wa-canal", "#wa-flotante"].forEach(sel => { const a = $(sel); a.href = wa("Hola Fynova! Quiero hacer una consulta."); a.target = "_blank"; a.rel = "noopener"; });
+$("#anio").textContent = new Date().getFullYear();
+
+// Carrusel de trabajos
+const car = $("#carrusel");
+$("#adelante").addEventListener("click", () => car.scrollBy({ left: car.clientWidth * .8, behavior: REDUCIR ? "auto" : "smooth" }));
+$("#atras").addEventListener("click", () => car.scrollBy({ left: -car.clientWidth * .8, behavior: REDUCIR ? "auto" : "smooth" }));
+
+// El video del rociador se usa dos veces: la segunda copia toma la fuente de la portada (no se duplica en el archivo)
+document.querySelectorAll("video[data-mismo-video]").forEach(v => {
+  const o = document.getElementById(v.dataset.mismoVideo);
+  v.poster = o.poster; o.querySelectorAll("source").forEach(src => v.append(src.cloneNode()));
+});
+// Videos: solo se reproducen en pantalla; con "reducir movimiento" quedan quietos
+document.querySelectorAll("video").forEach(v => {
+  if (REDUCIR) { v.removeAttribute("autoplay"); v.pause(); return; }
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }).observe(v);
+});
+
+// ================= Animaciones =================
+const GSAP = !REDUCIR && window.gsap && window.ScrollTrigger;
+function dividirPalabras(el) {
+  [...el.childNodes].forEach(n => {
+    if (n.nodeType !== 3) return;
+    const frag = document.createDocumentFragment();
+    n.textContent.split(/(\s+)/).forEach(t => { if (!t) return; if (/^\s+$/.test(t)) { frag.append(t); return; } frag.append(h("span", { class: "palabra" }, h("span", {}, t))); });
+    n.replaceWith(frag);
+  });
+}
+if (GSAP) {
+  gsap.registerPlugin(ScrollTrigger);
+  document.querySelectorAll(".hero h1, .h-sec").forEach(t => {
+    if (t.closest(".paso-a")) return;
+    dividirPalabras(t);
+    const enHero = t.closest(".hero");
+    gsap.from(t.querySelectorAll(".palabra > span"), { yPercent: 110, opacity: 0, filter: "blur(10px)", duration: 1, ease: "power4.out", stagger: .07, delay: enHero ? .2 : 0, scrollTrigger: enHero ? null : { trigger: t, start: "top 88%" } });
+  });
+  gsap.from(".hero .eyebrow, .hero .sub, .hero .ctas, .hero .normas", { y: 24, opacity: 0, duration: 1, ease: "power3.out", stagger: .1, delay: .5 });
+  gsap.to("#hero-video", { scale: 1.12, yPercent: 8, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  document.querySelectorAll(".revelar").forEach(el => gsap.from(el, { y: 48, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } }));
+  document.querySelectorAll("[data-contar]").forEach(el => {
+    const fin = +el.dataset.contar, pre = el.dataset.prefijo || "", suf = el.dataset.sufijo || "", o = { v: 0 };
+    gsap.to(o, { v: fin, duration: 2, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%" },
+      onStart: () => { el.textContent = pre + "0" + suf; }, onUpdate: () => { el.textContent = pre + Math.round(o.v) + suf; } });
+  });
+  document.querySelectorAll(".iman").forEach(b => {
+    const x = gsap.quickTo(b, "x", { duration: .5, ease: "power3" }), y = gsap.quickTo(b, "y", { duration: .5, ease: "power3" });
+    b.addEventListener("pointermove", e => { const r = b.getBoundingClientRect(); x((e.clientX - r.left - r.width / 2) * .3); y((e.clientY - r.top - r.height / 2) * .4); });
+    b.addEventListener("pointerleave", () => { x(0); y(0); });
+  });
+} else {
+  document.documentElement.classList.add("io");
+  const io = "IntersectionObserver" in window && !REDUCIR ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } })) : null;
+  document.querySelectorAll(".revelar").forEach(el => io ? io.observe(el) : el.classList.add("visible"));
+}
+// Resortes (Motion)
+if (window.Motion && !REDUCIR) {
+  const { animate, press, hover, stagger } = window.Motion;
+  press(".pill:not(.iman), .segmento button, .flecha", el => { animate(el, { scale: .94 }, { type: "spring", stiffness: 420, damping: 22 });
+    return () => animate(el, { scale: 1 }, { type: "spring", stiffness: 500, damping: 12 }); });
+  let firma = "";
+  const latir = () => {
+    const f = [...document.querySelectorAll(".kpi b")].map(b => b.textContent).join("|");
+    if (f === firma) return; firma = f;
+    animate(".calc:not([hidden]) .kpi b", { scale: [.94, 1] }, { type: "spring", stiffness: 500, damping: 14, delay: stagger(.03) });
+  };
+  document.querySelectorAll(".segmento").forEach(sg => sg.addEventListener("click", latir));
+  hover(".obra", el => { animate(el, { y: -6 }, { type: "spring", stiffness: 300, damping: 20 }); return () => animate(el, { y: 0 }, { type: "spring", stiffness: 300, damping: 20 }); });
+}
+// ================= Anatomía con imágenes reales =================
+// Cada paso es una foto real con zoom hacia el equipo; en la extinción, los cuadros del video del rociador avanzan con el scroll.
+const CUADROS = ["img/rociador/f000.webp","img/rociador/f001.webp","img/rociador/f002.webp","img/rociador/f003.webp","img/rociador/f004.webp","img/rociador/f005.webp","img/rociador/f006.webp","img/rociador/f007.webp","img/rociador/f008.webp","img/rociador/f009.webp","img/rociador/f010.webp","img/rociador/f011.webp","img/rociador/f012.webp","img/rociador/f013.webp","img/rociador/f014.webp","img/rociador/f015.webp","img/rociador/f016.webp","img/rociador/f017.webp","img/rociador/f018.webp","img/rociador/f019.webp","img/rociador/f020.webp","img/rociador/f021.webp","img/rociador/f022.webp","img/rociador/f023.webp","img/rociador/f024.webp","img/rociador/f025.webp","img/rociador/f026.webp","img/rociador/f027.webp","img/rociador/f028.webp","img/rociador/f029.webp","img/rociador/f030.webp","img/rociador/f031.webp","img/rociador/f032.webp","img/rociador/f033.webp","img/rociador/f034.webp","img/rociador/f035.webp","img/rociador/f036.webp","img/rociador/f037.webp","img/rociador/f038.webp","img/rociador/f039.webp","img/rociador/f040.webp","img/rociador/f041.webp","img/rociador/f042.webp","img/rociador/f043.webp","img/rociador/f044.webp","img/rociador/f045.webp","img/rociador/f046.webp","img/rociador/f047.webp","img/rociador/f048.webp","img/rociador/f049.webp","img/rociador/f050.webp","img/rociador/f051.webp","img/rociador/f052.webp","img/rociador/f053.webp","img/rociador/f054.webp","img/rociador/f055.webp","img/rociador/f056.webp","img/rociador/f057.webp","img/rociador/f058.webp","img/rociador/f059.webp","img/rociador/f060.webp","img/rociador/f061.webp","img/rociador/f062.webp"];
+(function anatomiaReal() {
+  const sec = $("#anatomia"), lienzo = $("#anat-lienzo");
+  const capas = [...sec.querySelectorAll(".capa")], marcas = [...sec.querySelectorAll(".marca-real")];
+  const pasos = [...sec.querySelectorAll(".paso-a")], barras = [...sec.querySelectorAll(".progreso-anat b")];
+  const canvas = $("#cuadros-rociador"), ctx = canvas.getContext("2d");
+  const imgs = CUADROS.map(src => { const i = new Image(); i.decoding = "async"; i.src = src; return i; });
+  // Tramos del scroll: [inicio, fin] de cada capa
+  const T = [[0, .16], [.16, .36], [.36, .58], [.58, .82], [.82, 1]];
+  const suave = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  // Cada foto se encuadra centrada en su equipo (object-position = foco): en pantallas verticales no queda afuera
+  capas.forEach(c => { const img = c.querySelector("img"); if (img) { const [fx, fy] = img.dataset.foco.split(",").map(Number); img.style.objectPosition = (fx * 100) + "% " + (fy * 100) + "%"; } });
+  // Punto de la foto (0-1) -> coordenadas en pantalla, respetando object-fit: cover y object-position
+  function aPantalla(img, fx, fy) {
+    const W = lienzo.clientWidth, H = lienzo.clientHeight, iw = img.naturalWidth || 16, ih = img.naturalHeight || 9;
+    const esc = Math.max(W / iw, H / ih), dw = iw * esc, dh = ih * esc;
+    const x = (W - dw) * fx + fx * dw, y = (H - dh) * fy + fy * dh;
+    return { x: Math.min(W, Math.max(0, x)), y: Math.min(H, Math.max(0, y)) };
+  }
+  const desplazamiento = y => lienzo.clientWidth <= 760 ? Math.min(0, lienzo.clientHeight * .36 - y) : 0;
+  let cuadroActual = -1;
+  function dibujarCuadro(k) {
+    k = Math.max(0, Math.min(imgs.length - 1, k));
+    const im = imgs[k];
+    if (!im.complete || !im.naturalWidth) { im.onload = () => dibujarCuadro(k); return; }
+    const W = canvas.clientWidth, H = canvas.clientHeight, dpr = Math.min(devicePixelRatio, 2);
+    if (canvas.width !== Math.round(W * dpr)) { canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); }
+    const esc = Math.max(canvas.width / im.naturalWidth, canvas.height / im.naturalHeight);
+    const dw = im.naturalWidth * esc, dh = im.naturalHeight * esc;
+    ctx.drawImage(im, (canvas.width - dw) / 2, (canvas.height - dh) / 2, dw, dh);
+    cuadroActual = k;
+  }
+  let activo = -1;
+  function estado(p) {
+    capas.forEach((c, i) => {
+      const [a, b] = T[i];
+      // Entra con fundido y sale con fundido; la primera arranca visible y la última queda
+      const entra = i === 0 ? 1 : suave(a - .03, a + .03, p), sale = i === capas.length - 1 ? 0 : suave(b - .03, b + .03, p);
+      c.style.opacity = Math.max(0, entra - sale);
+      const local = suave(a, b, p);
+      const img = c.querySelector("img");
+      if (img) {
+        const [fx, fy] = img.dataset.foco.split(",").map(Number);
+        const o = aPantalla(img, fx, fy);
+        img.style.transformOrigin = o.x + "px " + o.y + "px";
+        // En celular el texto va abajo: el equipo sube hacia el tercio superior mientras se acerca
+        const dy = desplazamiento(o.y) * local;
+        img.style.transform = "translateY(" + dy + "px) scale(" + (i === capas.length - 1 ? 1.25 - .2 * local : 1.02 + .5 * local) + ")";
+      }
+    });
+    // Video del rociador cuadro por cuadro
+    const k = Math.round(suave(T[3][0] + .02, T[3][1] - .02, p) * (imgs.length - 1));
+    if (k !== cuadroActual) dibujarCuadro(k);
+    // Marcas sobre el equipo de cada foto
+    marcas.forEach(m => {
+      const i = +m.dataset.capa, [a, b] = T[i];
+      const on = p > a + .03 && p < b - .03;
+      m.style.opacity = on ? 1 : 0;
+      if (!on) return;
+      if (i === 3) { m.style.left = (lienzo.clientWidth * .47) + "px"; m.style.top = (lienzo.clientHeight * .24) + "px"; return; }
+      const img = capas[i].querySelector("img"), [fx, fy] = img.dataset.foco.split(",").map(Number);
+      const o = aPantalla(img, fx, fy), local = suave(a, b, p);
+      m.style.left = o.x + "px"; m.style.top = (o.y + desplazamiento(o.y) * local) + "px";   // el zoom se hace sobre este mismo punto, así que no se mueve
+      m.classList.toggle("izq", o.x > lienzo.clientWidth * .68);   // cerca del borde derecho, la etiqueta va a la izquierda
+    });
+    barras.forEach((bar, i) => { const [a, b] = T[i + 1]; bar.style.height = (suave(a, b, p) * 100) + "%"; });
+    let i = 0; T.forEach(([a], k2) => { if (p >= a) i = k2; });
+    if (i !== activo) { activo = i; pasos.forEach((el, k2) => el.classList.toggle("activo", k2 === i)); }
+  }
+  if (GSAP) {
+    ScrollTrigger.create({ trigger: sec, start: "top top", end: "+=3600", pin: ".anat-pin", scrub: .4, refreshPriority: 1, onUpdate: st => estado(st.progress) });
+    ScrollTrigger.sort(); ScrollTrigger.refresh();
+    estado(0);
+    addEventListener("resize", () => estado(ScrollTrigger.getAll().find(t => t.trigger === sec)?.progress || 0));
+  } else {
+    sec.classList.add("estatico");
+    dibujarCuadro(40);
+  }
+})();
+
+// Luz que sigue al mouse en las tarjetas
+document.addEventListener("pointermove", e => {
+  const t = e.target.closest && e.target.closest(".tile");
+  if (!t) return;
+  const r = t.getBoundingClientRect();
+  t.style.setProperty("--mx", (e.clientX - r.left) + "px"); t.style.setProperty("--my", (e.clientY - r.top) + "px");
+}, { passive: true });
+</script>
+</body>
+</html>
