@@ -110,6 +110,14 @@ def construir_mensaje(destinatario: dict, remitente: str, remitente_nombre: str)
     return msg
 
 
+def crear_conexion_smtp(config: dict):
+    contexto_tls = ssl.create_default_context()
+    server = smtplib.SMTP(config["SMTP_HOST"], int(config["SMTP_PORT"]), timeout=30)
+    server.starttls(context=contexto_tls)
+    server.login(config["SMTP_USER"], config["SMTP_PASSWORD"])
+    return server
+
+
 def enviar_todos(clientes: pd.DataFrame, config: dict, dry_run: bool, limite: int | None):
     if limite is not None:
         clientes = clientes.head(limite)
@@ -122,6 +130,7 @@ def enviar_todos(clientes: pd.DataFrame, config: dict, dry_run: bool, limite: in
     remitente_nombre = config.get("REMITENTE_NOMBRE", "Fynova")
     correos_por_minuto = int(config.get("CORREOS_POR_MINUTO", 20))
     pausa = 60 / correos_por_minuto if correos_por_minuto > 0 else 0
+    reconectar_cada = int(config.get("RECONECTAR_CADA", 15))
 
     enviados, fallidos = 0, 0
 
@@ -131,24 +140,48 @@ def enviar_todos(clientes: pd.DataFrame, config: dict, dry_run: bool, limite: in
         log.info("Simulación finalizada: %d correos se habrían enviado.", len(clientes))
         return
 
-    contexto_tls = ssl.create_default_context()
-    with smtplib.SMTP(config["SMTP_HOST"], int(config["SMTP_PORT"])) as server:
-        server.starttls(context=contexto_tls)
-        server.login(config["SMTP_USER"], config["SMTP_PASSWORD"])
-
-        for _, fila in clientes.iterrows():
+    server = crear_conexion_smtp(config)
+    try:
+        for idx, (_, fila) in enumerate(clientes.iterrows()):
             destinatario = {"nombre": fila["nombre"], "email": fila["email"]}
-            try:
-                msg = construir_mensaje(destinatario, remitente, remitente_nombre)
-                server.send_message(msg)
-                log.info("Enviado a %s <%s>", destinatario["nombre"], destinatario["email"])
-                enviados += 1
-            except Exception as exc:
-                log.error("Error enviando a %s: %s", destinatario["email"], exc)
-                fallidos += 1
+
+            if idx > 0 and idx % reconectar_cada == 0:
+                try:
+                    server.quit()
+                except Exception:
+                    pass
+                log.info("Reconectando al servidor SMTP...")
+                server = crear_conexion_smtp(config)
+
+            for intento in range(3):
+                try:
+                    msg = construir_mensaje(destinatario, remitente, remitente_nombre)
+                    server.send_message(msg)
+                    log.info("Enviado a %s <%s>", destinatario["nombre"], destinatario["email"])
+                    enviados += 1
+                    break
+                except smtplib.SMTPServerDisconnected:
+                    if intento < 2:
+                        log.warning("Desconexión detectada, reconectando...")
+                        time.sleep(2 ** intento)
+                        server = crear_conexion_smtp(config)
+                    else:
+                        log.error("Error enviando a %s después de reintentos: conexión perdida", destinatario["email"])
+                        fallidos += 1
+                except Exception as exc:
+                    log.error("Error enviando a %s (intento %d): %s", destinatario["email"], intento + 1, exc)
+                    if intento == 2:
+                        fallidos += 1
+                    else:
+                        time.sleep(2 ** intento)
 
             if pausa:
                 time.sleep(pausa)
+    finally:
+        try:
+            server.quit()
+        except Exception:
+            pass
 
     log.info("Finalizado. Enviados: %d, fallidos: %d", enviados, fallidos)
 
